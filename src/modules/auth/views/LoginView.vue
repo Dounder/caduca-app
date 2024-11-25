@@ -13,7 +13,7 @@ import { useAuthStore } from '../store/auth.store'
 const toast = useToast()
 const authStore = useAuthStore()
 
-const initialValues = envs.mode === 'development' ? { username: 'dev', password: 'Dev@123' } : {}
+const initialValues = envs.mode === 'development' ? { username: 'admin', password: 'Abcd@123' } : {}
 const { defineField, errors, handleSubmit } = useForm({
   validationSchema: loginSchema,
   initialValues

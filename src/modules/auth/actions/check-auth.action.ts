@@ -20,7 +20,7 @@ export const checkAuthAction = async (): Promise<CheckError | CheckSuccess> => {
     if (localToken && localToken.length < 10)
       return { ok: false, message: 'Ocurrió un error al verificar la sesión' }
 
-    const { data } = await api.get<AuthResponse>('/auth/verify')
+    const { data } = await api.post<AuthResponse>('/auth/verify')
 
     return {
       ok: true,

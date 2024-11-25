@@ -75,7 +75,7 @@ const handleToggle = async () => {
         class="relative overflow-hidden w-full border-0 bg-transparent flex flex-col items-start p-4 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors duration-200"
       >
         <span class="font-bold">@{{ user?.username }}</span>
-        <span class="text-sm">{{ user?.roles.join(', ') }}</span>
+        <span class="text-sm">{{ user?.roles.map(({ name }) => name).join(', ') }}</span>
       </span>
     </template>
     <template #item="{ item, props }">
