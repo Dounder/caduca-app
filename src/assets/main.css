@@ -1,0 +1,14 @@
+/* index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.debug {
+  @apply border border-red-500;
+}
