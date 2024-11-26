@@ -5,15 +5,12 @@ import type { MenuItem } from 'primevue/menuitem'
 import { ref } from 'vue'
 
 import { useAuthStore } from '@/modules/auth/store/auth.store'
-import { useConfigStore } from '@/modules/shared/stores/config.store'
 import { storeToRefs } from 'pinia'
+import ToggleThemeBtn from './ToggleThemeBtn.vue'
 
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
-const configStore = useConfigStore()
-const { darkTheme } = storeToRefs(configStore)
 const menu = ref<MenuMethods | null>(null)
-const toggleBtn = ref<HTMLDivElement | null>(null)
 
 const toggle = (evt: MouseEvent) => menu.value?.toggle(evt)
 
@@ -31,38 +28,10 @@ const items = ref<MenuItem[]>([
     ]
   }
 ])
-
-const handleToggle = async () => {
-  if (
-    !toggleBtn.value ||
-    !document.startViewTransition ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    configStore.toggleTheme()
-    return
-  }
-
-  await document.startViewTransition(() => {
-    configStore.toggleTheme()
-  }).ready
-
-  document.documentElement.animate(
-    {
-      opacity: [0, 1]
-    },
-    {
-      duration: 400,
-      easing: 'ease',
-      pseudoElement: '::view-transition-new(root)'
-    }
-  )
-}
 </script>
 
 <template>
-  <div ref="toggleBtn">
-    <Button :icon="darkTheme ? icons.MOON : icons.SUN" @click="handleToggle" text plain />
-  </div>
+  <ToggleThemeBtn />
   <Button :icon="icons.COG" @click="toggle" text plain />
   <Menu ref="menu" id="overlay_menu" :model="items" :popup="true">
     <template #start>
