@@ -46,18 +46,13 @@ const handleToggle = async () => {
     configStore.toggleTheme()
   }).ready
 
-  const { top, left, width, height } = toggleBtn.value.getBoundingClientRect()
-
   document.documentElement.animate(
     {
-      clipPath: [
-        `circle(0 at ${left + width / 2}px ${top + height / 2}px)`,
-        `circle(150% at ${left + width / 2}px ${top + height / 2}px)`
-      ]
+      opacity: [0, 1]
     },
     {
-      duration: 500,
-      easing: 'ease-in-out',
+      duration: 400,
+      easing: 'ease',
       pseudoElement: '::view-transition-new(root)'
     }
   )
