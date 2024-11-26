@@ -23,5 +23,14 @@
   "home": {
     "title": "Inicio",
     "welcome": "Bienvenido a la página de inicio"
+  },
+  "user": {
+    "title": "Usuarios"
+  },
+  "customer": {
+    "title": "Clientes"
+  },
+  "salesperson": {
+    "title": "Vendedores"
   }
 }

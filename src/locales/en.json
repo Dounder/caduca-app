@@ -23,5 +23,14 @@
   "home": {
     "title": "Home",
     "welcome": "Welcome to the Home page"
+  },
+  "user": {
+    "title": "Users"
+  },
+  "customer": {
+    "title": "Customers"
+  },
+  "salesperson": {
+    "title": "Salespersons"
   }
 }
