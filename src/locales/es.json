@@ -1,0 +1,23 @@
+{
+  "shared": {
+    "toast": {
+      "success": { "summary": "Éxito", "detail": "Contenido del mensaje" },
+      "info": { "summary": "Información", "detail": "Contenido del mensaje" },
+      "warn": { "summary": "Advertencia", "detail": "Contenido del mensaje" },
+      "error": { "summary": "Error", "detail": "Contenido del mensaje" },
+      "secondary": { "summary": "Mensaje secundario", "detail": "Contenido del mensaje" },
+      "contrast": { "summary": "Mensaje de contraste", "detail": "Contenido del mensaje" }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar sesión",
+      "username": "Nombre de usuario",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "success": "Inicio de sesión exitoso",
+      "error": "Inicio de sesión fallido",
+      "errorMessage": "Credenciales inválidas"
+    }
+  }
+}

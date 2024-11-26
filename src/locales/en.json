@@ -1,0 +1,23 @@
+{
+  "shared": {
+    "toast": {
+      "success": { "summary": "Success", "detail": "Message content" },
+      "info": { "summary": "Info", "detail": "Message content" },
+      "warn": { "summary": "Warn", "detail": "Message content" },
+      "error": { "summary": "Error", "detail": "Message content" },
+      "secondary": { "summary": "Secondary", "detail": "Message content" },
+      "contrast": { "summary": "Contrast", "detail": "Message content" }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "username": "Username",
+      "password": "Password",
+      "submit": "Submit",
+      "success": "Login successful",
+      "error": "Login failed",
+      "errorMessage": "Invalid credentials"
+    }
+  }
+}

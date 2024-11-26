@@ -20,13 +20,9 @@ authStore.$subscribe(
       return
     }
 
-    if (authStore.authStatus === AuthStatus.Unauthenticated) {
-      router.replace({ name: 'auth.login' })
-    }
+    if (authStore.authStatus === AuthStatus.Unauthenticated) router.replace({ name: 'auth.login' })
   },
-  {
-    immediate: true
-  }
+  { immediate: true }
 )
 </script>
 
