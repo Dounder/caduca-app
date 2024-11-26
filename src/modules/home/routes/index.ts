@@ -12,7 +12,8 @@ export const HOME_ROUTES: RouteRecordRaw = {
     {
       path: '',
       name: 'home.view',
-      component: () => import('@/modules/home/views/HomeView.vue')
+      component: () => import('@/modules/home/views/HomeView.vue'),
+      meta: { titleKey: 'home.title' }
     }
   ]
 }

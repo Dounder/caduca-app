@@ -11,7 +11,8 @@ export const AUTH_ROUTES: RouteRecordRaw = {
     {
       path: 'login',
       name: 'auth.login',
-      component: () => import('@/modules/auth/views/LoginView.vue')
+      component: () => import('@/modules/auth/views/LoginView.vue'),
+      meta: { titleKey: 'auth.login.title' }
     }
   ]
 }

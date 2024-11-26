@@ -1,23 +1,21 @@
-import './assets/main.css'
 import 'primeicons/primeicons.css'
+import './assets/main.css'
 
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
-import { createApp } from 'vue'
 import FocusTrap from 'primevue/focustrap'
 import ToastService from 'primevue/toastservice'
 import Tooltip from 'primevue/tooltip'
-
-import './config/yup'
+import { createApp } from 'vue'
+import { createI18n } from 'vue-i18n'
 
 import App from './App.vue'
 import Aura from './config/app.theme'
-import router from './router'
-import { createI18n } from 'vue-i18n'
-
-import es from './locales/es.json'
+import './config/yup'
 import en from './locales/en.json'
+import es from './locales/es.json'
+import router from './router'
 
 const app = createApp(App)
 const i18n = createI18n({

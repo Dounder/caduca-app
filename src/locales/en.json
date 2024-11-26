@@ -19,5 +19,9 @@
       "error": "Login failed",
       "errorMessage": "Invalid credentials"
     }
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome to the Home page"
   }
 }

@@ -19,5 +19,9 @@
       "error": "Inicio de sesión fallido",
       "errorMessage": "Credenciales inválidas"
     }
+  },
+  "home": {
+    "title": "Inicio",
+    "welcome": "Bienvenido a la página de inicio"
   }
 }
