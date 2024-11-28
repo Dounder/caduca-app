@@ -1,26 +1,28 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { PrimeIcons as icons } from '@primevue/core/api'
 import { storeToRefs } from 'pinia'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useAuthStore } from '@/modules/auth/store/auth.store'
-import CustomCard from '@/modules/shared/components/CustomCard.vue'
 import ToggleThemeBtn from '@/modules/home/components/ToggleThemeBtn.vue'
+import { useConfigStore, type Lang } from '@/modules/shared'
+import CustomCard from '@/modules/shared/components/CustomCard.vue'
 
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
 
+const configStore = useConfigStore()
+const { selectedLang } = storeToRefs(configStore)
 const { t, locale } = useI18n()
-locale.value = 'en'
-const selectedLang = ref<string>(locale.value)
-const langs = [
+const langs: { name: string; value: Lang }[] = [
   { name: t('preferences.en'), value: 'en' },
   { name: t('preferences.es'), value: 'es' }
 ]
 
-watch(selectedLang, (lang) => {
+watch(selectedLang, (lang: Lang) => {
   locale.value = lang
+  configStore.setLang(lang)
 })
 </script>
 
@@ -34,7 +36,7 @@ watch(selectedLang, (lang) => {
       <hr class="w-full my-4" />
 
       <div class="grid grid-cols-2 gap-4 w-full">
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2" v-if="false">
           <label for="pref_lang">{{ t('preferences.lang') }}</label>
           <Select
             v-model="selectedLang"
@@ -43,6 +45,7 @@ watch(selectedLang, (lang) => {
             optionLabel="name"
             optionValue="value"
             :default-value="false"
+            @change="() => ($i18n.locale = selectedLang)"
           />
         </div>
         <ToggleThemeBtn />

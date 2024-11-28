@@ -3,9 +3,11 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 type Theme = 'light' | 'dark'
+export type Lang = 'en' | 'es'
 
 export const useConfigStore = defineStore('config', () => {
   const theme = ref(useLocalStorage<Theme | null>('theme', null))
+  const selectedLang = ref(useLocalStorage<Lang>('lang', 'en'))
 
   const setAppTheme = () => {
     const element = document.querySelector('html')
@@ -33,14 +35,21 @@ export const useConfigStore = defineStore('config', () => {
     setAppTheme()
   }
 
+  const setLang = (lang: 'en' | 'es') => {
+    selectedLang.value = lang
+  }
+
   return {
     //? Props
+    selectedLang,
+
     //* Getters
     darkTheme: computed(() => theme.value === 'dark'),
 
     //! Actions
     setAppTheme,
     toggleTheme,
-    setTheme
+    setTheme,
+    setLang
   }
 })

@@ -18,9 +18,9 @@ const toggle = (evt: MouseEvent) => menu.value?.toggle(evt)
 const items = ref<MenuItem[]>([
   { separator: true },
   {
-    label: t('navbar.profile'),
-    icon: icons.USER,
-    route: { name: 'user.profile', params: { username: user.value?.username } }
+    label: t('navbar.preferences'),
+    icon: icons.COG,
+    route: { name: 'home.preferences', params: { username: user.value?.username } }
   },
   {
     label: t('navbar.logout'),

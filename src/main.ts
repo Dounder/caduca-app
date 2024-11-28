@@ -19,6 +19,7 @@ import router from './router'
 
 const app = createApp(App)
 const i18n = createI18n({
+  legacy: false,
   locale: 'es',
   fallbackLocale: 'es',
   messages: { en, es }
