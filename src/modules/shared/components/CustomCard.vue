@@ -1,29 +1,21 @@
 <script setup lang="ts">
-import type { CardSlots } from 'primevue/card'
+import type { HTMLAttributes } from 'vue'
 
-// Define the slots for the Card component
-defineSlots<CardSlots>()
+interface Props {
+  customClass?: HTMLAttributes['class']
+}
+
+withDefaults(defineProps<Props>(), {
+  customClass: ''
+})
 </script>
 
 <template>
-  <Card class="dark:bg-dark-800 border dark:border-gray-700 border-primary-400">
-    <!-- Use the slots here -->
-    <template #header>
-      <slot name="header" />
-    </template>
-    <template #title>
-      <slot name="title" />
-    </template>
-    <template #subtitle>
-      <slot name="subtitle" />
-    </template>
+  <Card class="dark:bg-dark-950 border dark:border-gray-700 border-primary-400">
     <template #content>
-      <slot name="content" />
-    </template>
-    <template #footer>
-      <slot name="footer" />
+      <div :class="customClass">
+        <slot />
+      </div>
     </template>
   </Card>
 </template>
-
-<style scoped></style>

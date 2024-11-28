@@ -27,6 +27,12 @@ export const useConfigStore = defineStore('config', () => {
     setAppTheme()
   }
 
+  const setTheme = (newTheme: Theme) => {
+    theme.value = newTheme
+
+    setAppTheme()
+  }
+
   return {
     //? Props
     //* Getters
@@ -34,6 +40,7 @@ export const useConfigStore = defineStore('config', () => {
 
     //! Actions
     setAppTheme,
-    toggleTheme
+    toggleTheme,
+    setTheme
   }
 })

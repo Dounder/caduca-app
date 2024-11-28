@@ -32,5 +32,23 @@
   },
   "salesperson": {
     "title": "Vendedores"
+  },
+  "navbar": {
+    "home": "Inicio",
+    "directory": "Directorio",
+    "user": "Usuarios",
+    "customer": "Clientes",
+    "salesperson": "Vendedores",
+    "logout": "Cerrar sesión",
+    "profile": "Perfil"
+  },
+  "preferences": {
+    "title": "Preferencias",
+    "lang": "Idioma preferido",
+    "en": "Inglés",
+    "es": "Español",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro"
   }
 }

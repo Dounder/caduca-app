@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { PrimeIcons as icons } from '@primevue/core/api'
 
 import { useConfigStore } from '@shared/stores/config.store'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const configStore = useConfigStore()
-const { darkTheme } = storeToRefs(configStore)
+const isDarkTheme = ref(configStore.darkTheme)
 const toggleBtn = ref<HTMLDivElement | null>(null)
+const options = ref([
+  { label: t('preferences.light'), value: false },
+  { label: t('preferences.dark'), value: true }
+])
 
 const handleToggle = async () => {
   if (
@@ -26,16 +32,36 @@ const handleToggle = async () => {
     { duration: 300, easing: 'ease', pseudoElement: '::view-transition-new(root)' }
   )
 }
+
+watch(isDarkTheme, (val) => {
+  if (!val) {
+    isDarkTheme.value = false
+    configStore.setTheme('light')
+    return
+  }
+
+  handleToggle()
+})
 </script>
 
 <template>
-  <Button
-    :icon="darkTheme ? icons.MOON : icons.SUN"
-    @click="handleToggle"
-    text
-    plain
-    ref="toggleBtn"
-  />
+  <div class="flex flex-col gap-2">
+    <label for="theme_switch">{{ t('preferences.theme') }}</label>
+
+    <SelectButton
+      v-model="isDarkTheme"
+      :options="options"
+      option-label="label"
+      option-value="value"
+      id="theme_switch"
+      size="large"
+      class="h-full"
+    >
+      <template #option="{ option }">
+        <i :class="option.value ? icons.MOON : icons.SUN"></i>
+      </template>
+    </SelectButton>
+  </div>
 </template>
 
 <style scoped></style>
