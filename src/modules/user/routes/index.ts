@@ -10,6 +10,7 @@ export const USER_ROUTES: RouteRecordRaw[] = [
   {
     path: 'usuarios/u/:username',
     name: 'user.detail',
+    meta: { titleKey: 'user.title' },
     component: () => import('../views/UserView.vue')
   }
 ]

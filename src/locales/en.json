@@ -4,6 +4,7 @@
       "new": "New",
       "edit": "Edit",
       "delete": "Delete",
+      "restore": "Restore",
       "save": "Save",
       "cancel": "Cancel",
       "close": "Close",
@@ -73,5 +74,12 @@
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark"
+  },
+  "error": {
+    "404": "The resource you are looking for could not be found",
+    "500": "Internal server error, please contact the administrator",
+    "400": "Bad request, please check the input data",
+    "401": "Unauthorized, please login to access the resource",
+    "403": "Forbidden, you do not have permission to access the resource"
   }
 }

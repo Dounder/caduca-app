@@ -47,3 +47,8 @@ export interface UserAudit {
   username: string
   email: string
 }
+
+export interface DeleteRestoreUser {
+  userId: string
+  isDeleted: boolean
+}

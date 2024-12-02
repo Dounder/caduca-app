@@ -4,6 +4,7 @@
       "new": "Nuevo",
       "edit": "Editar",
       "delete": "Eliminar",
+      "restore": "Restaurar",
       "save": "Guardar",
       "cancel": "Cancelar",
       "close": "Cerrar",
@@ -73,5 +74,12 @@
     "theme": "Tema",
     "light": "Claro",
     "dark": "Oscuro"
+  },
+  "error": {
+    "404": "No se pudo encontrar el recurso solicitado",
+    "500": "Error interno del servidor, por favor contacte al administrador",
+    "400": "Solicitud incorrecta, por favor verifique los datos ingresados",
+    "401": "No autorizado, por favor inicie sesión para acceder al recurso",
+    "403": "Prohibido, no tiene permisos para acceder al recurso"
   }
 }

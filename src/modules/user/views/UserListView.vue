@@ -12,12 +12,6 @@ const { users, lastPage, total, isLoading, isPlaceholderData, refreshUsers, isFe
   useUsers()
 const { page } = usePagination()
 const pagination = reactive({ page, lastPage, total })
-const columns: TableColumn[] = [
-  { field: 'username', header: t('user.table.username') },
-  { field: 'email', header: t('user.table.email') },
-  { field: 'roles', header: t('user.table.roles') },
-  { field: 'createdAt', header: t('user.table.createdAt') }
-]
 </script>
 
 <template>

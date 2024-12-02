@@ -1,5 +1,10 @@
 import { api } from '@/api'
-import { type ApiListResponse, DateUtils, getLimitPaginationHelper } from '@/modules/shared'
+import {
+  type ApiListResponse,
+  DateUtils,
+  exceptionHandlerHelper,
+  getLimitPaginationHelper
+} from '@/modules/shared'
 import type { User, UserTable } from '../interfaces'
 
 export const getUsersAction = async (page: number = 1): Promise<ApiListResponse<UserTable>> => {
@@ -26,7 +31,6 @@ export const getUsersAction = async (page: number = 1): Promise<ApiListResponse<
       }))
     }
   } catch (error) {
-    console.log(`Error: ${error}`)
-    throw new Error('Unexpected error')
+    throw exceptionHandlerHelper(error, 'updateUser')
   }
 }

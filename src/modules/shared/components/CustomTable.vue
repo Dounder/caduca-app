@@ -3,12 +3,21 @@ import { PrimeIcons as icons } from '@primevue/core/api'
 
 import type { Pagination } from '../interfaces'
 import PaginationButtons from './PaginationButtons.vue'
+import { useI18n } from 'vue-i18n'
 
 interface Props {
   data: any[]
   pagination: Pagination
 }
 defineProps<Props>()
+
+interface Emits {
+  (e: 'on:edit', data: any, newTab: boolean): void
+  (e: 'on:delete', data: any): void
+}
+defineEmits<Emits>()
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -24,13 +33,22 @@ defineProps<Props>()
     <Column class="w-[8rem]">
       <template #body="{ data }">
         <section class="flex justify-center gap-2">
-          <Button text rounded :icon="icons.PENCIL" severity="secondary" @click="undefined" />
           <Button
+            v-tooltip.top="t('shared.actions.edit')"
+            text
+            rounded
+            :icon="icons.PENCIL"
+            severity="secondary"
+            @click="$emit('on:edit', data, false)"
+            @click.middle="$emit('on:edit', data, true)"
+          />
+          <Button
+            v-tooltip.top="t(data.deletedAt ? 'shared.actions.restore' : 'shared.actions.delete')"
             text
             rounded
             :icon="data.deletedAt ? icons.REFRESH : icons.TRASH"
             :severity="data.deletedAt ? 'help' : 'danger'"
-            @click="undefined"
+            @click="$emit('on:delete', data)"
           />
         </section>
       </template>

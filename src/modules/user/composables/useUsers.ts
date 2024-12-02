@@ -1,11 +1,17 @@
-import { ref, watchEffect } from 'vue'
 import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { ref, watch, watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 
+import { useNotification } from '@/modules/shared'
 import { usePagination } from '@shared/composables/usePagination'
 import { getUsersAction } from '../actions/get-users.action'
+import { useI18n } from 'vue-i18n'
 
 export const useUsers = () => {
+  const { t } = useI18n()
+  const router = useRouter()
   const queryClient = useQueryClient()
+  const { showError } = useNotification()
   const { page } = usePagination()
   const lastPage = ref(1)
   const total = ref(0)
@@ -14,7 +20,9 @@ export const useUsers = () => {
     data: users,
     isFetching,
     isLoading,
-    isPlaceholderData
+    isPlaceholderData,
+    isError,
+    error
   } = useQuery({
     queryKey: ['users', { page }],
     queryFn: () => getUsers(),
@@ -46,6 +54,13 @@ export const useUsers = () => {
       queryKey: ['users', { page }]
     })
   }
+
+  watch(isError, () => {
+    if (error.value) {
+      showError({ detail: t('error.500') })
+      router.back()
+    }
+  })
 
   return {
     //* Props

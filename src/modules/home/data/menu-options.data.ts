@@ -21,6 +21,7 @@ export const getMenuOptions = (userRoles: RoleItem[]) => {
     {
       label: t('navbar.directory'),
       icon: icons.BOOK,
+      roles: [RoleId.Admin, RoleId.Developer, RoleId.Manager, RoleId.Salesperson],
       items: [
         {
           label: t('navbar.user'),
