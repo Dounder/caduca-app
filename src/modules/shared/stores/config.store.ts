@@ -7,8 +7,7 @@ export type Lang = 'en' | 'es'
 
 export const useConfigStore = defineStore('config', () => {
   const theme = ref(useLocalStorage<Theme | null>('theme', null))
-  const selectedLang = ref(useLocalStorage<Lang>('lang', 'en'))
-
+  const selectedLang = ref(useLocalStorage<Lang>('lang', 'es'))
   const setAppTheme = () => {
     const element = document.querySelector('html')
     element?.classList.remove('dark')
@@ -45,6 +44,13 @@ export const useConfigStore = defineStore('config', () => {
 
     //* Getters
     darkTheme: computed(() => theme.value === 'dark'),
+    isMobile: computed(() => {
+      const isMobile = ref(window.innerWidth < 768)
+      window.addEventListener('resize', () => {
+        isMobile.value = window.innerWidth < 768
+      })
+      return isMobile.value
+    }),
 
     //! Actions
     setAppTheme,

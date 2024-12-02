@@ -1,4 +1,4 @@
-import type { User } from './user.interface'
+import type { User } from '../../user/interfaces/user.interface'
 
 export interface LoginError {
   ok: false

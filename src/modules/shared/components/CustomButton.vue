@@ -36,7 +36,7 @@ const { darkTheme } = storeToRefs(configStore)
 
 <template>
   <Button
-    :outlined="darkTheme ? true : undefined"
+    :outlined="!darkTheme"
     :label="label"
     :severity="severity"
     :fluid="fluid"

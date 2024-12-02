@@ -1,5 +1,16 @@
 {
   "shared": {
+    "actions": {
+      "new": "New",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close",
+      "back": "Back",
+      "refresh": "Refresh",
+      "export": "Export"
+    },
     "toast": {
       "success": { "summary": "Success", "detail": "Message content" },
       "info": { "summary": "Info", "detail": "Message content" },
@@ -25,7 +36,19 @@
     "welcome": "Welcome to the Home page"
   },
   "user": {
-    "title": "Users"
+    "title": "Users",
+    "table": {
+      "id": "ID",
+      "username": "Username",
+      "email": "Email",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "deletedAt": "Deleted At",
+      "createdBy": "Created By",
+      "roles": "Roles",
+      "updatedBy": "Updated By",
+      "deletedBy": "Deleted By"
+    }
   },
   "customer": {
     "title": "Customers"

@@ -1,5 +1,16 @@
 {
   "shared": {
+    "actions": {
+      "new": "Nuevo",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "back": "Atrás",
+      "refresh": "Actualizar",
+      "export": "Exportar"
+    },
     "toast": {
       "success": { "summary": "Éxito", "detail": "Contenido del mensaje" },
       "info": { "summary": "Información", "detail": "Contenido del mensaje" },
@@ -25,7 +36,19 @@
     "welcome": "Bienvenido a la página de inicio"
   },
   "user": {
-    "title": "Usuarios"
+    "title": "Usuarios",
+    "table": {
+      "id": "ID",
+      "username": "Usuario",
+      "email": "Email",
+      "createdAt": "Creado",
+      "updatedAt": "Actualizado",
+      "deletedAt": "Eliminado",
+      "createdBy": "Creado por",
+      "roles": "Roles",
+      "updatedBy": "Actualizado por",
+      "deletedBy": "Eliminado por"
+    }
   },
   "customer": {
     "title": "Clientes"
