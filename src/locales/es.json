@@ -29,7 +29,11 @@
       "confirmAction": "¿Estás seguro de que deseas realizar esta acción?",
       "emptyTable": "No se encontraron registros",
       "noMatch": "No se encontraron registros coincidentes",
-      "emptySearch": "No se encontraron registros para los criterios de búsqueda"
+      "emptySearch": "No se encontraron registros para los criterios de búsqueda",
+      "creationSuccess": "Registro creado exitosamente",
+      "updateSuccess": "Registro actualizado exitosamente",
+      "deletionSuccess": "Registro eliminado exitosamente",
+      "restorationSuccess": "Registro restaurado exitosamente"
     }
   },
   "auth": {
@@ -63,7 +67,19 @@
     }
   },
   "customer": {
-    "title": "Clientes"
+    "title": "Clientes",
+    "table": {
+      "id": "ID",
+      "code": "Código",
+      "name": "Nombre",
+      "address": "Dirección",
+      "createdAt": "Creado",
+      "updatedAt": "Actualizado",
+      "deletedAt": "Eliminado",
+      "createdBy": "Creado por",
+      "updatedBy": "Actualizado por",
+      "deletedBy": "Eliminado por"
+    }
   },
   "salesperson": {
     "title": "Vendedores"

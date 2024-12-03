@@ -29,7 +29,11 @@
       "confirmAction": "Are you sure you want to perform this action?",
       "emptyTable": "No records found",
       "noMatch": "No matching records found",
-      "emptySearch": "No records found for the search criteria"
+      "emptySearch": "No records found for the search criteria",
+      "creationSuccess": "Record created successfully",
+      "updateSuccess": "Record updated successfully",
+      "deletionSuccess": "Record deleted successfully",
+      "restorationSuccess": "Record restored successfully"
     }
   },
   "auth": {
@@ -63,7 +67,19 @@
     }
   },
   "customer": {
-    "title": "Customers"
+    "title": "Customers",
+    "table": {
+      "id": "ID",
+      "code": "Code",
+      "name": "Name",
+      "address": "Address",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "deletedAt": "Deleted At",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "deletedBy": "Deleted By"
+    }
   },
   "salesperson": {
     "title": "Salespersons"
