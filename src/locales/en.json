@@ -21,6 +21,15 @@
       "error": { "summary": "Error", "detail": "Message content" },
       "secondary": { "summary": "Secondary", "detail": "Message content" },
       "contrast": { "summary": "Contrast", "detail": "Message content" }
+    },
+    "messages": {
+      "confirm": "Are you sure?",
+      "confirmDelete": "Are you sure you want to delete this record?",
+      "confirmRestore": "Are you sure you want to restore this record?",
+      "confirmAction": "Are you sure you want to perform this action?",
+      "emptyTable": "No records found",
+      "noMatch": "No matching records found",
+      "emptySearch": "No records found for the search criteria"
     }
   },
   "auth": {

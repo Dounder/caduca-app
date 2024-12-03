@@ -23,7 +23,7 @@ export const HOME_ROUTES: RouteRecordRaw = {
       path: 'preferencias',
       name: 'home.preferences',
       component: () => import('@/modules/home/views/HomePreferencesView.vue'),
-      meta: { titleKey: 'home.preferences' }
+      meta: { titleKey: 'navbar.preferences' }
     },
     ...USER_ROUTES,
     ...CUSTOMER_ROUTES,

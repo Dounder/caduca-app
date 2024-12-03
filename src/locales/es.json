@@ -21,6 +21,15 @@
       "error": { "summary": "Error", "detail": "Contenido del mensaje" },
       "secondary": { "summary": "Mensaje secundario", "detail": "Contenido del mensaje" },
       "contrast": { "summary": "Mensaje de contraste", "detail": "Contenido del mensaje" }
+    },
+    "messages": {
+      "confirm": "¿Estás seguro?",
+      "confirmDelete": "¿Estás seguro de que deseas eliminar este registro?",
+      "confirmRestore": "¿Estás seguro de que deseas restaurar este registro?",
+      "confirmAction": "¿Estás seguro de que deseas realizar esta acción?",
+      "emptyTable": "No se encontraron registros",
+      "noMatch": "No se encontraron registros coincidentes",
+      "emptySearch": "No se encontraron registros para los criterios de búsqueda"
     }
   },
   "auth": {
