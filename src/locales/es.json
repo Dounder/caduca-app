@@ -10,7 +10,9 @@
       "close": "Cerrar",
       "back": "Atrás",
       "refresh": "Actualizar",
-      "export": "Exportar"
+      "export": "Exportar",
+      "search": "Buscar",
+      "options": "Opciones"
     },
     "toast": {
       "success": { "summary": "Éxito", "detail": "Contenido del mensaje" },

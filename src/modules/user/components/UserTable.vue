@@ -29,7 +29,13 @@ const onDelete = ({ id, deletedAt }: UserTable) => {
 </script>
 
 <template>
-  <CustomTable :data="data" :pagination="pagination" @on:edit="onEdit" @on:delete="onDelete">
+  <CustomTable
+    :data="data"
+    :pagination="pagination"
+    @on:edit="onEdit"
+    @on:delete="onDelete"
+    :options="[]"
+  >
     <Column field="username" :header="t('user.table.username')"></Column>
     <Column field="email" :header="t('user.table.email')"></Column>
     <Column field="roles" :header="t('user.table.roles')"></Column>

@@ -22,7 +22,7 @@ const visiblePages = computed(() => {
 </script>
 
 <template>
-  <article class="flex justify-center items-center gap-2 my-2" v-if="lastPage > 1">
+  <article class="flex justify-center items-center gap-2" v-if="lastPage > 1">
     <CustomButton
       text
       :icon="icons.ANGLE_DOUBLE_LEFT"

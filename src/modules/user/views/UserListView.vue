@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { usePagination } from '@/modules/shared'
-import type { TableColumn } from '@/modules/shared/interfaces'
 import ListPage from '@shared/components/ListPage.vue'
-import { reactive, watch } from 'vue'
+import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useUsers } from '../composables'
 import UserTable from '../components/UserTable.vue'
+import { useUsers } from '../composables'
 
 const { t } = useI18n()
 const { users, lastPage, total, isLoading, isPlaceholderData, refreshUsers, isFetching } =

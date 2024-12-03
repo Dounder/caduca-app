@@ -16,7 +16,7 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
 </script>
 
 <template>
-  <Toolbar class="dark:bg-dark-950 sticky mb-6">
+  <Toolbar class="dark:bg-dark-950 mb-3">
     <template #start>
       <h1 class="text-2xl capitalize">{{ title }}</h1>
     </template>
@@ -24,6 +24,7 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
     <template #end>
       <section class="flex justify-end gap-2">
         <Button
+          size="small"
           v-tooltip.top="!isMobile ? '' : t('shared.actions.new')"
           :label="!isMobile ? t('shared.actions.new') : ''"
           :icon="icons.PLUS"
@@ -33,6 +34,7 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
           :rounded="isMobile"
         />
         <Button
+          size="small"
           v-tooltip.top="!isMobile ? '' : t('shared.actions.refresh')"
           :label="!isMobile ? t('shared.actions.refresh') : ''"
           :icon="icons.REFRESH"
@@ -42,6 +44,7 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
           :rounded="isMobile"
         />
         <Button
+          size="small"
           v-tooltip.top="!isMobile ? '' : t('shared.actions.export')"
           :label="!isMobile ? t('shared.actions.export') : ''"
           :icon="icons.DOWNLOAD"

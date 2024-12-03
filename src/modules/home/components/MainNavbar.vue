@@ -11,7 +11,7 @@ const items = getMenuOptions(userRoles.value || [])
 </script>
 
 <template>
-  <Menubar :model="items" class="dark:bg-dark-950">
+  <Menubar :model="items" class="flex-shrink-0 h-16 dark:bg-dark-950">
     <template #item="{ item, props, hasSubmenu, root }">
       <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
         <a v-ripple :href="href" v-bind="props.action" @click="navigate">
