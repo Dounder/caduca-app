@@ -29,19 +29,33 @@ authStore.$subscribe(
 )
 
 const appName = 'Caduca'
+// Utility function to replace placeholders
+function replacePlaceholders(template: string, params: Record<string, string | string[]>): string {
+  return Object.keys(params).reduce((result, param) => {
+    const paramValue = Array.isArray(params[param]) ? params[param][0] : params[param]
+    return result.replace(`{${param}}`, String(paramValue || ''))
+  }, template)
+}
+
+// Watcher for the titleKey in route meta
 watch(
   () => route.meta.titleKey,
-  (titleKey) => {
-    if (titleKey) {
-      // Fetch the translated title from the JSON
-      const pageTitle = t(`${titleKey}`)
+  (titleKey: unknown) => {
+    const defaultTitle: string = appName
 
-      // Set the document title with the app name template
-      document.title = `${pageTitle} | ${appName}`
-    } else {
-      // Default to app name if no title key is provided
-      document.title = appName
+    if (!titleKey || typeof titleKey !== 'string') {
+      document.title = defaultTitle
+      return
     }
+
+    // Fetch the translated title
+    let pageTitle: string = titleKey.includes('{') ? titleKey : t(titleKey)
+
+    // Replace placeholders with route params
+    pageTitle = replacePlaceholders(pageTitle, route.params as Record<string, string | string[]>)
+
+    // Set the document title
+    document.title = `${pageTitle} | ${defaultTitle}`
   },
   { immediate: true }
 )

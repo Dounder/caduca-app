@@ -7,13 +7,10 @@ interface Props {
   className?: string
   label?: string
   severity?: ButtonProps['severity']
-  outlined?: boolean
   fluid?: boolean
   icon?: string
   iconPos?: 'left' | 'right' | 'top' | 'bottom'
   iconClass?: string
-  text?: boolean
-  plain?: boolean
   disabled?: boolean
   loading?: boolean
   loadingIcon?: string
@@ -36,21 +33,20 @@ const { darkTheme } = storeToRefs(configStore)
 
 <template>
   <Button
-    :outlined="!darkTheme"
+    :outlined="!darkTheme ? true : false"
+    :text="darkTheme ? true : false"
     :label="label"
     :severity="severity"
     :fluid="fluid"
     :icon="icon"
     :iconPos="iconPos"
-    :text="text"
-    :plain="plain"
     :disabled="disabled"
     :loading="loading"
     :loadingIcon="loadingIcon"
     :type="type"
     :class="className"
     :iconClass="`!${iconClass}`"
-    @click="$emit('click')"
+    @click="$emit('click', $event)"
   />
 </template>
 

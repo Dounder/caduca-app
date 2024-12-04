@@ -16,7 +16,7 @@ const authStore = useAuthStore()
 
 const router = useRouter()
 const onEdit = ({ code }: SalespersonTable, newTab: boolean) => {
-  const route = router.resolve({ name: 'customer.detail', params: { code } })
+  const route = router.resolve({ name: 'salesperson.detail', params: { code } })
   newTab ? window.open(route.href, '_blank') : router.push(route)
 }
 const onDelete = ({ id, deletedAt }: any) => {

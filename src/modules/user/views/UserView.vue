@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
+import { useUser } from '../composables'
+
+const {} = useUser()
 </script>
 
 <template>
-  <h1>UserView</h1>
+  <DetailPageCard />
 </template>
 
 <style scoped></style>
