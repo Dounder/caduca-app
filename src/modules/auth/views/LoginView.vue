@@ -62,7 +62,6 @@ const onSubmit = handleSubmit(async ({ username, password }, { resetForm }) => {
         <CustomInputPassword
           id="password"
           :label="t('auth.login.password')"
-          type="password"
           v-model="password"
           v-bind="passwordAttrs"
           :error="errors.password"

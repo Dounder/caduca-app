@@ -27,7 +27,7 @@
       "confirmDelete": "Are you sure you want to delete this record?",
       "confirmRestore": "Are you sure you want to restore this record?",
       "confirmAction": "Are you sure you want to perform this action?",
-      "emptyTable": "No records found",
+      "notFound": "No records found",
       "noMatch": "No matching records found",
       "emptySearch": "No records found for the search criteria",
       "creationSuccess": "Record created successfully",
