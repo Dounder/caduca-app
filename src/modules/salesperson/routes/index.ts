@@ -10,6 +10,7 @@ export const SALES_PERSON_ROUTES: RouteRecordRaw[] = [
   {
     path: 'vendedores/codigo/:code',
     name: 'salesperson.detail',
+    meta: { titleKey: 'salesperson.title' },
     component: () => import('../views/SalespersonView.vue')
   }
 ]

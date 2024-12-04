@@ -1,4 +1,4 @@
-import { RoleId, type RoleItem } from '@/modules/auth/interfaces'
+import { RoleId, type RoleItem } from '@/modules/user'
 import { filterMenuItems } from '@/modules/shared'
 import { PrimeIcons as icons } from '@primevue/core/api'
 import { useI18n } from 'vue-i18n'

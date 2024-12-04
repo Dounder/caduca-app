@@ -1,23 +1,21 @@
 import type { UserAudit } from '@/modules/user'
 
-export interface Customer {
+export interface Salesperson {
   id: string
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
   code: number
   name: string
-  address: string
-  createdAt: Date
-  updatedAt: Date
-  deletedAt: Date
   createdBy: UserAudit
   updatedBy?: UserAudit | null
   deletedBy?: UserAudit | null
 }
 
-export interface CustomerTable {
+export interface SalespersonTable {
   id: string
   code: number
   name: string
-  address: string
   createdAt: string | null
   updatedAt: string | null
   deletedAt: string | null
@@ -26,7 +24,7 @@ export interface CustomerTable {
   deletedBy?: string | null
 }
 
-export interface DeleteRestoreCustomer {
-  customerId: string
+export interface DeleteRestoreSalesperson {
+  salespersonId: string
   isDeleted: boolean
 }

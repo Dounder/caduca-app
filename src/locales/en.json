@@ -82,7 +82,18 @@
     }
   },
   "salesperson": {
-    "title": "Salespersons"
+    "title": "Salespersons",
+    "table": {
+      "id": "ID",
+      "code": "Code",
+      "name": "Name",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "deletedAt": "Deleted At",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "deletedBy": "Deleted By"
+    }
   },
   "navbar": {
     "home": "Home",

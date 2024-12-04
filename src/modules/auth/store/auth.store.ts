@@ -3,9 +3,10 @@ import { defineStore } from 'pinia'
 import { useToast } from 'primevue/usetoast'
 import { computed, ref } from 'vue'
 
-import { checkAuthAction, loginAction } from '../actions'
-import { AuthStatus, RoleId, type User } from '../interfaces'
 import { hasRoles } from '@/modules/shared'
+import { RoleId, type User } from '@/modules/user'
+import { checkAuthAction, loginAction } from '../actions'
+import { AuthStatus } from '../interfaces'
 
 export const useAuthStore = defineStore('auth', () => {
   const toast = useToast()
