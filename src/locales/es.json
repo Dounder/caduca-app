@@ -33,7 +33,8 @@
       "creationSuccess": "Registro creado exitosamente",
       "updateSuccess": "Registro actualizado exitosamente",
       "deletionSuccess": "Registro eliminado exitosamente",
-      "restorationSuccess": "Registro restaurado exitosamente"
+      "restorationSuccess": "Registro restaurado exitosamente",
+      "changesSaved": "Cambios guardados exitosamente"
     }
   },
   "auth": {

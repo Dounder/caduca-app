@@ -33,7 +33,8 @@
       "creationSuccess": "Record created successfully",
       "updateSuccess": "Record updated successfully",
       "deletionSuccess": "Record deleted successfully",
-      "restorationSuccess": "Record restored successfully"
+      "restorationSuccess": "Record restored successfully",
+      "changesSaved": "Changes saved successfully"
     }
   },
   "auth": {

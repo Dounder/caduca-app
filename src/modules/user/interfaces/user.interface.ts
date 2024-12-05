@@ -52,3 +52,9 @@ export interface DeleteRestoreUser {
   userId: string
   isDeleted: boolean
 }
+
+export interface UserRelatedMeta {
+  title: string
+  user?: UserAudit | null
+  date: Date | null
+}

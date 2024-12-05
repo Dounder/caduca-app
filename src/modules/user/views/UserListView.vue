@@ -7,8 +7,8 @@ import { useAuthStore } from '@/modules/auth/store/auth.store'
 import { usePagination } from '@/modules/shared'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import ListPage from '@shared/components/ListPage.vue'
-import { useUser, useUsers } from '../composables'
 import type { UserTable } from '../interfaces'
+import { useUserMutation, useUsers } from '../composables'
 
 const { t } = useI18n()
 const { users, lastPage, total, isLoading, isPlaceholderData, refreshUsers, isFetching } =
@@ -16,7 +16,7 @@ const { users, lastPage, total, isLoading, isPlaceholderData, refreshUsers, isFe
 const { page } = usePagination()
 const pagination = reactive({ page, lastPage, total })
 
-const { deleteMutation } = useUser()
+const { deleteMutation } = useUserMutation()
 const authStore = useAuthStore()
 
 const router = useRouter()

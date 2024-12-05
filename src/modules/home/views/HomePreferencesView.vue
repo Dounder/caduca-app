@@ -28,7 +28,7 @@ watch(selectedLang, (lang: Lang) => {
 
 <template>
   <div class="max-w-[40rem] w-full mx-auto relative">
-    <CustomCard customClass="flex flex-col justify-center items-center">
+    <CustomCard bodyClass="flex flex-col justify-center items-center">
       <h1 class="text-3xl mb-4">{{ t('preferences.title') }}</h1>
       <Avatar :icon="icons.USER" size="xlarge" shape="circle" />
       <h2 class="text-center text-2xl font-semibold mt-3 capitalize">@{{ user?.username }}</h2>

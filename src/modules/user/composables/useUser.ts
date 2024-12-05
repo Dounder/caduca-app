@@ -1,75 +1,81 @@
-import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { computed, watch } from 'vue'
-import { createUpdateUserAction, deleteRestoreUserAction } from '../actions'
-import type { DeleteRestoreUser } from '../interfaces'
-import { useNotification } from '@/modules/shared'
+import { useQuery } from '@tanstack/vue-query'
+import { useForm } from 'vee-validate'
+import { computed, reactive, watch, type Ref } from 'vue'
 
-export const useUser = () => {
-  const queryClient = useQueryClient()
-  const { showSuccess, showError } = useNotification()
+import { getUserByUsernameAction } from '../actions'
+import { userSchema } from '../schemas'
+
+export function useUser(usernameRef: Ref<string>) {
+  const { form, errors, meta, canSave, resetForm, handleSubmit } = useUserForm()
 
   const {
-    mutate: updateMutation,
-    isPending: isUpdatePending,
-    isSuccess: isUpdateSuccess,
-    data: updatedUser,
-    error: updateError
-  } = useMutation({
-    mutationFn: createUpdateUserAction
+    data: user,
+    isError,
+    isLoading,
+    isRefetching,
+    refetch
+  } = useQuery({
+    queryKey: ['user', usernameRef],
+    queryFn: () => getUserByUsernameAction(usernameRef.value),
+    retry: false
   })
 
-  const {
-    mutate: deleteMutation,
-    isPending: isDeletePending,
-    isSuccess: isDeleteSuccess,
-    data: deletedUser,
-    error: deleteError
-  } = useMutation({
-    mutationFn: ({ userId, isDeleted }: DeleteRestoreUser) =>
-      deleteRestoreUserAction(userId, isDeleted),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['users'] })
-      queryClient.setQueryData(['user', data.username], data)
+  function useUserForm() {
+    const { defineField, errors, handleSubmit, resetForm, meta } = useForm({
+      validationSchema: userSchema,
+      validateOnMount: false
+    })
+    const [username, usernameAttrs] = defineField('username')
+    const [email, emailAttrs] = defineField('email')
+
+    const form = reactive({
+      username,
+      usernameAttrs,
+      email,
+      emailAttrs
+    })
+
+    return {
+      //* Props
+      form,
+      errors,
+      meta,
+
+      //! Getters
+      canSave: computed(() => meta.value.valid && meta.value.dirty),
+
+      //? Methods
+      handleSubmit,
+      resetForm
     }
-  })
+  }
 
-  const isPending = computed(() => isUpdatePending.value || isDeletePending.value)
-  const isSuccess = computed(() => {
-    if (!updatedUser.value && !deletedUser.value) return null
+  watch(usernameRef, () => refetch(), { immediate: true })
 
-    if (isUpdateSuccess.value)
-      return { msg: 'Usuario actualizado correctamente', user: updatedUser.value }
-
-    if (isDeleteSuccess.value)
-      return {
-        msg: `Usuario ${deletedUser.value?.deletedAt ? 'eliminado' : 'restaurado'} correctamente`,
-        user: deletedUser.value
-      }
-
-    return null
-  })
-  const isError = computed<string | null>(() => {
-    if (updateError.value) return updateError.value.message.split(':')[1].trim()
-    if (deleteError.value) return deleteError.value.message.split(':')[1].trim()
-    return null
-  })
-
-  watch(isSuccess, (value) => {
-    if (!value) return
-    showSuccess({ detail: value.msg })
-  })
-
-  watch(isError, (value) => {
-    if (!value) return
-    showError({ detail: value })
-  })
+  watch(
+    user,
+    () => {
+      if (!user.value) return
+      resetForm({ values: user.value })
+    },
+    { immediate: true }
+  )
 
   return {
     //* Props
-    updateMutation,
-    deleteMutation
+    user,
+    form,
+    errors,
+    meta,
 
     //! Getters
+    isError,
+    isLoading: computed(() => isLoading.value || isRefetching.value),
+    canSave,
+
     //? Methods
+    refetch,
+    handleSubmit,
+    resetForm
   }
 }
