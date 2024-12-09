@@ -74,7 +74,14 @@
       "cm3rmdiwm00040clf27ymcarm": "Desarrollador",
       "cm3rmdiwm00050clffszl8rox": "Vendedor",
       "cm3rmdiwm00060clfg8032oef": "Cliente",
-      "cm3rmdiwm00070clf3w8288g4": "Bodega"
+      "cm3rmdiwm00070clf3w8288g4": "Bodega",
+      "Admin": "Administrador",
+      "Manager": "Gerente",
+      "Staff": "Empleado",
+      "Developer": "Desarrollador",
+      "Salesperson": "Vendedor",
+      "Customer": "Cliente",
+      "Warehouse": "Bodega"
     }
   },
   "customer": {

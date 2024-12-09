@@ -34,7 +34,7 @@ export interface UserTable {
   updatedAt: string | null
   deletedAt: string | null
   createdBy: string
-  roles: string
+  roles: string[]
   updatedBy?: string | null
   deletedBy?: string | null
   password?: string

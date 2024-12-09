@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { computed, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -12,6 +12,7 @@ export const useUserMutation = () => {
   const router = useRouter()
   const queryClient = useQueryClient()
   const { showSuccess, showError } = useNotification()
+  const { password, closeDialog } = handlePassword()
 
   const {
     mutate: updateMutation,
@@ -56,6 +57,13 @@ export const useUserMutation = () => {
 
   watch(isSuccess, (val) => {
     if (!val) return
+
+    if (val.password) {
+      console.log('🚀 ~ watch ~ val:', val.password)
+      password.value = val.password
+      password.visible = true
+    }
+
     showSuccess({ detail: t('shared.messages.changesSaved') })
 
     router.replace({ name: 'user.detail', params: { username: val?.username } })
@@ -66,15 +74,28 @@ export const useUserMutation = () => {
     showError({ detail: value })
   })
 
+  function handlePassword() {
+    const password = reactive({ value: '', visible: false })
+
+    const closeDialog = (state: boolean) => {
+      password.visible = state
+      password.value = ''
+    }
+
+    return { password, closeDialog }
+  }
+
   return {
     //* Props
     updateMutation,
     deleteMutation,
+    password,
 
     //! Getters
     isLoading: computed(() => isUpdatePending.value || isDeletePending.value),
-    isSuccess
+    isSuccess,
 
     //? Methods
+    closeDialog
   }
 }

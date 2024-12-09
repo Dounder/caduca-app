@@ -14,14 +14,12 @@ export const createUpdateUserAction = async (user: Partial<User>): Promise<UserW
 
 const cleanUser = (user: Partial<User>) => {
   delete user.id
-  delete user.username
   delete user.createdAt
   delete user.updatedAt
   delete user.deletedAt
   delete user.createdBy
   delete user.updatedBy
   delete user.deletedBy
-  delete user.roles //TODO: Implement roles
 
   if (user.password) delete user.password
 

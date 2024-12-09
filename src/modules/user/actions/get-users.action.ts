@@ -21,7 +21,7 @@ export const getUsersAction = async (page: number = 1): Promise<ApiListResponse<
       meta: meta,
       data: users.map((user) => ({
         ...user,
-        roles: user.roles.map((role) => role.name).join(', '),
+        roles: user.roles.map((role) => role.name),
         createdAt: DateUtils.convertDate(user.createdAt),
         updatedAt: DateUtils.convertDate(user.updatedAt),
         deletedAt: DateUtils.convertDate(user.deletedAt),

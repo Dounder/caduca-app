@@ -51,15 +51,15 @@ const onSearch = (value: string, option: string) => {
       @on:delete="onDelete"
       @on:search="onSearch"
     >
-      <Column field="username" :header="t('user.table.username')"></Column>
-      <Column field="email" :header="t('user.table.email')"></Column>
-      <Column field="roles" :header="t('user.table.roles')"></Column>
-      <Column field="createdAt" :header="t('user.table.createdAt')"></Column>
-      <Column
-        field="deletedAt"
-        :header="t('user.table.deletedAt')"
-        v-if="authStore.canDelete"
-      ></Column>
+      <Column field="username" :header="t('user.table.username')" />
+      <Column field="email" :header="t('user.table.email')" />
+      <Column field="roles" :header="t('user.table.roles')">
+        <template #body="{ data }">
+          {{ data.roles.map((role: string) => t(`user.roles.${role}`)).join(', ') }}
+        </template>
+      </Column>
+      <Column field="createdAt" :header="t('user.table.createdAt')" />
+      <Column field="deletedAt" :header="t('user.table.deletedAt')" v-if="authStore.canDelete" />
     </CustomTable>
   </ListPage>
 </template>

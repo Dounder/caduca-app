@@ -6,6 +6,7 @@ import CustomButton from '@/modules/shared/components/CustomButton.vue'
 import CustomInputText from '@/modules/shared/components/CustomInputText.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import { useUser, useUserMutation } from '../composables'
+import UserCredentialDialog from '../components/UserCredentialDialog.vue'
 
 interface Props {
   username: string
@@ -29,7 +30,13 @@ const {
   hasRole,
   toggleRole
 } = useUser(username)
-const { updateMutation, deleteMutation, isLoading: isMutationLoading } = useUserMutation()
+const {
+  updateMutation,
+  deleteMutation,
+  isLoading: isMutationLoading,
+  password,
+  closeDialog
+} = useUserMutation()
 const onDelete = async () => {
   if (!user.value) return
   deleteMutation({ userId: user.value.id, isDeleted: !!user.value.deletedAt })
@@ -83,6 +90,12 @@ const onSubmit = handleSubmit(async (values) => updateMutation(values))
       <div class="col-span-12 flex justify-end">
         <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
       </div>
+      <UserCredentialDialog
+        :visible="password.visible"
+        :username="user.username"
+        :password="password.value"
+        @update:visible="closeDialog"
+      />
     </form>
   </DetailPageCard>
 </template>
