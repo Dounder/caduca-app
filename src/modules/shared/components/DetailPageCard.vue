@@ -2,23 +2,24 @@
 import { PrimeIcons as icons } from '@primevue/core/api'
 import type { MenuMethods } from 'primevue'
 import type { MenuItem } from 'primevue/menuitem'
-import { ref, toRefs } from 'vue'
+import { ref, toRefs, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useAuthStore } from '@/modules/auth'
-import { RoleId, type User } from '@/modules/user'
+import { RoleId, type UserAuditInfo } from '@/modules/user'
+import { type RouteLocationRaw } from 'vue-router'
 import { filterMenuItems } from '../utils'
 import CustomButton from './CustomButton.vue'
 import CustomCard from './CustomCard.vue'
-import { useRoute, type RouteLocationRaw } from 'vue-router'
+import RecordAuditUsers from './RecordAuditInfo.vue'
 
 interface Props {
   loading: boolean
   backRoute?: RouteLocationRaw
-  user: User | undefined
+  auditData: UserAuditInfo[]
+  deleted: boolean
 }
 const props = defineProps<Props>()
-const { user } = toRefs(props)
 const emits = defineEmits(['on:new', 'on:delete', 'on:refresh'])
 
 const { t } = useI18n()
@@ -28,12 +29,9 @@ const menu = ref<MenuMethods | null>(null)
 const items = ref<MenuItem[]>([
   { label: t('shared.actions.new'), icon: icons.PLUS, command: () => emits('on:new') },
   {
-    label: !!user.value?.deletedAt ? t('shared.actions.restore') : t('shared.actions.delete'),
-    icon: !!user.value?.deletedAt ? icons.REFRESH : icons.TRASH,
-    command: () => {
-      if (props.user?.username === 'nuevo') return
-      emits('on:delete')
-    },
+    label: props.deleted ? t('shared.actions.restore') : t('shared.actions.delete'),
+    icon: props.deleted ? icons.REFRESH : icons.TRASH,
+    command: () => emits('on:delete'),
     roles: [RoleId.Admin, RoleId.Developer, RoleId.Manager]
   },
   { label: t('shared.actions.refresh'), icon: icons.SYNC, command: () => emits('on:refresh') }
@@ -42,16 +40,23 @@ const getMenuItems = () => {
   if (!authStore.userRoles) return []
   return filterMenuItems(items.value, authStore.userRoles)
 }
+
+watch(
+  () => props.deleted,
+  (deleted) => {
+    items.value[1].label = deleted ? t('shared.actions.restore') : t('shared.actions.delete')
+    items.value[1].icon = deleted ? icons.REFRESH : icons.TRASH
+  }
+)
 </script>
 
 <template>
   <BlockUI :blocked="loading">
-    <CustomCard :deleted="!!user?.deletedAt">
+    <CustomCard :deleted="deleted">
       <!-- Header -->
       <section class="flex items-center mb-6">
         <section class="flex justify-start flex-1 items-center">
           <CustomButton
-            v-tooltip.top="t('shared.actions.back')"
             :icon="icons.CHEVRON_LEFT"
             :label="t('shared.actions.back')"
             @click="backRoute ? $router.push(backRoute) : $router.back()"
@@ -71,6 +76,9 @@ const getMenuItems = () => {
       </section>
 
       <slot />
+
+      <!-- Footer -->
+      <RecordAuditUsers class="mt-6" :data="auditData" />
     </CustomCard>
   </BlockUI>
 </template>

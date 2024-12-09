@@ -34,8 +34,7 @@ export const useUserMutation = () => {
     data: deletedUser,
     error: deleteError
   } = useMutation({
-    mutationFn: ({ userId, isDeleted }: DeleteRestoreUser) =>
-      deleteRestoreUserAction(userId, isDeleted),
+    mutationFn: deleteRestoreUserAction,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['users'] })
       queryClient.setQueryData(['user', data.username], data)

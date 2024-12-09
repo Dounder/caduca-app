@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { useAttrs } from 'vue'
+
 interface Props {
   disabled?: boolean
   error?: string
   id: string
   label?: string
   modelValue?: string
-  placeholder?: string
   size?: 'large' | 'small'
   variant?: 'outlined' | 'filled'
   loading?: boolean
@@ -14,10 +15,13 @@ interface Props {
 }
 defineProps<Props>()
 defineEmits(['update:modelValue', 'blur', 'change', 'input'])
+
+const attrs = useAttrs()
+const klass = attrs.class
 </script>
 
 <template>
-  <article>
+  <article :class="klass">
     <FloatLabel variant="in">
       <InputText
         :id="id"
@@ -25,7 +29,6 @@ defineEmits(['update:modelValue', 'blur', 'change', 'input'])
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value || '')"
         @blur="$emit('blur')"
         :invalid="invalid || Boolean(error)"
-        :placeholder="placeholder"
         :size="size"
         :variant="variant"
         fluid

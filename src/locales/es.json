@@ -34,7 +34,8 @@
       "updateSuccess": "Registro actualizado exitosamente",
       "deletionSuccess": "Registro eliminado exitosamente",
       "restorationSuccess": "Registro restaurado exitosamente",
-      "changesSaved": "Cambios guardados exitosamente"
+      "changesSaved": "Cambios guardados exitosamente",
+      "additionalInfo": "Información adicional"
     }
   },
   "auth": {
@@ -65,6 +66,15 @@
       "roles": "Roles",
       "updatedBy": "Actualizado por",
       "deletedBy": "Eliminado por"
+    },
+    "roles": {
+      "cm3rmdiwl00010clfbut56c4r": "Administrador",
+      "cm3rmdiwl00020clf179p5y92": "Gerente",
+      "cm3rmdiwm00030clf2sw508so": "Empleado",
+      "cm3rmdiwm00040clf27ymcarm": "Desarrollador",
+      "cm3rmdiwm00050clffszl8rox": "Vendedor",
+      "cm3rmdiwm00060clfg8032oef": "Cliente",
+      "cm3rmdiwm00070clf3w8288g4": "Bodega"
     }
   },
   "customer": {

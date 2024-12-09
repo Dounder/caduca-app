@@ -34,7 +34,8 @@
       "updateSuccess": "Record updated successfully",
       "deletionSuccess": "Record deleted successfully",
       "restorationSuccess": "Record restored successfully",
-      "changesSaved": "Changes saved successfully"
+      "changesSaved": "Changes saved successfully",
+      "additionalInfo": "Additional information"
     }
   },
   "auth": {
@@ -65,6 +66,15 @@
       "roles": "Roles",
       "updatedBy": "Updated By",
       "deletedBy": "Deleted By"
+    },
+    "roles": {
+      "cm3rmdiwl00010clfbut56c4r": "Administrator",
+      "cm3rmdiwl00020clf179p5y92": "Manager",
+      "cm3rmdiwm00030clf2sw508so": "Staff",
+      "cm3rmdiwm00040clf27ymcarm": "Developer",
+      "cm3rmdiwm00050clffszl8rox": "Salesperson",
+      "cm3rmdiwm00060clfg8032oef": "Customer",
+      "cm3rmdiwm00070clf3w8288g4": "Warehouse"
     }
   },
   "customer": {

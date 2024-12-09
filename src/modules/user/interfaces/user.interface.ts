@@ -12,6 +12,20 @@ export interface User {
   password?: string
 }
 
+export interface UserWithRoleStrings {
+  id: string
+  username: string
+  email: string
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
+  createdBy: null | UserAudit
+  roles: string[]
+  updatedBy?: null | UserAudit
+  deletedBy?: null | UserAudit
+  password?: string
+}
+
 export interface UserTable {
   id: string
   username: string
@@ -53,7 +67,7 @@ export interface DeleteRestoreUser {
   isDeleted: boolean
 }
 
-export interface UserRelatedMeta {
+export interface UserAuditInfo {
   title: string
   user?: UserAudit | null
   date: Date | null

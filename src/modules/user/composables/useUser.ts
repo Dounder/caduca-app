@@ -1,12 +1,16 @@
 import { useQuery } from '@tanstack/vue-query'
-import { useForm } from 'vee-validate'
+import { useFieldArray, useForm } from 'vee-validate'
 import { computed, reactive, watch, type Ref } from 'vue'
 
+import { useI18n } from 'vue-i18n'
 import { getUserByUsernameAction } from '../actions'
+import { RoleId, type UserAuditInfo } from '../interfaces'
 import { userSchema } from '../schemas'
 
 export function useUser(usernameRef: Ref<string>) {
-  const { form, errors, meta, canSave, resetForm, handleSubmit } = useUserForm()
+  const { t } = useI18n()
+  const { form, errors, meta, canSave, allRoles, resetForm, handleSubmit, toggleRole } =
+    useUserForm()
 
   const {
     data: user,
@@ -27,13 +31,17 @@ export function useUser(usernameRef: Ref<string>) {
     })
     const [username, usernameAttrs] = defineField('username')
     const [email, emailAttrs] = defineField('email')
+    const { fields: roles, remove: removeRole, push: pushRoles } = useFieldArray<string>('roles')
 
-    const form = reactive({
-      username,
-      usernameAttrs,
-      email,
-      emailAttrs
-    })
+    const allRoles: string[] = Object.values(RoleId)
+    const toggleRole = (role: string) => {
+      const currentRoles = roles.value.map((r) => r.value)
+      const hasRole = currentRoles.includes(role)
+
+      hasRole ? removeRole(currentRoles.indexOf(role)) : pushRoles(role)
+    }
+
+    const form = reactive({ username, usernameAttrs, email, emailAttrs, roles })
 
     return {
       //* Props
@@ -42,11 +50,13 @@ export function useUser(usernameRef: Ref<string>) {
       meta,
 
       //! Getters
+      allRoles,
       canSave: computed(() => meta.value.valid && meta.value.dirty),
 
       //? Methods
       handleSubmit,
-      resetForm
+      resetForm,
+      toggleRole
     }
   }
 
@@ -69,13 +79,33 @@ export function useUser(usernameRef: Ref<string>) {
     meta,
 
     //! Getters
+    allRoles,
     isError,
     isLoading: computed(() => isLoading.value || isRefetching.value),
     canSave,
+    getAuditData: computed<UserAuditInfo[]>(() => {
+      if (!user.value || user.value.id === '') return []
+
+      return [
+        {
+          title: t('user.table.createdBy'),
+          user: user.value.createdBy,
+          date: user.value.createdAt
+        },
+        {
+          title: t('user.table.updatedBy'),
+          user: user.value.updatedBy,
+          date: user.value.updatedAt
+        },
+        { title: t('user.table.deletedBy'), user: user.value.deletedBy, date: user.value.deletedAt }
+      ]
+    }),
+    hasRole: (role: string) => form.roles.map((r) => r.value).includes(role),
 
     //? Methods
     refetch,
     handleSubmit,
-    resetForm
+    resetForm,
+    toggleRole
   }
 }
