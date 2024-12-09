@@ -43,6 +43,7 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
           :outlined="!darkTheme"
           :rounded="isMobile"
         />
+        <!-- TODO: Implement export logic -->
         <Button
           size="small"
           v-tooltip.top="!isMobile ? '' : t('shared.actions.export')"
@@ -52,6 +53,7 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
           :text="darkTheme"
           :outlined="!darkTheme"
           :rounded="isMobile"
+          disabled
         />
       </section>
     </template>
