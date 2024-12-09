@@ -2,8 +2,8 @@ import { api } from '@/api'
 import { exceptionHandlerHelper } from '@/modules/shared'
 import type { User, UserWithRoleStrings } from '../interfaces'
 
-export const getUserByUsernameAction = async (username: string): Promise<UserWithRoleStrings> => {
-  if (username === 'nuevo')
+export const getUserAction = async (id: string): Promise<UserWithRoleStrings> => {
+  if (id === 'nuevo')
     return {
       id: '',
       username: '',
@@ -19,10 +19,10 @@ export const getUserByUsernameAction = async (username: string): Promise<UserWit
     }
 
   try {
-    const { data } = await api.get<User>(`/user/username/${username}`)
+    const { data } = await api.get<User>(`/user/${id}`)
 
     return { ...data, roles: data.roles.map((role) => role.id) }
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'getUserByUsernameAction')
+    throw exceptionHandlerHelper(error, 'getUserAction')
   }
 }

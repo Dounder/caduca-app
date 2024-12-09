@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
+import { toRefs, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import CustomButton from '@/modules/shared/components/CustomButton.vue'
 import CustomInputText from '@/modules/shared/components/CustomInputText.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
+import NewUserPassword from '../components/NewUserPassword.vue'
 import { useUser, useUserMutation } from '../composables'
-import UserCredentialDialog from '../components/UserCredentialDialog.vue'
+import { useRouter } from 'vue-router'
+import { useNotification } from '@/modules/shared'
 
 interface Props {
-  username: string
+  id: string
 }
 const props = defineProps<Props>()
-const { username } = toRefs(props)
+const { id } = toRefs(props)
 
 const { t } = useI18n()
+const router = useRouter()
+const { showError, showSuccess } = useNotification()
 
 const {
   user,
@@ -28,20 +32,35 @@ const {
   getAuditData,
   allRoles,
   hasRole,
-  toggleRole
-} = useUser(username)
+  toggleRole,
+  resetForm
+} = useUser(id)
 const {
   updateMutation,
   deleteMutation,
   isLoading: isMutationLoading,
-  password,
-  closeDialog
+  isSuccess,
+  isError,
+  password
 } = useUserMutation()
 const onDelete = async () => {
   if (!user.value) return
   deleteMutation({ userId: user.value.id, isDeleted: !!user.value.deletedAt })
 }
 const onSubmit = handleSubmit(async (values) => updateMutation(values))
+
+watch(isSuccess, (val) => {
+  if (!val) return
+  if (val.password) password.value = val.password
+  showSuccess({ detail: t('shared.messages.changesSaved') })
+  router.replace({ name: 'user.detail', params: { username: val?.username } })
+  resetForm({ values: val })
+})
+
+watch(isError, (value) => {
+  if (!value) return
+  showError({ detail: value })
+})
 </script>
 
 <template>
@@ -51,7 +70,7 @@ const onSubmit = handleSubmit(async (values) => updateMutation(values))
     :back-route="{ name: 'user.list' }"
     :loading="isLoading || isMutationLoading"
     :audit-data="getAuditData"
-    @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
+    @on:new="$router.replace({ name: 'user.detail', params: { id: 'nuevo' } })"
     @on:delete="onDelete"
     @on:refresh="refetch"
   >
@@ -62,7 +81,6 @@ const onSubmit = handleSubmit(async (values) => updateMutation(values))
         v-model="form.username"
         v-bind="form.usernameAttrs"
         :error="errors.username"
-        :disabled="user.username !== ''"
         class="col-span-12 md:col-span-6"
       />
       <CustomInputText
@@ -90,12 +108,7 @@ const onSubmit = handleSubmit(async (values) => updateMutation(values))
       <div class="col-span-12 flex justify-end">
         <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
       </div>
-      <UserCredentialDialog
-        :visible="password.visible"
-        :username="user.username"
-        :password="password.value"
-        @update:visible="closeDialog"
-      />
+      <NewUserPassword class="col-span-12" v-if="password" :password="password" />
     </form>
   </DetailPageCard>
 </template>

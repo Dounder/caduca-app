@@ -20,8 +20,8 @@ const { deleteMutation } = useUserMutation()
 const authStore = useAuthStore()
 
 const router = useRouter()
-const onEdit = ({ username }: UserTable, newTab: boolean) => {
-  const route = router.resolve({ name: 'user.detail', params: { username } })
+const onEdit = ({ id }: UserTable, newTab: boolean) => {
+  const route = router.resolve({ name: 'user.detail', params: { id } })
   newTab ? window.open(route.href, '_blank') : router.push(route)
 }
 const onDelete = ({ id, deletedAt }: UserTable) => {
@@ -35,7 +35,7 @@ const onSearch = (value: string, option: string) => {
 <template>
   <ListPage
     :title="t('user.title')"
-    @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
+    @on:new="$router.push({ name: 'user.detail', params: { id: 'nuevo' } })"
     @on:refresh="refreshUsers"
   >
     <CustomTable

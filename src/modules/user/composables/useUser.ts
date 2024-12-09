@@ -3,11 +3,11 @@ import { useFieldArray, useForm } from 'vee-validate'
 import { computed, reactive, watch, type Ref } from 'vue'
 
 import { useI18n } from 'vue-i18n'
-import { getUserByUsernameAction } from '../actions'
 import { RoleId, type UserAuditInfo } from '../interfaces'
 import { userSchema } from '../schemas'
+import { getUserAction } from '../actions'
 
-export function useUser(usernameRef: Ref<string>) {
+export function useUser(id: Ref<string>) {
   const { t } = useI18n()
   const { form, errors, meta, canSave, allRoles, resetForm, handleSubmit, toggleRole } =
     useUserForm()
@@ -19,8 +19,8 @@ export function useUser(usernameRef: Ref<string>) {
     isRefetching,
     refetch
   } = useQuery({
-    queryKey: ['user', usernameRef],
-    queryFn: () => getUserByUsernameAction(usernameRef.value),
+    queryKey: ['user', id],
+    queryFn: () => getUserAction(id.value),
     retry: false
   })
 
@@ -60,7 +60,7 @@ export function useUser(usernameRef: Ref<string>) {
     }
   }
 
-  watch(usernameRef, () => refetch(), { immediate: true })
+  watch(id, () => refetch(), { immediate: true })
 
   watch(
     user,
