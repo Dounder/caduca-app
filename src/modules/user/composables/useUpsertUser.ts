@@ -22,6 +22,7 @@ export const useUpsertUser = () => {
     mutationFn: upsertUserAction,
     onSuccess: (data) => {
       if (data.password) password.value = data.password
+      if (data.id === '') password.value = null
 
       queryClient.setQueryData(['user', data.username], data)
 
@@ -40,6 +41,7 @@ export const useUpsertUser = () => {
     upsertMutation,
     isUpsertPending,
     isUpsertSuccess,
-    upsertData
+    upsertData,
+    removePassword: () => (password.value = null)
   }
 }

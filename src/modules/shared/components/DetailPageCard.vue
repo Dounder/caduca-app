@@ -7,10 +7,11 @@ import { useI18n } from 'vue-i18n'
 import { type RouteLocationRaw } from 'vue-router'
 
 import { useAuthStore } from '@/modules/auth'
-import { RoleId, type UserAuditInfo } from '@/modules/user'
+import { RoleId } from '@/modules/user'
 import { filterMenuItems } from '../utils'
 import CustomButton from './CustomButton.vue'
 import CustomCard from './CustomCard.vue'
+import CustomSpinner from './CustomSpinner.vue'
 
 interface Props {
   loading: boolean
@@ -49,33 +50,38 @@ watch(
 </script>
 
 <template>
-  <BlockUI :blocked="loading">
-    <CustomCard :deleted="deleted">
-      <!-- Header -->
-      <section class="flex items-center mb-6">
-        <section class="flex justify-start flex-1 items-center">
-          <CustomButton
-            :icon="icons.CHEVRON_LEFT"
-            :label="t('shared.actions.back')"
-            @click="backRoute ? $router.push(backRoute) : $router.back()"
-          />
-        </section>
-
-        <section>
-          <CustomButton
-            v-tooltip.top="t('shared.actions.options')"
-            :icon="icons.ELLIPSIS_V"
-            aria-haspopup="true"
-            aria-controls="detail_page_menu"
-            @click="menu?.toggle($event)"
-          />
-          <Menu ref="menu" id="detail_page_menu" :model="getMenuItems()" :popup="true" />
-        </section>
+  <CustomCard :deleted="deleted" class="relative">
+    <!-- Header -->
+    <section class="flex items-center mb-6">
+      <section class="flex justify-start flex-1 items-center">
+        <CustomButton
+          :icon="icons.CHEVRON_LEFT"
+          :label="t('shared.actions.back')"
+          @click="backRoute ? $router.push(backRoute) : $router.back()"
+          :disabled="loading"
+        />
       </section>
 
-      <slot />
-    </CustomCard>
-  </BlockUI>
+      <section>
+        <CustomButton
+          v-tooltip.top="t('shared.actions.options')"
+          :icon="icons.ELLIPSIS_V"
+          aria-haspopup="true"
+          aria-controls="detail_page_menu"
+          @click="menu?.toggle($event)"
+          :disabled="loading"
+        />
+        <Menu ref="menu" id="detail_page_menu" :model="getMenuItems()" :popup="true" />
+      </section>
+    </section>
+
+    <slot />
+
+    <!-- Overlay and Loader -->
+    <div v-if="loading" class="absolute inset-0 z-50 flex items-center justify-center bg-black/50">
+      <CustomSpinner />
+    </div>
+  </CustomCard>
 </template>
 
 <style scoped></style>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 import { generateAuditItemList } from '@/modules/shared'
 import CustomButton from '@/modules/shared/components/CustomButton.vue'
@@ -16,16 +17,23 @@ interface Props {
 const props = defineProps<Props>()
 const { username } = toRefs(props)
 const { t } = useI18n()
+const router = useRouter()
 
-const { user, refetch, handleSubmit, form, meta, errors, hasRole, allRoles, toggleRole, canSave } = useUser(username)
-const { deletionToggleMutation } = useUserDeletionToggle()
-const { upsertMutation, password } = useUpsertUser()
+const { user, isFetching, refetch, handleSubmit, form, meta, errors, hasRole, allRoles, toggleRole, canSave } =
+  useUser(username)
+const { deletionToggleMutation, isDeletionTogglePending } = useUserDeletionToggle()
+const { upsertMutation, password, isUpsertPending, removePassword } = useUpsertUser()
 
 const onDelete = () => {
   if (!user.value) return
   deletionToggleMutation({ userId: user.value.id, isDeleted: !!user.value.deletedAt })
 }
 const onSubmit = handleSubmit(async (values) => upsertMutation(values))
+const onNew = () => {
+  router.push({ name: 'user.detail', params: { username: 'nuevo' } })
+  removePassword()
+}
+const isPending = computed(() => isFetching.value || isDeletionTogglePending.value || isUpsertPending.value)
 </script>
 
 <template>
@@ -33,8 +41,8 @@ const onSubmit = handleSubmit(async (values) => upsertMutation(values))
     class="max-w-[70rem] mx-auto"
     :deleted="!!user?.deletedAt"
     :back-route="{ name: 'user.list' }"
-    :loading="false"
-    @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
+    :loading="isPending"
+    @on:new="onNew"
     @on:delete="onDelete"
     @on:refresh="refetch"
   >

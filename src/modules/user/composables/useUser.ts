@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/vue-query'
-import { watch, type Ref } from 'vue'
+import { computed, watch, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { getUserAction } from '../actions'
@@ -20,6 +20,8 @@ export function useUser(username: Ref<string>) {
     queryFn: () => getUserAction(username.value),
     retry: false
   })
+
+  const isFetching = computed(() => isLoading.value || isRefetching.value)
 
   watch([isError, isLoading], ([error, loading]) => {
     if (error && !loading) router.replace({ name: 'user.list' })
@@ -45,9 +47,10 @@ export function useUser(username: Ref<string>) {
     meta,
     allRoles,
     canSave,
+    isError,
 
     //! Getters
-    isError,
+    isFetching,
 
     //? Methods
     hasRole,
