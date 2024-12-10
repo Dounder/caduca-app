@@ -1,28 +1,18 @@
-export interface User {
+import type { AuditTrailData } from '@/modules/shared'
+
+export interface User extends AuditTrailData {
   id: string
   username: string
   email: string
-  createdAt: Date | null
-  updatedAt: Date | null
-  deletedAt: Date | null
-  createdBy: null | UserAudit
   roles: RoleItem[]
-  updatedBy?: null | UserAudit
-  deletedBy?: null | UserAudit
   password?: string
 }
 
-export interface UserWithRoleStrings {
+export interface UserWithRoleStrings extends AuditTrailData {
   id: string
   username: string
   email: string
-  createdAt: Date | null
-  updatedAt: Date | null
-  deletedAt: Date | null
-  createdBy: null | UserAudit
   roles: string[]
-  updatedBy?: null | UserAudit
-  deletedBy?: null | UserAudit
   password?: string
 }
 
@@ -65,10 +55,4 @@ export interface UserAudit {
 export interface DeleteRestoreUser {
   userId: string
   isDeleted: boolean
-}
-
-export interface UserAuditInfo {
-  title: string
-  user?: UserAudit | null
-  date: Date | null
 }

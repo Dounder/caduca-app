@@ -12,7 +12,8 @@
       "refresh": "Actualizar",
       "export": "Exportar",
       "search": "Buscar",
-      "options": "Opciones"
+      "options": "Opciones",
+      "copy": "Copiar"
     },
     "toast": {
       "success": { "summary": "Éxito", "detail": "Contenido del mensaje" },
@@ -23,19 +24,19 @@
       "contrast": { "summary": "Mensaje de contraste", "detail": "Contenido del mensaje" }
     },
     "messages": {
-      "confirm": "¿Estás seguro?",
-      "confirmDelete": "¿Estás seguro de que deseas eliminar este registro?",
-      "confirmRestore": "¿Estás seguro de que deseas restaurar este registro?",
-      "confirmAction": "¿Estás seguro de que deseas realizar esta acción?",
-      "emptyTable": "No se encontraron registros",
-      "noMatch": "No se encontraron registros coincidentes",
-      "emptySearch": "No se encontraron registros para los criterios de búsqueda",
-      "creationSuccess": "Registro creado exitosamente",
-      "updateSuccess": "Registro actualizado exitosamente",
-      "deletionSuccess": "Registro eliminado exitosamente",
-      "restorationSuccess": "Registro restaurado exitosamente",
-      "changesSaved": "Cambios guardados exitosamente",
+      "success": "Operación exitosa",
+      "deleted": "{0} eliminado exitosamente",
+      "restored": "{0} restaurado exitosamente",
+      "updated": "{0} actualizado exitosamente",
+      "created": "{0} creado exitosamente",
+      "saved": "{0} guardado exitosamente",
+      "error": "Operación fallida",
       "additionalInfo": "Información adicional"
+    },
+    "fields": {
+      "createdBy": "Creado por",
+      "updatedBy": "Actualizado por",
+      "deletedBy": "Eliminado por"
     }
   },
   "auth": {
@@ -65,7 +66,8 @@
       "createdBy": "Creado por",
       "roles": "Roles",
       "updatedBy": "Actualizado por",
-      "deletedBy": "Eliminado por"
+      "deletedBy": "Eliminado por",
+      "password": "Contraseña"
     },
     "roles": {
       "cm3rmdiwl00010clfbut56c4r": "Administrador",

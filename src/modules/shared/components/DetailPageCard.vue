@@ -2,21 +2,19 @@
 import { PrimeIcons as icons } from '@primevue/core/api'
 import type { MenuMethods } from 'primevue'
 import type { MenuItem } from 'primevue/menuitem'
-import { ref, toRefs, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { type RouteLocationRaw } from 'vue-router'
 
 import { useAuthStore } from '@/modules/auth'
 import { RoleId, type UserAuditInfo } from '@/modules/user'
-import { type RouteLocationRaw } from 'vue-router'
 import { filterMenuItems } from '../utils'
 import CustomButton from './CustomButton.vue'
 import CustomCard from './CustomCard.vue'
-import RecordAuditUsers from './RecordAuditInfo.vue'
 
 interface Props {
   loading: boolean
   backRoute?: RouteLocationRaw
-  auditData: UserAuditInfo[]
   deleted: boolean
 }
 const props = defineProps<Props>()
@@ -76,9 +74,6 @@ watch(
       </section>
 
       <slot />
-
-      <!-- Footer -->
-      <RecordAuditUsers class="mt-6" :data="auditData" />
     </CustomCard>
   </BlockUI>
 </template>

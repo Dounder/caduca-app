@@ -2,7 +2,7 @@ import { api } from '@/api'
 import type { DeleteRestoreUser, User, UserWithRoleStrings } from '../interfaces'
 import { exceptionHandlerHelper } from '@/modules/shared'
 
-export const deleteRestoreUserAction = async ({
+export const userDeletionToggle = async ({
   userId,
   isDeleted
 }: DeleteRestoreUser): Promise<UserWithRoleStrings> => {

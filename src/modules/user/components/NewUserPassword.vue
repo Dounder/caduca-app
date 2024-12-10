@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { PrimeIcons as icons } from '@primevue/core/api'
-import { useToast } from 'primevue/usetoast'
 
-import CustomButton from '@shared/components/CustomButton.vue'
-import CustomDialog from '@/modules/shared/components/CustomDialog.vue'
 import { useNotification } from '@/modules/shared'
+import CustomButton from '@shared/components/CustomButton.vue'
+import { useI18n } from 'vue-i18n'
 
 interface Props {
-  password: string
+  password: string | null
 }
 defineProps<Props>()
 
+const { t } = useI18n()
 const { showSuccess, showError } = useNotification()
 const onCopy = async (text: string) => {
   try {
@@ -26,10 +25,10 @@ const onCopy = async (text: string) => {
 
 <template>
   <transition name="p-message" tag="section" class="flex flex-col">
-    <Fieldset legend="Contraseña">
+    <Fieldset legend="Contraseña" v-if="password">
       <div class="flex justify-between items-center">
         <p class="m-0 text-xl">{{ password }}</p>
-        <CustomButton :icon="icons.COPY" @click="onCopy(password)" />
+        <CustomButton v-tooltip.top="t('shared.actions.copy')" :icon="icons.COPY" @click="onCopy(password)" />
       </div>
     </Fieldset>
   </transition>

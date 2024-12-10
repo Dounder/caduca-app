@@ -1,80 +1,44 @@
 <script setup lang="ts">
-import { toRefs, watch } from 'vue'
+import { toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import { generateAuditItemList } from '@/modules/shared'
 import CustomButton from '@/modules/shared/components/CustomButton.vue'
 import CustomInputText from '@/modules/shared/components/CustomInputText.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
+import RecordAuditInfo from '@/modules/shared/components/RecordAuditInfo.vue'
 import NewUserPassword from '../components/NewUserPassword.vue'
-import { useUser, useUserMutation } from '../composables'
-import { useRouter } from 'vue-router'
-import { useNotification } from '@/modules/shared'
+import { useUpsertUser, useUser, useUserDeletionToggle } from '../composables'
 
 interface Props {
-  id: string
+  username: string
 }
 const props = defineProps<Props>()
-const { id } = toRefs(props)
-
+const { username } = toRefs(props)
 const { t } = useI18n()
-const router = useRouter()
-const { showError, showSuccess } = useNotification()
 
-const {
-  user,
-  isLoading,
-  refetch,
-  form,
-  errors,
-  meta,
-  canSave,
-  handleSubmit,
-  getAuditData,
-  allRoles,
-  hasRole,
-  toggleRole,
-  resetForm
-} = useUser(id)
-const {
-  updateMutation,
-  deleteMutation,
-  isLoading: isMutationLoading,
-  isSuccess,
-  isError,
-  password
-} = useUserMutation()
-const onDelete = async () => {
+const { user, refetch, handleSubmit, form, meta, errors, hasRole, allRoles, toggleRole, canSave } = useUser(username)
+const { deletionToggleMutation } = useUserDeletionToggle()
+const { upsertMutation, password } = useUpsertUser()
+
+const onDelete = () => {
   if (!user.value) return
-  deleteMutation({ userId: user.value.id, isDeleted: !!user.value.deletedAt })
+  deletionToggleMutation({ userId: user.value.id, isDeleted: !!user.value.deletedAt })
 }
-const onSubmit = handleSubmit(async (values) => updateMutation(values))
-
-watch(isSuccess, (val) => {
-  if (!val) return
-  if (val.password) password.value = val.password
-  showSuccess({ detail: t('shared.messages.changesSaved') })
-  router.replace({ name: 'user.detail', params: { username: val?.username } })
-  resetForm({ values: val })
-})
-
-watch(isError, (value) => {
-  if (!value) return
-  showError({ detail: value })
-})
+const onSubmit = handleSubmit(async (values) => upsertMutation(values))
 </script>
 
 <template>
   <DetailPageCard
-    class="max-w-[50rem] mx-auto"
+    class="max-w-[70rem] mx-auto"
     :deleted="!!user?.deletedAt"
     :back-route="{ name: 'user.list' }"
-    :loading="isLoading || isMutationLoading"
-    :audit-data="getAuditData"
-    @on:new="$router.replace({ name: 'user.detail', params: { id: 'nuevo' } })"
+    :loading="false"
+    @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
     @on:delete="onDelete"
     @on:refresh="refetch"
   >
-    <form @submit="onSubmit" class="grid grid-cols-12 gap-4" v-focustrap v-if="user">
+    <form @submit="onSubmit" class="grid grid-cols-12 gap-4" v-focustrap>
       <CustomInputText
         id="username"
         :label="t('user.table.username')"
@@ -82,6 +46,7 @@ watch(isError, (value) => {
         v-bind="form.usernameAttrs"
         :error="errors.username"
         class="col-span-12 md:col-span-6"
+        autofocus
       />
       <CustomInputText
         id="email"
@@ -108,8 +73,10 @@ watch(isError, (value) => {
       <div class="col-span-12 flex justify-end">
         <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
       </div>
-      <NewUserPassword class="col-span-12" v-if="password" :password="password" />
+      <NewUserPassword class="col-span-12" :password="password" />
     </form>
+
+    <RecordAuditInfo class="mt-6" :data="generateAuditItemList(user)" />
   </DetailPageCard>
 </template>
 

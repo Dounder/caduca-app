@@ -1,4 +1,4 @@
-import type { RoleId, RoleItem } from '@/modules/auth/interfaces'
+import type { RoleId, RoleItem } from '@/modules/user'
 
 /**
  * Determines if a user has any of the valid roles.

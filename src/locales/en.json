@@ -12,7 +12,8 @@
       "refresh": "Refresh",
       "export": "Export",
       "search": "Search",
-      "options": "Options"
+      "options": "Options",
+      "copy": "Copy"
     },
     "toast": {
       "success": { "summary": "Success", "detail": "Message content" },
@@ -23,19 +24,19 @@
       "contrast": { "summary": "Contrast", "detail": "Message content" }
     },
     "messages": {
-      "confirm": "Are you sure?",
-      "confirmDelete": "Are you sure you want to delete this record?",
-      "confirmRestore": "Are you sure you want to restore this record?",
-      "confirmAction": "Are you sure you want to perform this action?",
-      "notFound": "No records found",
-      "noMatch": "No matching records found",
-      "emptySearch": "No records found for the search criteria",
-      "creationSuccess": "Record created successfully",
-      "updateSuccess": "Record updated successfully",
-      "deletionSuccess": "Record deleted successfully",
-      "restorationSuccess": "Record restored successfully",
-      "changesSaved": "Changes saved successfully",
+      "success": "Operation successful",
+      "deleted": "{0} deleted successfully",
+      "restored": "{0} restored successfully",
+      "updated": "{0} updated successfully",
+      "created": "{0} created successfully",
+      "saved": "{0} saved successfully",
+      "error": "Operation failed",
       "additionalInfo": "Additional information"
+    },
+    "fields": {
+      "createdBy": "Created by",
+      "updatedBy": "Updated by",
+      "deletedBy": "Deleted by"
     }
   },
   "auth": {
@@ -65,7 +66,8 @@
       "createdBy": "Created By",
       "roles": "Roles",
       "updatedBy": "Updated By",
-      "deletedBy": "Deleted By"
+      "deletedBy": "Deleted By",
+      "password": "Password"
     },
     "roles": {
       "cm3rmdiwl00010clfbut56c4r": "Administrator",

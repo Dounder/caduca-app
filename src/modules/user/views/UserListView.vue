@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -7,35 +7,37 @@ import { useAuthStore } from '@/modules/auth/store/auth.store'
 import { usePagination } from '@/modules/shared'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import ListPage from '@shared/components/ListPage.vue'
+import { useUserDeletionToggle, useUsers } from '../composables'
 import type { UserTable } from '../interfaces'
-import { useUserMutation, useUsers } from '../composables'
 
 const { t } = useI18n()
-const { users, lastPage, total, isLoading, isPlaceholderData, refreshUsers, isFetching } =
-  useUsers()
+const { users, lastPage, total, isLoading, isPlaceholderData, refreshUsers, isFetching } = useUsers()
 const { page } = usePagination()
 const pagination = reactive({ page, lastPage, total })
 
-const { deleteMutation } = useUserMutation()
+const { deletionToggleMutation, isDeletionToggleSuccess } = useUserDeletionToggle()
 const authStore = useAuthStore()
 
 const router = useRouter()
-const onEdit = ({ id }: UserTable, newTab: boolean) => {
-  const route = router.resolve({ name: 'user.detail', params: { id } })
+const onEdit = ({ username }: UserTable, newTab: boolean) => {
+  const route = router.resolve({ name: 'user.detail', params: { username } })
   newTab ? window.open(route.href, '_blank') : router.push(route)
 }
-const onDelete = ({ id, deletedAt }: UserTable) => {
-  deleteMutation({ userId: id, isDeleted: !!deletedAt })
-}
+const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ userId: id, isDeleted: !!deletedAt })
+
 const onSearch = (value: string, option: string) => {
   console.log(value, option)
 }
+
+watch(isDeletionToggleSuccess, (value) => {
+  if (value) refreshUsers()
+})
 </script>
 
 <template>
   <ListPage
     :title="t('user.title')"
-    @on:new="$router.push({ name: 'user.detail', params: { id: 'nuevo' } })"
+    @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
     @on:refresh="refreshUsers"
   >
     <CustomTable

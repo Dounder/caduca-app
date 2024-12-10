@@ -18,5 +18,6 @@ const envVars: EnvVars = value
 
 export const envs = {
   apiUrl: envVars.VITE_API_URL,
-  mode: import.meta.env.MODE
+  mode: import.meta.env.MODE,
+  isDev: import.meta.env.DEV
 }

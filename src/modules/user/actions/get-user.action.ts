@@ -1,4 +1,7 @@
+import { faker } from '@faker-js/faker'
+
 import { api } from '@/api'
+import { envs } from '@/config/envs'
 import { exceptionHandlerHelper } from '@/modules/shared'
 import type { User, UserWithRoleStrings } from '../interfaces'
 
@@ -6,8 +9,8 @@ export const getUserAction = async (id: string): Promise<UserWithRoleStrings> =>
   if (id === 'nuevo')
     return {
       id: '',
-      username: '',
-      email: '',
+      username: envs.isDev ? faker.internet.username() : '',
+      email: envs.isDev ? faker.internet.email() : '',
       createdAt: null,
       updatedAt: null,
       deletedAt: null,
@@ -19,7 +22,7 @@ export const getUserAction = async (id: string): Promise<UserWithRoleStrings> =>
     }
 
   try {
-    const { data } = await api.get<User>(`/user/${id}`)
+    const { data } = await api.get<User>(`/user/username/${id}`)
 
     return { ...data, roles: data.roles.map((role) => role.id) }
   } catch (error) {

@@ -2,7 +2,7 @@ import { api } from '@/api'
 import { exceptionHandlerHelper } from '@/modules/shared'
 import type { User, UserWithRoleStrings } from '../interfaces'
 
-export const createUpdateUserAction = async (user: Partial<User>): Promise<UserWithRoleStrings> => {
+export const upsertUserAction = async (user: Partial<User>): Promise<UserWithRoleStrings> => {
   const userId = user.id
 
   user = cleanUser(user)
