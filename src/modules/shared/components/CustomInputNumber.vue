@@ -1,70 +1,41 @@
 <script setup lang="ts">
-interface Props {
-  disabled?: boolean
-  error?: string
+import type { InputNumberProps } from 'primevue'
+import { useAttrs } from 'vue'
+
+interface Props extends InputNumberProps {
   id: string
+  error?: string
   label?: string
-  modelValue?: number
-  placeholder?: string
-  size?: 'large' | 'small'
-  variant?: 'outlined' | 'filled'
-  mode?: 'decimal' | 'currency'
-  useGrouping?: boolean
-  minFractionDigits?: number
-  maxFractionDigits?: number
-  min?: number
-  max?: number
-  prefix?: string
-  currency?: string
   loading?: boolean
-  invalid?: boolean
   autofocus?: boolean
 }
 
-withDefaults(defineProps<Props>(), {
-  mode: 'decimal',
-  useGrouping: true,
-  minFractionDigits: 0,
-  maxFractionDigits: 2,
-  min: 0,
-  max: Infinity,
-  loading: false
-})
+withDefaults(defineProps<Props>(), {})
+defineEmits(['update:modelValue', 'blur', 'change', 'input'])
 
-defineEmits(['update:modelValue', 'blur'])
+const attrs = useAttrs()
+const klass = attrs.class
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <label v-if="label" :for="id">{{ label }}</label>
+  <FloatLabel variant="in">
     <InputNumber
-      :input-id="id"
+      :inputId="id"
       :model-value="modelValue"
-      @input="$emit('update:modelValue', $event.value)"
+      @update:modelValue="$emit('update:modelValue', $event)"
       @blur="$emit('blur')"
-      :aria-describedby="`${id}-help`"
       :invalid="invalid || Boolean(error)"
-      :placeholder="placeholder"
-      :size="size"
-      :variant="variant"
-      :mode="mode"
-      :useGrouping="useGrouping"
-      :minFractionDigits="minFractionDigits"
-      :maxFractionDigits="maxFractionDigits"
-      :min="min"
-      :max="max"
-      :prefix="prefix"
-      :currency="currency"
-      locale="en-US"
-      fluid
       :disabled="disabled"
       :loading="loading"
       :autofocus="autofocus"
+      size="large"
+      fluid
     />
-    <transition name="p-message" tag="div" class="flex flex-col">
+    <label :for="id">{{ label }}</label>
+    <transition name="p-message" tag="div" class="flex flex-col mt-2">
       <Message v-if="error" severity="error">{{ error }}</Message>
     </transition>
-  </div>
+  </FloatLabel>
 </template>
 
 <style scoped>

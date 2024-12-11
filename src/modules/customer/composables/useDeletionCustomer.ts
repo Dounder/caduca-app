@@ -17,7 +17,7 @@ export const useDeletionCustomer = () => {
     mutationFn: customerDeletionToggleAction,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['customers'] })
-      queryClient.setQueryData(['customer', data.code], data)
+      queryClient.setQueryData(['customer', { code: data.code }], data)
       const message = data.deletedAt
         ? t('shared.messages.deleted', [data.name])
         : t('shared.messages.restored', [data.name])

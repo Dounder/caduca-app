@@ -14,14 +14,13 @@ export const useUpsertCustomer = () => {
 
   const {
     mutate: upsertMutation,
-    isPending: isUpsertPending,
-    isSuccess: isUpsertSuccess,
-    data: upsertData
+    data: upsertData,
+    isSuccess,
+    isPending
   } = useMutation({
     mutationFn: upsertCustomerAction,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['customers'] })
-      queryClient.setQueryData(['customer', data.code], data)
+      queryClient.setQueryData(['customer', { code: data.code }], data)
 
       const message = data.id ? t('shared.messages.updated', [data.code]) : t('shared.messages.created', [data.code])
       showSuccess({ detail: message })
@@ -33,8 +32,8 @@ export const useUpsertCustomer = () => {
 
   return {
     upsertMutation,
-    isUpsertPending,
-    isUpsertSuccess,
+    isPending,
+    isSuccess,
     upsertData
   }
 }

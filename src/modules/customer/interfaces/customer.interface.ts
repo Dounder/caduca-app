@@ -5,10 +5,10 @@ export interface Customer {
   code: number
   name: string
   address: string
-  createdAt: Date
-  updatedAt: Date
-  deletedAt: Date
-  createdBy: UserAudit
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
+  createdBy: UserAudit | null
   updatedBy?: UserAudit | null
   deletedBy?: UserAudit | null
 }

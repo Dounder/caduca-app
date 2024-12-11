@@ -7,8 +7,6 @@ interface Props {
   id: string
   label?: string
   modelValue?: string
-  size?: 'large' | 'small'
-  variant?: 'outlined' | 'filled'
   loading?: boolean
   invalid?: boolean
   autofocus?: boolean
@@ -29,12 +27,11 @@ const klass = attrs.class
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value || '')"
         @blur="$emit('blur')"
         :invalid="invalid || Boolean(error)"
-        :size="size"
-        :variant="variant"
-        fluid
         :disabled="disabled"
         :loading="loading"
         :autofocus="autofocus"
+        size="large"
+        fluid
       />
       <label v-if="label" :for="id">{{ label }}</label>
     </FloatLabel>

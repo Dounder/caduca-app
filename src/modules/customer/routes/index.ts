@@ -10,6 +10,7 @@ export const CUSTOMER_ROUTES: RouteRecordRaw[] = [
   {
     path: 'clientes/codigo/:code',
     name: 'customer.detail',
+    props: true,
     meta: { titleKey: 'Cliente {code}' },
     component: () => import('../views/CustomerView.vue')
   }
