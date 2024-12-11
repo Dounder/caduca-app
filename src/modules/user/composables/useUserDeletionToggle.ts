@@ -16,6 +16,7 @@ export const useUserDeletionToggle = () => {
   } = useMutation({
     mutationFn: userDeletionToggle,
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
       queryClient.setQueryData(['user', data.username], data)
       const message = data.deletedAt
         ? t('shared.messages.deleted', [data.username])

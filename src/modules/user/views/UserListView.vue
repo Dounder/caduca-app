@@ -11,7 +11,7 @@ import { useUserDeletionToggle, useUsers } from '../composables'
 const router = useRouter()
 const { t } = useI18n()
 const authStore = useAuthStore()
-const { deletionToggleMutation } = useUserDeletionToggle()
+const { deletionToggleMutation, isDeletionTogglePending } = useUserDeletionToggle()
 const { users, refetch, loading } = useUsers()
 
 const options = [
@@ -32,7 +32,13 @@ const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ user
     @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
     @on:refresh="refetch"
   >
-    <CustomTable :data="users" :loading="loading" :options="options" @on:edit="onEdit" @on:delete="onDelete">
+    <CustomTable
+      :data="users"
+      :loading="loading || isDeletionTogglePending"
+      :options="options"
+      @on:edit="onEdit"
+      @on:delete="onDelete"
+    >
       <Column field="username" :header="t('user.table.username')" />
       <Column field="email" :header="t('user.table.email')" />
       <Column field="roles" :header="t('user.table.roles')">
