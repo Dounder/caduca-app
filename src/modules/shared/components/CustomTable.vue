@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { PrimeIcons as icons } from '@primevue/core/api'
-import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useAuthStore } from '@/modules/auth/store/auth.store'
-import { usePagination } from '../composables'
 import type { SelectOption } from '../interfaces'
 import BottomPagination from './BottomPagination.vue'
 import TableSearchBar from './TableSearchBar.vue'
@@ -26,7 +24,6 @@ interface Emits {
 const emits = defineEmits<Emits>()
 
 const { t } = useI18n()
-const { page } = usePagination()
 const onSearch = (value: string, option: string) => emits('on:search', value, option)
 
 const authStore = useAuthStore()
@@ -74,7 +71,7 @@ const authStore = useAuthStore()
     </Column>
 
     <template #paginatorcontainer>
-      <BottomPagination :lastPage="3" :page="page" />
+      <BottomPagination />
     </template>
   </DataTable>
 </template>

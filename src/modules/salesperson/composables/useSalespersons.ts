@@ -1,16 +1,17 @@
 import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/vue-query'
-import { reactive, ref, watch, watchEffect } from 'vue'
+import { reactive, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { getCustomersAction } from '@/modules/customer/actions'
-import { useNotification, usePagination } from '@/modules/shared'
+import { useNotification, usePaginationStore } from '@/modules/shared'
+import { storeToRefs } from 'pinia'
 import { getSalespersonsAction } from '../actions'
 
 export const useSalespersons = () => {
   const { t } = useI18n()
   const queryClient = useQueryClient()
   const { showError } = useNotification()
-  const { page } = usePagination()
+  const paginationStore = usePaginationStore()
+  const { page, lastPage } = storeToRefs(paginationStore)
   const pagination = reactive({ page, lastPage: 1, total: 0 })
 
   const {

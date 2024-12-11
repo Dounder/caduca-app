@@ -25,8 +25,3 @@ export interface CustomerTable {
   updatedBy?: string | null
   deletedBy?: string | null
 }
-
-export interface DeleteRestoreCustomer {
-  customerId: string
-  isDeleted: boolean
-}

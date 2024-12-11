@@ -2,15 +2,16 @@ import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import { computed, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { useNotification } from '@/modules/shared'
-import { usePagination } from '@shared/composables/usePagination'
+import { useNotification, usePaginationStore } from '@/modules/shared'
+import { storeToRefs } from 'pinia'
 import { getUsersAction } from '../actions/get-users.action'
 
 export const useUsers = () => {
-  const queryClient = useQueryClient()
   const { t } = useI18n()
+  const queryClient = useQueryClient()
   const { showError } = useNotification()
-  const { page, lastPage, setLastPage } = usePagination()
+  const paginationStore = usePaginationStore()
+  const { page, lastPage } = storeToRefs(paginationStore)
 
   const { data, isFetching, isLoading, isPlaceholderData, isError, refetch } = useQuery({
     queryKey: ['users', { page }],
@@ -42,7 +43,7 @@ export const useUsers = () => {
   })
 
   watch(data, (val) => {
-    if (val) setLastPage(val.meta.lastPage)
+    if (val) lastPage.value = val.meta.lastPage
   })
 
   return {

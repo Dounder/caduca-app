@@ -1,3 +1,3 @@
-export * from './create-update-customer.action'
-export * from './delete-restore-customer.action'
+export * from './upsert-customer.action'
+export * from './customer-deletion-toggle.action'
 export * from './get-customers.action'

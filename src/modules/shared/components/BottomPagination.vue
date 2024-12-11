@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { PrimeIcons as icons } from '@primevue/core/api'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 
+import { usePaginationStore } from '../stores'
 import { useConfigStore } from '../stores/config.store'
-import type { Pagination } from '../interfaces'
 import CustomButton from './CustomButton.vue'
 
-const props = defineProps<Pagination>()
+const paginationStore = usePaginationStore()
+const { page, lastPage } = storeToRefs(paginationStore)
 const configStore = useConfigStore()
 const { isMobile } = storeToRefs(configStore)
+
 const visiblePages = computed(() => {
   const visible = []
-  const startPage = Math.max(1, props.page - 2)
-  const endPage = Math.min(props.lastPage, props.page + 2)
+  const startPage = Math.max(1, page.value - 2)
+  const endPage = Math.min(lastPage.value, page.value + 2)
 
   for (let i = startPage; i <= endPage; i++) visible.push(i)
 
@@ -63,9 +65,3 @@ const visiblePages = computed(() => {
     />
   </article>
 </template>
-
-<style scoped>
-.disabled {
-  @apply cursor-not-allowed;
-}
-</style>
