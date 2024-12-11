@@ -1,58 +1,38 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-import { useAuthStore } from '@/modules/auth/store/auth.store'
-import { usePagination } from '@/modules/shared'
+import { useAuthStore } from '@/modules/auth'
+import ListPage from '@/modules/shared/components/ListPage.vue'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
-import ListPage from '@shared/components/ListPage.vue'
-import { useUserDeletionToggle, useUsers } from '../composables'
 import type { UserTable } from '../interfaces'
-
-const { t } = useI18n()
-const { users, lastPage, total, isLoading, isPlaceholderData, refreshUsers, isFetching } = useUsers()
-const { page } = usePagination()
-const pagination = reactive({ page, lastPage, total })
-
-const { deletionToggleMutation, isDeletionToggleSuccess } = useUserDeletionToggle()
-const authStore = useAuthStore()
+import { useUserDeletionToggle, useUsers } from '../composables'
 
 const router = useRouter()
+const { t } = useI18n()
+const authStore = useAuthStore()
+const { deletionToggleMutation } = useUserDeletionToggle()
+const { users, refetch, loading } = useUsers()
+
+const options = [
+  { label: t('user.table.username'), value: 'username' },
+  { label: t('user.table.email'), value: 'email' },
+  { label: t('user.table.roles'), value: 'roles' }
+]
 const onEdit = ({ username }: UserTable, newTab: boolean) => {
   const route = router.resolve({ name: 'user.detail', params: { username } })
   newTab ? window.open(route.href, '_blank') : router.push(route)
 }
 const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ userId: id, isDeleted: !!deletedAt })
-
-const onSearch = (value: string, option: string) => {
-  console.log(value, option)
-}
-
-watch(isDeletionToggleSuccess, (value) => {
-  if (value) refreshUsers()
-})
 </script>
 
 <template>
   <ListPage
     :title="t('user.title')"
     @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
-    @on:refresh="refreshUsers"
+    @on:refresh="refetch"
   >
-    <CustomTable
-      :data="users || []"
-      :pagination="pagination"
-      :loading="(isLoading && !isPlaceholderData) || isFetching"
-      :options="[
-        { label: t('user.table.username'), value: 'username' },
-        { label: t('user.table.email'), value: 'email' },
-        { label: t('user.table.roles'), value: 'roles' }
-      ]"
-      @on:edit="onEdit"
-      @on:delete="onDelete"
-      @on:search="onSearch"
-    >
+    <CustomTable :data="users" :loading="loading" :options="options" @on:edit="onEdit" @on:delete="onDelete">
       <Column field="username" :header="t('user.table.username')" />
       <Column field="email" :header="t('user.table.email')" />
       <Column field="roles" :header="t('user.table.roles')">

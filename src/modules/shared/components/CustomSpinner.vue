@@ -3,7 +3,7 @@
 <template>
   <svg
     role="status"
-    class="inline h-16 w-16 md:h-28 md:w-28 animate-spin mr-2 text-gray-200 dark:text-gray-600 fill-primary-400"
+    class="inline h-16 w-16 animate-spin mr-2 text-gray-200 dark:text-gray-600 fill-primary-400"
     viewBox="0 0 100 101"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

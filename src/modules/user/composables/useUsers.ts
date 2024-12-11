@@ -1,78 +1,59 @@
-import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/vue-query'
-import { ref, watch, watchEffect } from 'vue'
-import { useRouter } from 'vue-router'
+import { useQuery, useQueryClient } from '@tanstack/vue-query'
+import { computed, watch, watchEffect } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useNotification } from '@/modules/shared'
 import { usePagination } from '@shared/composables/usePagination'
 import { getUsersAction } from '../actions/get-users.action'
-import { useI18n } from 'vue-i18n'
 
 export const useUsers = () => {
-  const { t } = useI18n()
-  const router = useRouter()
   const queryClient = useQueryClient()
+  const { t } = useI18n()
   const { showError } = useNotification()
-  const { page } = usePagination()
-  const lastPage = ref(1)
-  const total = ref(0)
+  const { page, lastPage, setLastPage } = usePagination()
 
-  const {
-    data: users,
-    isFetching,
-    isLoading,
-    isPlaceholderData,
-    isError,
-    error
-  } = useQuery({
+  const { data, isFetching, isLoading, isPlaceholderData, isError, refetch } = useQuery({
     queryKey: ['users', { page }],
-    queryFn: () => getUsers(),
-    placeholderData: keepPreviousData
+    queryFn: () => getUsersAction(page.value)
   })
+
+  const loading = computed(() => isFetching.value || isLoading.value)
+  const users = computed(() => data.value?.data || [])
 
   watchEffect(() => {
-    if (page.value > 1)
+    const currentPage = page.value
+    const currentLastPage = lastPage.value
+
+    if (currentPage > 1)
       queryClient.prefetchQuery({
-        queryKey: ['users', { page: page.value - 1 }],
-        queryFn: () => getUsers()
+        queryKey: ['users', { page: currentPage - 1 }],
+        queryFn: () => getUsersAction(currentPage - 1)
       })
 
-    queryClient.prefetchQuery({
-      queryKey: ['users', { page: page.value + 1 }],
-      queryFn: () => getUsers()
-    })
+    if (currentPage < currentLastPage)
+      queryClient.prefetchQuery({
+        queryKey: ['users', { page: currentPage + 1 }],
+        queryFn: () => getUsersAction(currentPage + 1)
+      })
   })
 
-  const getUsers = async () => {
-    const { data, meta } = await getUsersAction(page.value)
-    lastPage.value = meta.lastPage
-    total.value = meta.total
-    return data
-  }
+  watch(isError, (val) => {
+    if (val) showError({ detail: t('error.500') })
+  })
 
-  const refreshUsers = () => {
-    queryClient.refetchQueries({
-      queryKey: ['users', { page }]
-    })
-  }
-
-  watch(isError, () => {
-    if (error.value) {
-      showError({ detail: t('error.500') })
-      router.back()
-    }
+  watch(data, (val) => {
+    if (val) setLastPage(val.meta.lastPage)
   })
 
   return {
     //* Props
     users,
-    lastPage,
-    total,
-    isFetching,
-    isLoading,
     isPlaceholderData,
 
     //! Getters
+    loading,
+
     //? Methods
-    refreshUsers
+    refetch
   }
 }

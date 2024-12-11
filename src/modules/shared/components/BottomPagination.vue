@@ -27,7 +27,6 @@ const visiblePages = computed(() => {
       text
       :icon="icons.ANGLE_DOUBLE_LEFT"
       :disabled="page === 1"
-      :class="{ disabled: page === 1 }"
       @click="$router.push({ query: { page: 1 } })"
     />
 
@@ -35,7 +34,6 @@ const visiblePages = computed(() => {
       text
       :icon="icons.ANGLE_LEFT"
       :disabled="page === 1"
-      :class="{ disabled: page === 1 }"
       @click="$router.push({ query: { page: page - 1 } })"
     />
 
@@ -55,14 +53,12 @@ const visiblePages = computed(() => {
       text
       :icon="icons.ANGLE_RIGHT"
       :disabled="page === lastPage"
-      :class="{ disabled: page === lastPage }"
       @click="$router.push({ query: { page: page + 1 } })"
     />
     <CustomButton
       text
       :icon="icons.ANGLE_DOUBLE_RIGHT"
       :disabled="page === lastPage"
-      :class="{ disabled: page === lastPage }"
       @click="$router.push({ query: { page: lastPage } })"
     />
   </article>

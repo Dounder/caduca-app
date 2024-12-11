@@ -1,28 +1,31 @@
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 export const usePagination = () => {
   const route = useRoute()
   const page = ref(Number(route.query.page) || 1)
-
-  const handleScroll = () => {
-    const container = document.querySelector('#main-content')
-    if (!container) return
-
-    container.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  const lastPage = ref(1)
 
   watch(
     () => route.query.page,
     (newPage) => {
-      page.value = Math.max(1, Number(newPage) || 1)
+      if (!newPage) return
+      const pageNumber = Number(newPage) || 1
 
-      handleScroll()
+      if (pageNumber > lastPage.value) page.value = lastPage.value
+
+      page.value = Math.max(1, pageNumber)
     }
   )
 
+  const setLastPage = (value: number) => (lastPage.value = value)
+
   return {
     //* props
-    page
+    page,
+    lastPage: computed(() => lastPage.value),
+
+    //? methods
+    setLastPage
   }
 }
