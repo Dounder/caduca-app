@@ -26,7 +26,7 @@ export const useCustomer = (code: Ref<string>) => {
   const isDeleted = computed(() => customer?.value?.deletedAt !== null)
 
   watch([isError, isLoading], ([error, loading]) => {
-    if (error && !loading) router.replace({ name: 'user.list' })
+    if (error && !loading) router.replace({ name: 'customer.list' })
   })
 
   watch(

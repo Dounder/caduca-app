@@ -1,3 +1,4 @@
-export * from './create-update-salesperson.action'
-export * from './delete-restore-salesperson.action'
+export * from './deletion-toggle-salesperson.action'
+export * from './get-salesperson.action'
 export * from './get-salespersons.action'
+export * from './upsert-salesperson.action'

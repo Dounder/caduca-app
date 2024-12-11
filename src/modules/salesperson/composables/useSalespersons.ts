@@ -1,74 +1,57 @@
-import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/vue-query'
-import { reactive, watch, watchEffect } from 'vue'
+import { useQuery, useQueryClient } from '@tanstack/vue-query'
+import { storeToRefs } from 'pinia'
+import { computed, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useNotification, usePaginationStore } from '@/modules/shared'
-import { storeToRefs } from 'pinia'
 import { getSalespersonsAction } from '../actions'
 
 export const useSalespersons = () => {
   const { t } = useI18n()
   const queryClient = useQueryClient()
-  const { showError } = useNotification()
   const paginationStore = usePaginationStore()
   const { page, lastPage } = storeToRefs(paginationStore)
-  const pagination = reactive({ page, lastPage: 1, total: 0 })
+  const { showError } = useNotification()
 
-  const {
-    data: salespersons,
-    isFetching,
-    isLoading,
-    isPlaceholderData,
-    isError,
-    error
-  } = useQuery({
+  const { data, isFetching, isLoading, isError, refetch } = useQuery({
     queryKey: ['salespersons', { page }],
-    queryFn: () => getData(),
-    placeholderData: keepPreviousData
+    queryFn: () => getSalespersonsAction(page.value)
   })
+
+  const loading = computed(() => isFetching.value || isLoading.value)
+  const salespersons = computed(() => data.value?.data || [])
 
   watchEffect(() => {
-    if (page.value > 1)
+    const currentPage = page.value
+    const currentLastPage = lastPage.value
+
+    if (currentPage > 1)
       queryClient.prefetchQuery({
-        queryKey: ['salespersons', { page: page.value - 1 }],
-        queryFn: () => getData()
+        queryKey: ['salespersons', { page: currentPage - 1 }],
+        queryFn: () => getSalespersonsAction(currentPage - 1)
       })
 
-    queryClient.prefetchQuery({
-      queryKey: ['salespersons', { page: page.value + 1 }],
-      queryFn: () => getData()
-    })
+    if (currentPage < currentLastPage)
+      queryClient.prefetchQuery({
+        queryKey: ['salespersons', { page: currentPage + 1 }],
+        queryFn: () => getSalespersonsAction(currentPage + 1)
+      })
   })
-
-  const getData = async () => {
-    const { data, meta } = await getSalespersonsAction(page.value)
-    pagination.lastPage = meta.lastPage
-    pagination.total = meta.total
-    return data
-  }
-
-  const refreshData = () => {
-    queryClient.refetchQueries({
-      queryKey: ['customers', { page }]
-    })
-  }
-
-  watch(isError, () => {
-    if (error.value) {
-      showError({ detail: t('error.500') })
-    }
+  watch(isError, (val) => {
+    if (val) showError({ detail: t('error.500') })
+  })
+  watch(data, (val) => {
+    if (val) paginationStore.setLastPage(val.meta.lastPage)
   })
 
   return {
     //* Props
     salespersons,
-    pagination,
-    isFetching,
-    isLoading,
-    isPlaceholderData,
 
     //! Getters
+    loading,
+
     //? Methods
-    refreshData
+    refetch
   }
 }

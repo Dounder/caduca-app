@@ -1,79 +1,72 @@
-import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { computed, watch } from 'vue'
+import { useQuery } from '@tanstack/vue-query'
+import { useForm } from 'vee-validate'
+import { type Ref, computed, reactive, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { getSalespersonAction } from '../actions'
+import { salespersonSchema } from '../schemas/salesperson.schema'
 
-import { useNotification } from '@/modules/shared'
-import { useI18n } from 'vue-i18n'
-import { createUpdateSalespersonAction, deleteRestoreSalespersonAction } from '../actions'
-import type { DeleteRestoreSalesperson } from '../interfaces'
+export const useSalesperson = (code: Ref<string>) => {
+  const router = useRouter()
+  const salespersonForm = useSalespersonForm()
 
-export const useSalesperson = () => {
-  const { t } = useI18n()
-  const queryClient = useQueryClient()
-  const { showSuccess, showError } = useNotification()
+  const { data, isLoading, isRefetching, isError, refetch } = useQuery({
+    queryKey: ['salesperson', { code: Number(code.value) }],
+    queryFn: async () => await getSalespersonAction(code.value)
+  })
+  const isFetching = computed(() => isLoading.value || isRefetching.value)
 
-  const {
-    mutate: updateMutation,
-    isPending: isUpdatePending,
-    isSuccess: isUpdateSuccess,
-    data: updatedSalesperson,
-    error: updateError
-  } = useMutation({
-    mutationFn: createUpdateSalespersonAction
+  watch([isError, isLoading], ([error, loading]) => {
+    if (error && !loading) router.replace({ name: 'customer.list' })
   })
 
-  const {
-    mutate: deleteMutation,
-    isPending: isDeletePending,
-    isSuccess: isDeleteSuccess,
-    data: deletedSalesperson,
-    error: deleteError
-  } = useMutation({
-    mutationFn: ({ salespersonId, isDeleted }: DeleteRestoreSalesperson) =>
-      deleteRestoreSalespersonAction(salespersonId, isDeleted),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['salespersons'] })
-      queryClient.setQueryData(['salesperson', data.code], data)
-    }
-  })
+  watch(
+    data,
+    (newData) => {
+      if (!newData) return
 
-  const isPending = computed(() => isUpdatePending.value || isDeletePending.value)
-  const isSuccess = computed(() => {
-    if (!updatedSalesperson.value && !deletedSalesperson.value) return null
+      salespersonForm.resetForm({ values: newData })
+    },
+    { immediate: true }
+  )
 
-    if (isUpdateSuccess.value)
-      return { msg: t('shared.messages.updateSuccess'), salesperson: updatedSalesperson.value }
-
-    if (isDeleteSuccess.value)
-      return {
-        msg: `Vendedor ${deletedSalesperson.value?.deletedAt ? 'eliminado' : 'restaurado'} correctamente`,
-        salesperson: deletedSalesperson.value
-      }
-
-    return null
-  })
-  const isError = computed<string | null>(() => {
-    if (updateError.value) return updateError.value.message.split(':')[1].trim()
-    if (deleteError.value) return deleteError.value.message.split(':')[1].trim()
-    return null
-  })
-
-  watch(isSuccess, (value) => {
-    if (!value) return
-    showSuccess({ detail: value.msg })
-  })
-
-  watch(isError, (value) => {
-    if (!value) return
-    showError({ detail: value })
-  })
+  watch(code, () => refetch())
 
   return {
     //* Props
-    updateMutation,
-    deleteMutation,
-    isPending
+    salesperson: data,
 
     //! Getters
+    isFetching,
+
     //? Methods
+    refetch,
+
+    //? Form
+    ...salespersonForm
+  }
+}
+
+const useSalespersonForm = () => {
+  const { meta, errors, handleSubmit, resetForm, defineField } = useForm({
+    validationSchema: salespersonSchema
+  })
+
+  const [name, nameAttrs] = defineField('name')
+  const [address, addressAttrs] = defineField('address')
+
+  const form = reactive({ name, address, nameAttrs, addressAttrs })
+
+  return {
+    //* Props
+    form,
+    meta,
+    errors,
+
+    //! Getters
+    canSave: computed(() => meta.value.valid && meta.value.dirty),
+
+    //? Methods
+    handleSubmit,
+    resetForm
   }
 }

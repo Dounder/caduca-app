@@ -1,18 +1,13 @@
+import type { AuditTrailData, AuditTrailDataPlain } from '@/modules/shared'
 import type { UserAudit } from '@/modules/user'
 
-export interface Salesperson {
+export interface Salesperson extends AuditTrailData {
   id: string
-  createdAt: Date | null
-  updatedAt: Date | null
-  deletedAt: Date | null
   code: number
   name: string
-  createdBy: UserAudit
-  updatedBy?: UserAudit | null
-  deletedBy?: UserAudit | null
 }
 
-export interface SalespersonTable {
+export interface SalespersonTable extends AuditTrailDataPlain {
   id: string
   code: number
   name: string
@@ -22,9 +17,4 @@ export interface SalespersonTable {
   createdBy: string | null
   updatedBy?: string | null
   deletedBy?: string | null
-}
-
-export interface DeleteRestoreSalesperson {
-  salespersonId: string
-  isDeleted: boolean
 }
