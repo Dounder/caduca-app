@@ -28,6 +28,11 @@ export const getMenuOptions = (userRoles: RoleItem[]) => {
           roles: [RoleId.Admin, RoleId.Developer, RoleId.Manager]
         }
       ]
+    },
+    {
+      label: t('navbar.products'),
+      icon: icons.BOX,
+      route: { name: 'product.list' }
     }
   ]
 

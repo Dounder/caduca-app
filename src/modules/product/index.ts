@@ -1,0 +1,7 @@
+export * from './composables/useProduct'
+export * from './composables/useProductDeletion'
+export * from './composables/useProductUpsert'
+export * from './composables/useProducts'
+export * from './interfaces/product.interface'
+export * from './schemas/product.schema'
+export * from './routes'
