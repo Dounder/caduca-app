@@ -14,6 +14,7 @@ export const useSalesperson = (code: Ref<string>) => {
     queryFn: async () => await getSalespersonAction(code.value)
   })
   const isFetching = computed(() => isLoading.value || isRefetching.value)
+  const isDeleted = computed(() => !!data.value?.deletedAt)
 
   watch([isError, isLoading], ([error, loading]) => {
     if (error && !loading) router.replace({ name: 'customer.list' })
@@ -37,6 +38,7 @@ export const useSalesperson = (code: Ref<string>) => {
 
     //! Getters
     isFetching,
+    isDeleted,
 
     //? Methods
     refetch,
@@ -52,9 +54,8 @@ const useSalespersonForm = () => {
   })
 
   const [name, nameAttrs] = defineField('name')
-  const [address, addressAttrs] = defineField('address')
 
-  const form = reactive({ name, address, nameAttrs, addressAttrs })
+  const form = reactive({ name, nameAttrs })
 
   return {
     //* Props

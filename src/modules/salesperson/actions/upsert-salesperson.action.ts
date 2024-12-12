@@ -2,15 +2,12 @@ import { api } from '@/api'
 import { exceptionHandlerHelper } from '@/modules/shared'
 import type { Salesperson } from '../interfaces'
 
-export const createUpdateSalespersonAction = async (
-  salesperson: Partial<Salesperson>
-): Promise<Salesperson> => {
+export const upsertSalespersonAction = async (salesperson: Partial<Salesperson>): Promise<Salesperson> => {
   const salespersonId = salesperson.id
 
   salesperson = cleanSalesperson(salesperson)
 
-  if (salespersonId && salespersonId !== '')
-    return await updateSalesperson(salespersonId, salesperson)
+  if (salespersonId && salespersonId !== '') return await updateSalesperson(salespersonId, salesperson)
 
   return await createSalesperson(salesperson)
 }
