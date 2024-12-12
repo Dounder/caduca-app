@@ -148,8 +148,9 @@
     "title": "Products",
     "table": {
       "id": "ID",
-      "code": "Code",
-      "name": "Name"
+      "codes": "Codes",
+      "name": "Name",
+      "noCodes": "No Codes"
     }
   }
 }

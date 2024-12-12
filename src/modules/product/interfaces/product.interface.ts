@@ -3,6 +3,7 @@ import type { AuditTrailData, AuditTrailDataPlain } from '@/modules/shared'
 export interface Product extends AuditTrailData {
   id: string
   name: string
+  slug: string
   codes: ProductCode[]
 }
 
@@ -14,5 +15,6 @@ export interface ProductCode {
 export interface ProductPlain extends AuditTrailDataPlain {
   id: string
   name: string
-  codes: string[]
+  codes: number[]
+  slug: string
 }

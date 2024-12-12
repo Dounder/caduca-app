@@ -5,13 +5,13 @@ export const PRODUCT_ROUTES: RouteRecordRaw[] = [
     path: 'productos',
     name: 'product.list',
     meta: { titleKey: 'product.title' },
-    component: () => import(/* webpackChunkName: "product" */ '../views/ProductListView.vue')
+    component: () => import(/* webpackChunkName: "product_list" */ '../views/ProductListView.vue')
   },
   {
-    path: 'producto/:id',
+    path: 'productos/n/:slug',
     name: 'product.detail',
     props: true,
     meta: { titleKey: 'product.title' },
-    component: () => import(/* webpackChunkName: "product" */ '../views/ProductView.vue')
+    component: () => import(/* webpackChunkName: "product_detail" */ '../views/ProductView.vue')
   }
 ]
