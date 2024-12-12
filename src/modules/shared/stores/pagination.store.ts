@@ -4,44 +4,59 @@ import { useRoute } from 'vue-router'
 
 export const usePaginationStore = defineStore('pagination', () => {
   const route = useRoute()
-  const page = ref(Number(route.query.page) || 1)
-  const lastPage = ref(1)
+  const page = ref<number>(1)
+  const lastPage = ref<number>(1)
 
+  // Watch for URL query changes
   watch(
     () => route.query.page,
     (newPage) => {
-      if (!newPage) return
+      const pageNumber = Number(newPage)
 
-      const pageNumber = Number(newPage) || 1
+      if (!newPage || isNaN(pageNumber)) {
+        page.value = 1
+        return
+      }
 
-      if (pageNumber > lastPage.value) page.value = lastPage.value
-
-      page.value = Math.max(1, pageNumber)
-    }
+      page.value = clampPageNumber(pageNumber)
+    },
+    { immediate: true }
   )
 
-  // Optional computed if you want derived state, not necessary
+  // Derived states
   const isOnLastPage = computed(() => page.value === lastPage.value)
+  const isOnFirstPage = computed(() => page.value === 1)
+  const hasNextPage = computed(() => page.value < lastPage.value)
+  const hasPreviousPage = computed(() => page.value > 1)
 
-  const setPage = (newPage: number) => {
-    page.value = Math.max(1, Math.min(newPage, lastPage.value))
+  // Helper function to ensure page number is within valid range
+  const clampPageNumber = (num: number): number => {
+    return Math.max(1, Math.min(num, lastPage.value))
   }
 
-  const setLastPage = (newLastPage: number) => {
-    lastPage.value = newLastPage
+  const setPage = (newPage: number): void => {
+    if (newPage <= 0) throw new Error('Page number must be positive')
+    page.value = clampPageNumber(newPage)
+  }
 
-    if (page.value > lastPage.value) page.value = lastPage.value
+  const setLastPage = (newLastPage: number): void => {
+    if (newLastPage <= 0) throw new Error('Last page must be positive')
+    lastPage.value = newLastPage
+    page.value = clampPageNumber(page.value)
   }
 
   return {
-    //? Props
+    // State
     page,
     lastPage,
 
-    //* Getters
+    // Getters
     isOnLastPage,
+    isOnFirstPage,
+    hasNextPage,
+    hasPreviousPage,
 
-    //! Actions
+    // Actions
     setPage,
     setLastPage
   }
