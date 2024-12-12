@@ -22,7 +22,7 @@ export const useUpsertCustomer = () => {
     onSuccess: (data) => {
       queryClient.setQueryData(['customer', { code: data.code }], data)
 
-      const message = data.id ? t('shared.messages.updated', [data.code]) : t('shared.messages.created', [data.code])
+      const message = data.id ? t('shared.messages.updated', [data.name]) : t('shared.messages.created', [data.name])
       showSuccess({ detail: message })
 
       router.replace({ name: 'customer.detail', params: { code: data.code } })
