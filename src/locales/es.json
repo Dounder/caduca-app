@@ -1,5 +1,20 @@
 {
   "shared": {
+    "actions": {
+      "new": "Nuevo",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "restore": "Restaurar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "back": "Regresar",
+      "refresh": "Actualizar",
+      "export": "Exportar",
+      "search": "Buscar",
+      "options": "Opciones",
+      "copy": "Copiar"
+    },
     "toast": {
       "success": { "summary": "Éxito", "detail": "Contenido del mensaje" },
       "info": { "summary": "Información", "detail": "Contenido del mensaje" },
@@ -7,6 +22,21 @@
       "error": { "summary": "Error", "detail": "Contenido del mensaje" },
       "secondary": { "summary": "Mensaje secundario", "detail": "Contenido del mensaje" },
       "contrast": { "summary": "Mensaje de contraste", "detail": "Contenido del mensaje" }
+    },
+    "messages": {
+      "success": "Operación exitosa",
+      "deleted": "{0} eliminado exitosamente",
+      "restored": "{0} restaurado exitosamente",
+      "updated": "{0} actualizado exitosamente",
+      "created": "{0} creado exitosamente",
+      "saved": "{0} guardado exitosamente",
+      "error": "Operación fallida",
+      "additionalInfo": "Información adicional"
+    },
+    "fields": {
+      "createdBy": "Creado por",
+      "updatedBy": "Actualizado por",
+      "deletedBy": "Eliminado por"
     }
   },
   "auth": {
@@ -23,5 +53,91 @@
   "home": {
     "title": "Inicio",
     "welcome": "Bienvenido a la página de inicio"
+  },
+  "user": {
+    "title": "Usuarios",
+    "table": {
+      "id": "ID",
+      "username": "Usuario",
+      "email": "Email",
+      "createdAt": "Creado",
+      "updatedAt": "Actualizado",
+      "deletedAt": "Eliminado",
+      "createdBy": "Creado por",
+      "roles": "Roles",
+      "updatedBy": "Actualizado por",
+      "deletedBy": "Eliminado por",
+      "password": "Contraseña"
+    },
+    "roles": {
+      "cm3rmdiwl00010clfbut56c4r": "Administrador",
+      "cm3rmdiwl00020clf179p5y92": "Gerente",
+      "cm3rmdiwm00030clf2sw508so": "Empleado",
+      "cm3rmdiwm00040clf27ymcarm": "Desarrollador",
+      "cm3rmdiwm00050clffszl8rox": "Vendedor",
+      "cm3rmdiwm00060clfg8032oef": "Cliente",
+      "cm3rmdiwm00070clf3w8288g4": "Bodega",
+      "Admin": "Administrador",
+      "Manager": "Gerente",
+      "Staff": "Empleado",
+      "Developer": "Desarrollador",
+      "Salesperson": "Vendedor",
+      "Customer": "Cliente",
+      "Warehouse": "Bodega"
+    }
+  },
+  "customer": {
+    "title": "Clientes",
+    "table": {
+      "id": "ID",
+      "code": "Código",
+      "name": "Nombre",
+      "address": "Dirección",
+      "createdAt": "Creado",
+      "updatedAt": "Actualizado",
+      "deletedAt": "Eliminado",
+      "createdBy": "Creado por",
+      "updatedBy": "Actualizado por",
+      "deletedBy": "Eliminado por"
+    }
+  },
+  "salesperson": {
+    "title": "Vendedores",
+    "table": {
+      "id": "ID",
+      "code": "Código",
+      "name": "Nombre",
+      "createdAt": "Creado",
+      "updatedAt": "Actualizado",
+      "deletedAt": "Eliminado",
+      "createdBy": "Creado por",
+      "updatedBy": "Actualizado por",
+      "deletedBy": "Eliminado por"
+    }
+  },
+  "navbar": {
+    "home": "Inicio",
+    "directory": "Directorio",
+    "user": "Usuarios",
+    "customer": "Clientes",
+    "salesperson": "Vendedores",
+    "logout": "Cerrar sesión",
+    "preferences": "Preferencias"
+  },
+  "preferences": {
+    "title": "Preferencias",
+    "lang": "Idioma preferido",
+    "en": "Inglés",
+    "es": "Español",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "error": {
+    "404": "No se pudo encontrar el recurso solicitado",
+    "500": "Error interno del servidor, por favor contacte al administrador",
+    "400": "Solicitud incorrecta, por favor verifique los datos ingresados",
+    "401": "No autorizado, por favor inicie sesión para acceder al recurso",
+    "403": "Prohibido, no tiene permisos para acceder al recurso"
   }
 }

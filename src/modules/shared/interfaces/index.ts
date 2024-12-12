@@ -1,1 +1,5 @@
-export * from './api-response.interface'
+export * from './api.interface'
+export * from './audit.interface'
+export * from './pagination.interface'
+export * from './select-option.interface'
+export * from './table.interface'

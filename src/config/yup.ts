@@ -9,7 +9,9 @@ yup.setLocale({
     notOneOf: 'No debe ser uno de los siguientes valores: ${values}',
     defined: 'Debe estar definido',
     notNull: 'No puede ser nulo',
-    notType: 'Debe ser de tipo ${type}'
+    notType: ({ type, value }) => {
+      return `Debe ser de tipo ${type}, pero el valor actual es ${value}`
+    }
   },
   string: {
     length: 'Debe tener exactamente ${length} caracteres',
@@ -17,6 +19,7 @@ yup.setLocale({
     max: 'Debe tener como máximo ${max} caracteres',
     email: 'Debe ser un correo electrónico válido',
     url: 'Debe ser una URL válida',
+    uuid: 'Debe ser un UUID válido',
     trim: 'No debe contener espacios al inicio o al final',
     lowercase: 'Debe estar en minúsculas',
     uppercase: 'Debe estar en mayúsculas',
@@ -37,6 +40,13 @@ yup.setLocale({
   },
   array: {
     min: 'Debe tener al menos ${min} elementos',
-    max: 'Debe tener como máximo ${max} elementos'
+    max: 'Debe tener como máximo ${max} elementos',
+    length: 'Debe tener exactamente ${length} elementos'
+  },
+  boolean: {
+    isValue: 'Debe ser ${value}'
+  },
+  object: {
+    noUnknown: 'No se permiten claves no definidas en la validación'
   }
 })

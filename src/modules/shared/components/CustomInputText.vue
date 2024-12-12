@@ -1,45 +1,44 @@
 <script setup lang="ts">
+import { useAttrs } from 'vue'
+
 interface Props {
   disabled?: boolean
   error?: string
   id: string
   label?: string
   modelValue?: string
-  placeholder?: string
-  size?: 'large' | 'small'
-  variant?: 'outlined' | 'filled'
   loading?: boolean
   invalid?: boolean
   autofocus?: boolean
 }
-
 defineProps<Props>()
+defineEmits(['update:modelValue', 'blur', 'change', 'input'])
 
-defineEmits(['update:modelValue', 'blur'])
+const attrs = useAttrs()
+const klass = attrs.class
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <label v-if="label" :for="id">{{ label }}</label>
-    <InputText
-      :id="id"
-      :model-value="modelValue"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value || '')"
-      @blur="$emit('blur')"
-      :aria-describedby="`${id}-help`"
-      :invalid="invalid || Boolean(error)"
-      :placeholder="placeholder"
-      :size="size"
-      :variant="variant"
-      fluid
-      :disabled="disabled"
-      :loading="loading"
-      :autofocus="autofocus"
-    />
-    <transition name="p-message" tag="div" class="flex flex-col">
+  <article :class="klass">
+    <FloatLabel variant="in">
+      <InputText
+        :id="id"
+        :model-value="modelValue"
+        @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value || '')"
+        @blur="$emit('blur')"
+        :invalid="invalid || Boolean(error)"
+        :disabled="disabled"
+        :loading="loading"
+        :autofocus="autofocus"
+        size="large"
+        fluid
+      />
+      <label v-if="label" :for="id">{{ label }}</label>
+    </FloatLabel>
+    <transition name="p-message" tag="div" class="flex flex-col mt-2">
       <Message v-if="error" severity="error">{{ error }}</Message>
     </transition>
-  </div>
+  </article>
 </template>
 
 <style scoped>

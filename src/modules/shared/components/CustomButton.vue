@@ -2,25 +2,22 @@
 import type { ButtonProps } from 'primevue/button'
 import { useConfigStore } from '../stores/config.store'
 import { storeToRefs } from 'pinia'
+import { useAttrs } from 'vue'
 
 interface Props {
-  className?: string
   label?: string
   severity?: ButtonProps['severity']
-  outlined?: boolean
   fluid?: boolean
   icon?: string
   iconPos?: 'left' | 'right' | 'top' | 'bottom'
   iconClass?: string
-  text?: boolean
-  plain?: boolean
   disabled?: boolean
   loading?: boolean
   loadingIcon?: string
   type?: ButtonProps['type']
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   className: '',
   severity: 'primary',
   outlined: false,
@@ -32,25 +29,26 @@ defineEmits(['click'])
 
 const configStore = useConfigStore()
 const { darkTheme } = storeToRefs(configStore)
+const attrs = useAttrs()
+const klass = attrs.class
 </script>
 
 <template>
   <Button
-    :outlined="darkTheme ? true : undefined"
+    :outlined="!darkTheme ? true : false"
+    :text="darkTheme ? true : false"
     :label="label"
     :severity="severity"
     :fluid="fluid"
     :icon="icon"
     :iconPos="iconPos"
-    :text="text"
-    :plain="plain"
     :disabled="disabled"
     :loading="loading"
     :loadingIcon="loadingIcon"
     :type="type"
-    :class="className"
+    :class="klass"
     :iconClass="`!${iconClass}`"
-    @click="$emit('click')"
+    @click="$emit('click', $event)"
   />
 </template>
 

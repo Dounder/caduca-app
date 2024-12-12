@@ -11,16 +11,16 @@ const items = getMenuOptions(userRoles.value || [])
 </script>
 
 <template>
-  <Menubar :model="items" class="dark:bg-dark-950">
+  <Menubar :model="items" class="flex-shrink-0 h-16 dark:bg-dark-950">
     <template #item="{ item, props, hasSubmenu, root }">
       <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
         <a v-ripple :href="href" v-bind="props.action" @click="navigate">
-          <span :class="[item.icon, 'p-2']" />
+          <span v-if="item.icon" :class="[item.icon, 'p-2']" />
           <span v-if="item.label">{{ item.label }}</span>
         </a>
       </router-link>
       <a v-else v-ripple class="flex items-center" v-bind="props.action">
-        <span :class="[item.icon, 'p-2']" />
+        <span v-if="item.icon" :class="[item.icon, 'p-2']" />
         <span v-if="item.label">{{ item.label }}</span>
         <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
         <span

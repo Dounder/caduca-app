@@ -1,3 +1,4 @@
+// Import PrimeVue and other libraries
 import 'primeicons/primeicons.css'
 import './assets/main.css'
 
@@ -10,20 +11,23 @@ import Tooltip from 'primevue/tooltip'
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 
+// Import your App and configurations
 import App from './App.vue'
 import Aura from './config/app.theme'
+
+// Import the Yup configuration
 import './config/yup'
-import en from './locales/en.json'
-import es from './locales/es.json'
+
+// Import locales for i18n
+import i18n from '@/locales/i18n'
+
+// Import router
 import router from './router'
 
+// Create the Vue app
 const app = createApp(App)
-const i18n = createI18n({
-  locale: 'es',
-  fallbackLocale: 'en',
-  messages: { en, es }
-})
 
+// Configure the Vue app
 app.use(i18n)
 app.use(createPinia())
 app.use(router)
@@ -36,4 +40,5 @@ app.use(ToastService)
 app.directive('focustrap', FocusTrap)
 app.directive('tooltip', Tooltip)
 
+// Mount the app to the DOM
 app.mount('#app')

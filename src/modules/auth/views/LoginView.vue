@@ -10,6 +10,7 @@ import CustomInputPassword from '@shared/components/CustomInputPassword.vue'
 import CustomInputText from '@shared/components/CustomInputText.vue'
 import { loginSchema } from '../schemas'
 import { useAuthStore } from '../store/auth.store'
+import CustomCard from '@/modules/shared/components/CustomCard.vue'
 
 const { t } = useI18n()
 const { showSuccess, showError } = useNotification()
@@ -47,34 +48,29 @@ const onSubmit = handleSubmit(async ({ username, password }, { resetForm }) => {
 <template>
   <div class="max-w-[30rem] h-full mx-auto flex items-center flex-col justify-center">
     <h1 class="font-bold text-center text-2xl mb-5">Logo</h1>
-    <Card class="w-full dark:bg-gray-950 border dark:border-gray-700">
-      <template #title>
-        <div class="text-center">{{ t('auth.login.title') }}</div>
-      </template>
-      <template #content>
-        <form @submit="onSubmit" class="flex flex-col gap-6" v-focustrap>
-          <CustomInputText
-            id="username"
-            :label="t('auth.login.username')"
-            v-model="username"
-            v-bind="usernameAttrs"
-            :error="errors.username"
-            autofocus
-          />
-          <CustomInputPassword
-            id="password"
-            :label="t('auth.login.password')"
-            type="password"
-            v-model="password"
-            v-bind="passwordAttrs"
-            :error="errors.password"
-          />
-          <CustomButton type="submit" :label="t('auth.login.submit')" class="mt-4" fluid />
-          <transition name="p-message" tag="div" class="flex flex-col">
-            <Message v-if="error" severity="error">{{ error }}</Message>
-          </transition>
-        </form>
-      </template>
-    </Card>
+    <CustomCard class="w-full">
+      <h4 class="text-center text-2xl mb-6">{{ t('auth.login.title') }}</h4>
+      <form @submit="onSubmit" class="flex flex-col gap-6" v-focustrap>
+        <CustomInputText
+          id="username"
+          :label="t('auth.login.username')"
+          v-model="username"
+          v-bind="usernameAttrs"
+          :error="errors.username"
+          autofocus
+        />
+        <CustomInputPassword
+          id="password"
+          :label="t('auth.login.password')"
+          v-model="password"
+          v-bind="passwordAttrs"
+          :error="errors.password"
+        />
+        <CustomButton type="submit" :label="t('auth.login.submit')" class="mt-4" fluid />
+        <transition name="p-message" tag="div" class="flex flex-col">
+          <Message v-if="error" severity="error">{{ error }}</Message>
+        </transition>
+      </form>
+    </CustomCard>
   </div>
 </template>

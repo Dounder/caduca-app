@@ -6,41 +6,38 @@ import { ref } from 'vue'
 
 import { useAuthStore } from '@/modules/auth/store/auth.store'
 import { storeToRefs } from 'pinia'
-import ToggleThemeBtn from './ToggleThemeBtn.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
-const menu = ref<MenuMethods | null>(null)
 
+const menu = ref<MenuMethods | null>(null)
 const toggle = (evt: MouseEvent) => menu.value?.toggle(evt)
 
 const items = ref<MenuItem[]>([
   { separator: true },
   {
-    label: 'Configuración',
-    items: [
-      { label: 'Notificaciones', icon: icons.INBOX, badge: 2 },
-      {
-        label: 'Cerrar Sesión',
-        icon: icons.SIGN_OUT,
-        command: () => authStore.logout(true)
-      }
-    ]
+    label: t('navbar.preferences'),
+    icon: icons.COG,
+    route: { name: 'home.preferences', params: { username: user.value?.username } }
+  },
+  {
+    label: t('navbar.logout'),
+    icon: icons.SIGN_OUT,
+    command: () => authStore.logout(true)
   }
 ])
 </script>
 
 <template>
-  <ToggleThemeBtn />
   <Button :icon="icons.COG" @click="toggle" text plain />
   <Menu ref="menu" id="overlay_menu" :model="items" :popup="true">
     <template #start>
-      <span
-        class="relative overflow-hidden w-full border-0 bg-transparent flex flex-col items-start p-4 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors duration-200"
-      >
-        <span class="font-bold">@{{ user?.username }}</span>
-        <span class="text-sm">{{ user?.roles.map(({ name }) => name).join(', ') }}</span>
-      </span>
+      <div class="tile">
+        <span class="font-bold">{{ user?.username }}</span>
+        <span class="text-sm">{{ user?.roles.map((role) => role.name).join(', ') }}</span>
+      </div>
     </template>
     <template #item="{ item, props }">
       <router-link
@@ -73,4 +70,8 @@ const items = ref<MenuItem[]>([
   </Menu>
 </template>
 
-<style scoped></style>
+<style scoped>
+.tile {
+  @apply relative overflow-hidden w-full border-0 bg-transparent flex flex-col items-start justify-between p-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200;
+}
+</style>

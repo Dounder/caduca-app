@@ -1,5 +1,20 @@
 {
   "shared": {
+    "actions": {
+      "new": "New",
+      "edit": "Edit",
+      "delete": "Delete",
+      "restore": "Restore",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close",
+      "back": "Back",
+      "refresh": "Refresh",
+      "export": "Export",
+      "search": "Search",
+      "options": "Options",
+      "copy": "Copy"
+    },
     "toast": {
       "success": { "summary": "Success", "detail": "Message content" },
       "info": { "summary": "Info", "detail": "Message content" },
@@ -7,6 +22,21 @@
       "error": { "summary": "Error", "detail": "Message content" },
       "secondary": { "summary": "Secondary", "detail": "Message content" },
       "contrast": { "summary": "Contrast", "detail": "Message content" }
+    },
+    "messages": {
+      "success": "Operation successful",
+      "deleted": "{0} deleted successfully",
+      "restored": "{0} restored successfully",
+      "updated": "{0} updated successfully",
+      "created": "{0} created successfully",
+      "saved": "{0} saved successfully",
+      "error": "Operation failed",
+      "additionalInfo": "Additional information"
+    },
+    "fields": {
+      "createdBy": "Created by",
+      "updatedBy": "Updated by",
+      "deletedBy": "Deleted by"
     }
   },
   "auth": {
@@ -23,5 +53,91 @@
   "home": {
     "title": "Home",
     "welcome": "Welcome to the Home page"
+  },
+  "user": {
+    "title": "Users",
+    "table": {
+      "id": "ID",
+      "username": "Username",
+      "email": "Email",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "deletedAt": "Deleted At",
+      "createdBy": "Created By",
+      "roles": "Roles",
+      "updatedBy": "Updated By",
+      "deletedBy": "Deleted By",
+      "password": "Password"
+    },
+    "roles": {
+      "cm3rmdiwl00010clfbut56c4r": "Administrator",
+      "cm3rmdiwl00020clf179p5y92": "Manager",
+      "cm3rmdiwm00030clf2sw508so": "Staff",
+      "cm3rmdiwm00040clf27ymcarm": "Developer",
+      "cm3rmdiwm00050clffszl8rox": "Salesperson",
+      "cm3rmdiwm00060clfg8032oef": "Customer",
+      "cm3rmdiwm00070clf3w8288g4": "Warehouse",
+      "Admin": "Administrator",
+      "Manager": "Manager",
+      "Staff": "Staff",
+      "Developer": "Developer",
+      "Salesperson": "Salesperson",
+      "Customer": "Customer",
+      "Warehouse": "Warehouse"
+    }
+  },
+  "customer": {
+    "title": "Customers",
+    "table": {
+      "id": "ID",
+      "code": "Code",
+      "name": "Name",
+      "address": "Address",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "deletedAt": "Deleted At",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "deletedBy": "Deleted By"
+    }
+  },
+  "salesperson": {
+    "title": "Salespersons",
+    "table": {
+      "id": "ID",
+      "code": "Code",
+      "name": "Name",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "deletedAt": "Deleted At",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "deletedBy": "Deleted By"
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "directory": "Directory",
+    "user": "Users",
+    "customer": "Customers",
+    "salesperson": "Salespersons",
+    "logout": "Logout",
+    "preferences": "Preferences"
+  },
+  "preferences": {
+    "title": "Preferences",
+    "lang": "Preferred Language",
+    "en": "English",
+    "es": "Spanish",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "error": {
+    "404": "The resource you are looking for could not be found",
+    "500": "Internal server error, please contact the administrator",
+    "400": "Bad request, please check the input data",
+    "401": "Unauthorized, please login to access the resource",
+    "403": "Forbidden, you do not have permission to access the resource"
   }
 }
