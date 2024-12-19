@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { PrimeIcons as icons } from '@primevue/core/api'
 
 import { generateAuditItemList } from '@/modules/shared'
 import CustomButton from '@/modules/shared/components/CustomButton.vue'
@@ -8,6 +9,8 @@ import CustomInputText from '@/modules/shared/components/CustomInputText.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import RecordAuditInfo from '@/modules/shared/components/RecordAuditInfo.vue'
 import { useProduct, useProductDeletion, useProductUpsert } from '../composables'
+import ProductCodes from '../components/ProductCodes.vue'
+import { useProductCodeCreation } from '@/modules/product-codes'
 
 interface Props {
   slug: string
@@ -19,13 +22,21 @@ const { t } = useI18n()
 const { product, form, errors, canSave, isDeleted, isFetching, handleSubmit, refetch } = useProduct(slug)
 const { deletionMutation, isPending: deletionPending } = useProductDeletion()
 const { upsertMutation, isPending: upsertPending } = useProductUpsert()
-const isPending = computed(() => isFetching.value || upsertPending.value || deletionPending.value)
+const { productCodeMutation, isPending: productCodePending } = useProductCodeCreation()
+
+const isPending = computed(
+  () => isFetching.value || upsertPending.value || deletionPending.value || productCodePending.value
+)
 
 const onDelete = () => {
   if (!product.value) return
   deletionMutation({ id: product.value.id, isDeleted: isDeleted.value })
 }
 const onSubmit = handleSubmit(async (values) => upsertMutation(values))
+const onNewCode = () => {
+  if (!product.value) return
+  productCodeMutation(product.value.id)
+}
 </script>
 
 <template>
@@ -48,6 +59,8 @@ const onSubmit = handleSubmit(async (values) => upsertMutation(values))
         class="col-span-12"
         autofocus
       />
+
+      <ProductCodes :codes="product.codes" @add:code="onNewCode" />
 
       <div class="col-span-12 flex justify-end">
         <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />

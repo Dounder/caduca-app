@@ -151,6 +151,10 @@
       "codes": "Códigos",
       "name": "Nombre",
       "noCodes": "Sin códigos"
+    },
+    "actions": {
+      "addCode": "Agregar código",
+      "removeCode": "Eliminar código"
     }
   }
 }
