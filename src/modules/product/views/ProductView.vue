@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { PrimeIcons as icons } from '@primevue/core/api'
 
+import { useProductCodeCreation } from '@/modules/product-codes'
 import { generateAuditItemList } from '@/modules/shared'
 import CustomButton from '@/modules/shared/components/CustomButton.vue'
 import CustomInputText from '@/modules/shared/components/CustomInputText.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import RecordAuditInfo from '@/modules/shared/components/RecordAuditInfo.vue'
-import { useProduct, useProductDeletion, useProductUpsert } from '../composables'
 import ProductCodes from '../components/ProductCodes.vue'
-import { useProductCodeCreation } from '@/modules/product-codes'
+import { useProduct, useProductDeletion, useProductUpsert } from '../composables'
 
 interface Props {
   slug: string
@@ -43,9 +42,9 @@ const onNewCode = () => {
   <DetailPageCard
     class="max-w-[70rem] mx-auto"
     :deleted="isDeleted"
-    :back-route="{ name: 'customer.list' }"
+    :back-route="{ name: 'product.list' }"
     :loading="isPending"
-    @on:new="$router.push({ name: 'customer.detail', params: { username: 'nuevo' } })"
+    @on:new="$router.push({ name: 'product.detail', params: { slug: 'nuevo' } })"
     @on:delete="onDelete"
     @on:refresh="refetch"
   >
