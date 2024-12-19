@@ -19,7 +19,7 @@ export interface AuditTrailDataPlain {
   createdAt: string | null
   updatedAt: string | null
   deletedAt: string | null
-  createdBy: string | null
+  createdBy?: string | null
   updatedBy?: string | null
   deletedBy?: string | null
 }

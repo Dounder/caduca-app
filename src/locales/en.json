@@ -34,10 +34,39 @@
       "additionalInfo": "Additional information"
     },
     "fields": {
-      "createdBy": "Created by",
-      "updatedBy": "Updated by",
-      "deletedBy": "Deleted by"
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "deletedAt": "Deleted At",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "deletedBy": "Deleted By"
     }
+  },
+  "navbar": {
+    "home": "Home",
+    "directory": "Directory",
+    "user": "Users",
+    "customer": "Customers",
+    "salesperson": "Salespersons",
+    "logout": "Logout",
+    "preferences": "Preferences",
+    "products": "Products"
+  },
+  "preferences": {
+    "title": "Preferences",
+    "lang": "Preferred Language",
+    "en": "English",
+    "es": "Spanish",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "error": {
+    "404": "The resource you are looking for could not be found",
+    "500": "Internal server error, please contact the administrator",
+    "400": "Bad request, please check the input data",
+    "401": "Unauthorized, please login to access the resource",
+    "403": "Forbidden, you do not have permission to access the resource"
   },
   "auth": {
     "login": {
@@ -115,29 +144,17 @@
       "deletedBy": "Deleted By"
     }
   },
-  "navbar": {
-    "home": "Home",
-    "directory": "Directory",
-    "user": "Users",
-    "customer": "Customers",
-    "salesperson": "Salespersons",
-    "logout": "Logout",
-    "preferences": "Preferences"
-  },
-  "preferences": {
-    "title": "Preferences",
-    "lang": "Preferred Language",
-    "en": "English",
-    "es": "Spanish",
-    "theme": "Theme",
-    "light": "Light",
-    "dark": "Dark"
-  },
-  "error": {
-    "404": "The resource you are looking for could not be found",
-    "500": "Internal server error, please contact the administrator",
-    "400": "Bad request, please check the input data",
-    "401": "Unauthorized, please login to access the resource",
-    "403": "Forbidden, you do not have permission to access the resource"
+  "product": {
+    "title": "Products",
+    "table": {
+      "id": "ID",
+      "codes": "Codes",
+      "name": "Name",
+      "noCodes": "No Codes"
+    },
+    "actions": {
+      "addCode": "Add Code",
+      "removeCode": "Remove Code"
+    }
   }
 }

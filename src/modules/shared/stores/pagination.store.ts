@@ -18,7 +18,7 @@ export const usePaginationStore = defineStore('pagination', () => {
         return
       }
 
-      page.value = clampPageNumber(pageNumber)
+      page.value = clampPageNumber(pageNumber, lastPage.value)
     },
     { immediate: true }
   )
@@ -29,20 +29,15 @@ export const usePaginationStore = defineStore('pagination', () => {
   const hasNextPage = computed(() => page.value < lastPage.value)
   const hasPreviousPage = computed(() => page.value > 1)
 
-  // Helper function to ensure page number is within valid range
-  const clampPageNumber = (num: number): number => {
-    return Math.max(1, Math.min(num, lastPage.value))
-  }
-
   const setPage = (newPage: number): void => {
     if (newPage <= 0) throw new Error('Page number must be positive')
-    page.value = clampPageNumber(newPage)
+    page.value = clampPageNumber(newPage, lastPage.value)
   }
 
   const setLastPage = (newLastPage: number): void => {
     if (newLastPage <= 0) throw new Error('Last page must be positive')
     lastPage.value = newLastPage
-    page.value = clampPageNumber(page.value)
+    page.value = clampPageNumber(page.value, lastPage.value)
   }
 
   return {
@@ -61,3 +56,8 @@ export const usePaginationStore = defineStore('pagination', () => {
     setLastPage
   }
 })
+
+// Helper function to ensure page number is within valid range
+const clampPageNumber = (num: number, lastPage: number): number => {
+  return Math.max(1, Math.min(num, lastPage))
+}

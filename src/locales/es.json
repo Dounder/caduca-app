@@ -34,10 +34,39 @@
       "additionalInfo": "Información adicional"
     },
     "fields": {
+      "createdAt": "Creado",
+      "updatedAt": "Actualizado",
+      "deletedAt": "Eliminado",
       "createdBy": "Creado por",
       "updatedBy": "Actualizado por",
       "deletedBy": "Eliminado por"
     }
+  },
+  "navbar": {
+    "home": "Inicio",
+    "directory": "Directorio",
+    "user": "Usuarios",
+    "customer": "Clientes",
+    "salesperson": "Vendedores",
+    "logout": "Cerrar sesión",
+    "preferences": "Preferencias",
+    "products": "Productos"
+  },
+  "preferences": {
+    "title": "Preferencias",
+    "lang": "Idioma preferido",
+    "en": "Inglés",
+    "es": "Español",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "error": {
+    "404": "No se pudo encontrar el recurso solicitado",
+    "500": "Error interno del servidor, por favor contacte al administrador",
+    "400": "Solicitud incorrecta, por favor verifique los datos ingresados",
+    "401": "No autorizado, por favor inicie sesión para acceder al recurso",
+    "403": "Prohibido, no tiene permisos para acceder al recurso"
   },
   "auth": {
     "login": {
@@ -115,29 +144,17 @@
       "deletedBy": "Eliminado por"
     }
   },
-  "navbar": {
-    "home": "Inicio",
-    "directory": "Directorio",
-    "user": "Usuarios",
-    "customer": "Clientes",
-    "salesperson": "Vendedores",
-    "logout": "Cerrar sesión",
-    "preferences": "Preferencias"
-  },
-  "preferences": {
-    "title": "Preferencias",
-    "lang": "Idioma preferido",
-    "en": "Inglés",
-    "es": "Español",
-    "theme": "Tema",
-    "light": "Claro",
-    "dark": "Oscuro"
-  },
-  "error": {
-    "404": "No se pudo encontrar el recurso solicitado",
-    "500": "Error interno del servidor, por favor contacte al administrador",
-    "400": "Solicitud incorrecta, por favor verifique los datos ingresados",
-    "401": "No autorizado, por favor inicie sesión para acceder al recurso",
-    "403": "Prohibido, no tiene permisos para acceder al recurso"
+  "product": {
+    "title": "Productos",
+    "table": {
+      "id": "ID",
+      "codes": "Códigos",
+      "name": "Nombre",
+      "noCodes": "Sin códigos"
+    },
+    "actions": {
+      "addCode": "Agregar código",
+      "removeCode": "Eliminar código"
+    }
   }
 }
