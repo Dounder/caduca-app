@@ -50,7 +50,8 @@
     "salesperson": "Vendedores",
     "logout": "Cerrar sesión",
     "preferences": "Preferencias",
-    "products": "Productos"
+    "products": "Productos",
+    "expiredVouchers": "Vales vencidos"
   },
   "preferences": {
     "title": "Preferencias",

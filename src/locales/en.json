@@ -50,7 +50,8 @@
     "salesperson": "Salespersons",
     "logout": "Logout",
     "preferences": "Preferences",
-    "products": "Products"
+    "products": "Products",
+    "expiredVouchers": "Expired Vouchers"
   },
   "preferences": {
     "title": "Preferences",
