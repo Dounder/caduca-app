@@ -31,7 +31,8 @@
       "created": "{0} creado exitosamente",
       "saved": "{0} guardado exitosamente",
       "error": "Operación fallida",
-      "additionalInfo": "Información adicional"
+      "additionalInfo": "Información adicional",
+      "noData": "No hay datos para mostrar"
     },
     "fields": {
       "createdAt": "Creado",
@@ -156,6 +157,18 @@
     "actions": {
       "addCode": "Agregar código",
       "removeCode": "Eliminar código"
+    }
+  },
+  "voucher": {
+    "title": "Vales",
+    "fields": {
+      "id": "ID",
+      "number": "Número",
+      "approvedDate": "Fecha de aprobación",
+      "rejectedDate": "Fecha de rechazo",
+      "customer": "Cliente",
+      "status": "Estado",
+      "returnType": "Tipo de devolución"
     }
   }
 }

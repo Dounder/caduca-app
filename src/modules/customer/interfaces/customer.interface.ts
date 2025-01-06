@@ -25,3 +25,9 @@ export interface CustomerTable {
   updatedBy?: string | null
   deletedBy?: string | null
 }
+
+export interface CustomerSummary {
+  id: string
+  code: number
+  name: string
+}

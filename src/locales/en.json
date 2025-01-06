@@ -31,7 +31,8 @@
       "created": "{0} created successfully",
       "saved": "{0} saved successfully",
       "error": "Operation failed",
-      "additionalInfo": "Additional information"
+      "additionalInfo": "Additional information",
+      "noData": "No data available"
     },
     "fields": {
       "createdAt": "Created At",
@@ -156,6 +157,18 @@
     "actions": {
       "addCode": "Add Code",
       "removeCode": "Remove Code"
+    }
+  },
+  "voucher": {
+    "title": "Expired Vouchers",
+    "fields": {
+      "id": "ID",
+      "number": "Number",
+      "approvedDate": "Approved Date",
+      "rejectedDate": "Rejected Date",
+      "customer": "Customer",
+      "status": "Status",
+      "returnType": "Return Type"
     }
   }
 }

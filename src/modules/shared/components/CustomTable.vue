@@ -8,7 +8,7 @@ import BottomPagination from './BottomPagination.vue'
 import TableSearchBar from './TableSearchBar.vue'
 
 interface Props {
-  options: SelectOption[]
+  options?: SelectOption[]
   data: any[]
   loading: boolean
 }
@@ -72,6 +72,13 @@ const authStore = useAuthStore()
 
     <template #paginatorcontainer>
       <BottomPagination />
+    </template>
+
+    <template #empty>
+      <div class="flex flex-col items-center justify-center h-[200px]">
+        <i class="pi pi-folder-open text-4xl text-gray-400" />
+        <p class="text-gray-400">{{ t('shared.messages.noData') }}</p>
+      </div>
     </template>
   </DataTable>
 </template>
