@@ -1,3 +1,4 @@
+import type { AuditTrailDataPlain } from '@/modules/shared'
 import type { UserAudit } from '@/modules/user'
 
 export interface Customer {
@@ -13,17 +14,10 @@ export interface Customer {
   deletedBy?: UserAudit | null
 }
 
-export interface CustomerTable {
-  id: string
+export interface CustomerTable extends AuditTrailDataPlain {
   code: number
   name: string
   address: string
-  createdAt: string | null
-  updatedAt: string | null
-  deletedAt: string | null
-  createdBy: string | null
-  updatedBy?: string | null
-  deletedBy?: string | null
 }
 
 export interface CustomerSummary {

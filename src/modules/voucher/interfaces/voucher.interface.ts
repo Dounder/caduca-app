@@ -5,9 +5,9 @@ export interface Voucher extends AuditTrailData {
   number: number
   approvedDate: null | Date
   rejectedDate: null | Date
-  customer: CustomerSummary
-  status: VoucherStatusCatalog
-  returnType: VoucherStatusCatalog
+  customer: CustomerSummary | null
+  status: VoucherStatusCatalog | null
+  returnType: VoucherStatusCatalog | null
 }
 
 export interface VoucherPlain extends AuditTrailDataPlain {

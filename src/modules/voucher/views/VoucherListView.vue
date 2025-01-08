@@ -5,13 +5,17 @@ import { useVouchers } from '../composables'
 import ListPage from '@/modules/shared/components/ListPage.vue'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import { useAuthStore } from '@/modules/auth'
+import type { VoucherPlain } from '../interfaces'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const { t } = useI18n()
 const { loading, refetch, vouchers } = useVouchers()
 const authStore = useAuthStore()
 
-const onEdit = () => {
-  console.log('Edit')
+const onEdit = ({ number }: VoucherPlain, newTab: boolean) => {
+  const route = router.resolve({ name: 'voucher.detail', params: { number } })
+  newTab ? window.open(route.href, '_blank') : router.push(route)
 }
 const onDelete = () => {
   console.log('Delete')
@@ -21,7 +25,7 @@ const onDelete = () => {
 <template>
   <ListPage
     :title="t('voucher.title')"
-    @on:new="$router.push({ name: 'expired_voucher.detail', params: { id: 'nuevo' } })"
+    @on:new="$router.push({ name: 'voucher.detail', params: { number: 'nuevo' } })"
     @on:refresh="refetch"
   >
     <CustomTable :data="vouchers" :loading="loading || false" @on:edit="onEdit" @on:delete="onDelete">

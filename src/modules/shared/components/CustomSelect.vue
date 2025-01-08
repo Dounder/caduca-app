@@ -1,48 +1,45 @@
 <script setup lang="ts">
+import { ref, useAttrs } from 'vue'
+import type { SelectOption } from '../interfaces'
+
 interface Props {
   disabled?: boolean
   error?: string
   id: string
   label?: string
-  modelValue?: any
-  options?: { name: string; value: any }[]
-  placeholder?: string
-  scrollHeight?: string
-  variant?: 'outlined' | 'filled'
+  modelValue?: string
   loading?: boolean
+  invalid?: boolean
+  autofocus?: boolean
+  options: SelectOption[]
 }
+defineProps<Props>()
+defineEmits(['update:modelValue', 'blur', 'change', 'input'])
 
-withDefaults(defineProps<Props>(), {
-  scrollHeight: '15rem',
-  loading: false
-})
-defineEmits(['update:modelValue', 'blur'])
+const attrs = useAttrs()
+const klass = attrs.class
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <label v-if="label" :for="id">{{ label }}</label>
-    <Select
-      @change="$emit('update:modelValue', $event.value)"
-      @blur="$emit('blur')"
-      :modelValue="modelValue"
-      :options="options"
-      filter
-      optionLabel="name"
-      optionValue="value"
-      :placeholder="placeholder"
-      fluid
-      filterMatchMode="contains"
-      :invalid="Boolean(error)"
-      :disabled="disabled"
-      :variant="variant"
-      showClear
-      :id="id"
-      :aria-describedby="`${id}-help`"
-      :loading="loading"
-    />
-    <transition name="expand">
-      <small v-if="error" :id="`${id}-help`" class="text-red-500">{{ error }}</small>
+  <article :class="klass">
+    <FloatLabel variant="in">
+      <Select
+        :inputId="id"
+        :model-value="modelValue"
+        @change="$emit('change', $event)"
+        @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value || '')"
+        @blur="$emit('blur')"
+        :options="options"
+        option-label="name"
+        option-value="value"
+        fluid
+        :loading="loading"
+      />
+
+      <label v-if="label" :for="id">{{ label }}</label>
+    </FloatLabel>
+    <transition name="p-message" tag="div" class="flex flex-col mt-2">
+      <Message v-if="error" severity="error">{{ error }}</Message>
     </transition>
-  </div>
+  </article>
 </template>

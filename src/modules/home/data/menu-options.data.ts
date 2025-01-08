@@ -37,7 +37,7 @@ export const getMenuOptions = (userRoles: RoleItem[]) => {
     {
       label: t('navbar.expiredVouchers'),
       icon: icons.TICKET,
-      route: { name: 'expired_voucher.list' }
+      route: { name: 'voucher.list' }
     }
   ]
 

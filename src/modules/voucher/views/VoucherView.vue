@@ -1,0 +1,77 @@
+<script setup lang="ts">
+import { computed, toRefs } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+import { useCustomersSummary } from '@/modules/customer/composables'
+import CustomButton from '@/modules/shared/components/CustomButton.vue'
+import CustomInputNumber from '@/modules/shared/components/CustomInputNumber.vue'
+import CustomSelect from '@/modules/shared/components/CustomSelect.vue'
+import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
+import { useVoucherReturnType } from '@/modules/voucher-catalog'
+import { useVoucher } from '../composables'
+
+interface Props {
+  number: string
+}
+const props = defineProps<Props>()
+const { number } = toRefs(props)
+
+const { t } = useI18n()
+const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSubmit, meta } = useVoucher(number)
+const { customers, loading: customersLoading } = useCustomersSummary()
+const { returnTypes, loading: returnTypesLoading } = useVoucherReturnType()
+const isPending = computed(() => isFetching.value)
+
+const onSubmit = (evt: Event) => {
+  evt.preventDefault()
+  console.log('submit')
+}
+</script>
+
+<template>
+  <DetailPageCard
+    :loading="isPending"
+    :deleted="isDeleted"
+    :back-route="{ name: 'voucher.list' }"
+    @on:new="$router.push({ name: 'voucher.detail', params: { number: 'nuevo' } })"
+    @on:delete="undefined"
+    @on:refresh="refetch"
+  >
+    <form @submit="onSubmit" class="grid grid-cols-12 gap-4" v-focustrap v-if="voucher">
+      <CustomInputNumber
+        id="number"
+        v-model="voucher.number"
+        :label="t('voucher.fields.number')"
+        class="col-span-12 md:col-span-2"
+        disabled
+      />
+      <CustomSelect
+        id="customer"
+        v-model="form.customerId"
+        v-bind="form.customerIdAttrs"
+        :error="errors.customerId"
+        :options="customers"
+        :loading="customersLoading"
+        :label="t('voucher.fields.customer')"
+        class="col-span-12 md:col-span-5"
+        autofocus
+      />
+      <CustomSelect
+        id="returnType"
+        v-model="form.returnTypeId"
+        v-bind="form.returnTypeIdAttrs"
+        :error="errors.returnTypeId"
+        :options="returnTypes"
+        :loading="returnTypesLoading"
+        :label="t('voucher.fields.returnType')"
+        class="col-span-12 md:col-span-5"
+      />
+
+      <div class="col-span-12 flex justify-end">
+        <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
+      </div>
+    </form>
+  </DetailPageCard>
+</template>
+
+<style scoped></style>

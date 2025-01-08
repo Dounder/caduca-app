@@ -12,3 +12,8 @@ export interface DeletionToggle {
   id: string
   isDeleted: boolean
 }
+
+export interface CatalogResponse {
+  id: number
+  name: string
+}
