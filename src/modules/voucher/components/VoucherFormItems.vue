@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { PrimeIcons as icons } from '@primevue/core/api'
 import type { FieldEntry } from 'vee-validate'
-import { reactive } from 'vue'
+import { ref, useAttrs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import CustomButton from '@/modules/shared/components/CustomButton.vue'
-import CustomInputNumber from '@/modules/shared/components/CustomInputNumber.vue'
-import CustomInputText from '@/modules/shared/components/CustomInputText.vue'
-import CustomSelect from '@/modules/shared/components/CustomSelect.vue'
-import type { CreateVoucherItem } from '../interfaces'
 import { DateUtils } from '@/modules/shared'
+import CustomButton from '@/modules/shared/components/CustomButton.vue'
+import type { CreateVoucherItem } from '../interfaces'
+import VoucherItemDialog from './VoucherItemDialog.vue'
 
 interface Props {
   items: FieldEntry<CreateVoucherItem>[]
@@ -18,39 +16,60 @@ interface Props {
 const props = defineProps<Props>()
 
 const { t } = useI18n()
-const form = reactive({ quantity: 0, productId: '', expirationDate: '', observation: '' })
+const attrs = useAttrs()
+const showDialog = ref(false)
+
+const handleSave = (item: CreateVoucherItem) => {
+  console.log(item)
+}
 </script>
 
 <template>
-  <Fieldset :legend="t('voucher.items.title')">
-    <article class="flex flex-col">
-      <section class="grid grid-cols-12 gap-2 text-center">
-        <span class="col-span-2 flex justify-center items-center">{{ t('voucher.items.fields.quantity') }}</span>
-        <span class="col-span-6 flex justify-center items-center">{{ t('voucher.items.fields.product') }}</span>
-        <span class="col-span-2 flex justify-center items-center">{{ t('voucher.items.fields.expirationDate') }}</span>
-        <span class="col-span-2 flex justify-center items-center">{{ t('voucher.items.fields.observation') }}</span>
+  <DataTable
+    :value="items"
+    tableStyle="min-width: 50rem"
+    :class="attrs.class"
+    :paginator="true"
+    :rows="10"
+    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+    :rowsPerPageOptions="[5, 10, 25]"
+    currentPageReportTemplate="{first} a {last} de {totalRecords} items"
+    show-gridlines
+  >
+    <template #header>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <span class="text-xl font-bold">{{ t('voucher.items.title') }}</span>
+        <CustomButton
+          :icon="icons.PLUS"
+          icon-pos="right"
+          v-tooltip.top="t('shared.actions.new')"
+          @click="showDialog = true"
+        />
+      </div>
+    </template>
+    <Column :header="t('voucher.items.fields.quantity')">
+      <template #body="{ data }">
+        <span>{{ data.value.quantity }}</span>
+      </template>
+    </Column>
+    <Column :header="t('voucher.items.fields.product')">
+      <template #body="{ data }">
+        <span>{{ data.value.product }}</span>
+      </template>
+    </Column>
+    <Column :header="t('voucher.items.fields.expirationDate')">
+      <template #body="{ data }">
+        <span>{{ DateUtils.convertToMonthYear(data.value.expirationDate) }}</span>
+      </template>
+    </Column>
+    <Column :header="t('voucher.items.fields.observation')">
+      <template #body="{ data }">
+        <span>{{ data.value.observation }}</span>
+      </template>
+    </Column>
+  </DataTable>
 
-        <template v-for="(item, index) in items" :key="index">
-          <span class="col-span-2 truncate">{{ item.value.quantity }}</span>
-          <span class="col-span-6 truncate">{{ item.value.product }}</span>
-          <span class="col-span-2 truncate">{{ DateUtils.convertToMonthYear(item.value.expirationDate) }}</span>
-          <span class="col-span-2 truncate">{{ item.value.observation }}</span>
-        </template>
-      </section>
-      <section class="grid grid-cols-12 gap-2 text-center mt-4">
-        <CustomInputNumber id="quantity" v-model="form.quantity" class="col-span-2" />
-        <CustomSelect id="product" v-model="form.productId" :options="[]" class="col-span-6" />
-        <CustomSelect id="expirationDate" v-model="form.expirationDate" :options="[]" class="col-span-2" />
-        <CustomInputText id="observation" v-model="form.observation" :options="[]" class="col-span-2" />
-
-        <CustomButton class="col-span-2 col-start-11" :icon="icons.PLUS" :label="t('shared.actions.new')" />
-      </section>
-
-      <transition name="p-message" tag="div" class="flex flex-col mt-4">
-        <Message v-if="error" severity="error">{{ error }}</Message>
-      </transition>
-    </article>
-  </Fieldset>
+  <VoucherItemDialog v-model:visible="showDialog" @on:close="showDialog = false" @on:save="handleSave" />
 </template>
 
 <style scoped></style>
