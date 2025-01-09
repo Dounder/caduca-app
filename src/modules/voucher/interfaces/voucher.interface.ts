@@ -1,4 +1,5 @@
 import type { CustomerSummary } from '@/modules/customer/interfaces'
+import type { ProductCode } from '@/modules/product-codes'
 import type { AuditTrailData, AuditTrailDataPlain } from '@/modules/shared'
 
 export interface Voucher extends AuditTrailData {
@@ -8,6 +9,7 @@ export interface Voucher extends AuditTrailData {
   customer: CustomerSummary | null
   status: VoucherStatusCatalog | null
   returnType: VoucherStatusCatalog | null
+  items: VoucherItem[]
 }
 
 export interface VoucherPlain extends AuditTrailDataPlain {
@@ -23,4 +25,21 @@ export interface VoucherStatusCatalog {
   id: number
   name: string
   isActive: boolean
+}
+
+export interface VoucherItem {
+  id: string
+  expirationDate: Date
+  observation: string
+  received: boolean
+  quantity: number
+  productCode: ProductCode
+}
+
+export interface CreateVoucherItem {
+  product: string | null
+  expirationDate: Date
+  observation: string
+  quantity: number
+  productCode: ProductCode
 }

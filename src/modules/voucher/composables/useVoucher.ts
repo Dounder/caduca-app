@@ -4,7 +4,8 @@ import { useRouter } from 'vue-router'
 
 import { getVoucherAction } from '../actions'
 import { voucherSchema } from '../schemas'
-import { useForm } from 'vee-validate'
+import { useFieldArray, useForm } from 'vee-validate'
+import type { CreateVoucherItem } from '../interfaces'
 
 export const useVoucher = (number: Ref<string>) => {
   const router = useRouter()
@@ -32,9 +33,17 @@ export const useVoucher = (number: Ref<string>) => {
     voucher,
     (newData) => {
       if (!newData) return
-      console.log('🚀 ~ useVoucher ~ newData:', newData)
 
-      voucherForm.resetForm({ values: { customerId: newData.customer?.id, returnTypeId: newData.returnType?.id } })
+      const items = newData.items.map((item) => ({
+        product: item.productCode.product.name,
+        productCodeId: item.productCode.id,
+        quantity: item.quantity,
+        observation: item.observation,
+        expirationDate: item.expirationDate
+      }))
+      voucherForm.resetForm({
+        values: { customerId: newData.customer?.id || null, returnTypeId: newData.returnType?.id || null, items }
+      })
     },
     { immediate: true }
   )
@@ -65,7 +74,9 @@ const useVoucherForm = () => {
   const [customerId, customerIdAttrs] = defineField('customerId')
   const [returnTypeId, returnTypeIdAttrs] = defineField('returnTypeId')
 
-  const form = reactive({ customerId, customerIdAttrs, returnTypeId, returnTypeIdAttrs })
+  const { fields: items, remove: removeItem, push: pushItem } = useFieldArray<CreateVoucherItem>('items')
+
+  const form = reactive({ customerId, customerIdAttrs, returnTypeId, returnTypeIdAttrs, items })
 
   return {
     //* Props
@@ -78,6 +89,8 @@ const useVoucherForm = () => {
 
     //? Methods
     handleSubmit,
-    resetForm
+    resetForm,
+    removeItem,
+    pushItem
   }
 }

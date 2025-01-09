@@ -169,6 +169,18 @@
       "customer": "Cliente",
       "status": "Estado",
       "returnType": "Tipo de devolución"
+    },
+    "items": {
+      "title": "Items del Vale",
+      "fields": {
+        "id": "ID",
+        "product": "Producto",
+        "quantity": "Cantidad",
+        "expirationDate": "Fecha de vencimiento",
+        "observation": "Observación",
+        "received": "Recibido",
+        "productCode": "Código de producto"
+      }
     }
   }
 }

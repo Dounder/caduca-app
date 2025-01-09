@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { ref, useAttrs } from 'vue'
+import { defineProps, useAttrs } from 'vue'
 import type { SelectOption } from '../interfaces'
 
-interface Props {
-  disabled?: boolean
-  error?: string
-  id: string
-  label?: string
-  modelValue?: string
-  loading?: boolean
-  invalid?: boolean
-  autofocus?: boolean
-  options: SelectOption[]
+interface FieldAttrs {
+  name?: string
+  onChange?: (e: any) => void
+  onBlur?: (e: any) => void
 }
-defineProps<Props>()
-defineEmits(['update:modelValue', 'blur', 'change', 'input'])
 
-const attrs = useAttrs()
-const klass = attrs.class
+interface Props {
+  id: string
+  modelValue: any
+  fieldAttrs?: FieldAttrs
+  options?: SelectOption[]
+  label?: string
+  error?: string
+  loading?: boolean
+}
+withDefaults(defineProps<Props>(), {
+  options: () => [{ name: 'Missing options', value: 1 }]
+})
 </script>
 
 <template>
-  <article :class="klass">
+  <article>
     <FloatLabel variant="in">
       <Select
-        :inputId="id"
-        :model-value="modelValue"
-        @change="$emit('change', $event)"
-        @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value || '')"
-        @blur="$emit('blur')"
+        :modelValue="modelValue"
+        @update:modelValue="$emit('update:modelValue', $event)"
+        v-bind="fieldAttrs"
         :options="options"
         option-label="name"
         option-value="value"
-        fluid
         :loading="loading"
+        fluid
       />
 
       <label v-if="label" :for="id">{{ label }}</label>
@@ -43,3 +43,5 @@ const klass = attrs.class
     </transition>
   </article>
 </template>
+
+<style scoped></style>

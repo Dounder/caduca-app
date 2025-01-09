@@ -169,6 +169,18 @@
       "customer": "Customer",
       "status": "Status",
       "returnType": "Return Type"
+    },
+    "items": {
+      "title": "Voucher Items",
+      "fields": {
+        "id": "ID",
+        "product": "Product",
+        "quantity": "Quantity",
+        "expirationDate": "Expiration Date",
+        "observation": "Observation",
+        "received": "Received",
+        "productCode": "Product Code"
+      }
     }
   }
 }

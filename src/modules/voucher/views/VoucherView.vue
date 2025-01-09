@@ -8,6 +8,7 @@ import CustomInputNumber from '@/modules/shared/components/CustomInputNumber.vue
 import CustomSelect from '@/modules/shared/components/CustomSelect.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import { useVoucherReturnType } from '@/modules/voucher-catalog'
+import VoucherFormItems from '../components/VoucherFormItems.vue'
 import { useVoucher } from '../composables'
 
 interface Props {
@@ -22,10 +23,9 @@ const { customers, loading: customersLoading } = useCustomersSummary()
 const { returnTypes, loading: returnTypesLoading } = useVoucherReturnType()
 const isPending = computed(() => isFetching.value)
 
-const onSubmit = (evt: Event) => {
-  evt.preventDefault()
-  console.log('submit')
-}
+const onSubmit = handleSubmit((values) => {
+  console.log(values)
+})
 </script>
 
 <template>
@@ -37,13 +37,13 @@ const onSubmit = (evt: Event) => {
     @on:delete="undefined"
     @on:refresh="refetch"
   >
-    <form @submit="onSubmit" class="grid grid-cols-12 gap-4" v-focustrap v-if="voucher">
+    <form @submit.prevent="onSubmit" class="grid grid-cols-12 gap-4" v-focustrap v-if="voucher">
       <CustomInputNumber
         id="number"
         v-model="voucher.number"
         :label="t('voucher.fields.number')"
-        class="col-span-12 md:col-span-2"
         disabled
+        class="col-span-2"
       />
       <CustomSelect
         id="customer"
@@ -53,8 +53,7 @@ const onSubmit = (evt: Event) => {
         :options="customers"
         :loading="customersLoading"
         :label="t('voucher.fields.customer')"
-        class="col-span-12 md:col-span-5"
-        autofocus
+        class="col-span-5"
       />
       <CustomSelect
         id="returnType"
@@ -64,11 +63,13 @@ const onSubmit = (evt: Event) => {
         :options="returnTypes"
         :loading="returnTypesLoading"
         :label="t('voucher.fields.returnType')"
-        class="col-span-12 md:col-span-5"
+        class="col-span-5"
       />
 
+      <VoucherFormItems :items="form.items" :error="errors.items" class="col-span-12" />
+
       <div class="col-span-12 flex justify-end">
-        <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
+        <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="false" />
       </div>
     </form>
   </DetailPageCard>

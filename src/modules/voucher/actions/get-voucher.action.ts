@@ -14,7 +14,8 @@ export const getVoucherAction = async (number: string): Promise<Voucher> => {
       createdAt: null,
       updatedAt: null,
       deletedAt: null,
-      createdBy: null
+      createdBy: null,
+      items: []
     }
 
   try {

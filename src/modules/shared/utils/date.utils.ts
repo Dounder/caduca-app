@@ -13,4 +13,10 @@ export class DateUtils {
       locale: configStore.selectedLang === 'es' ? es : enUS
     })
   }
+
+  static convertToMonthYear(date: string | Date | null): string | null {
+    if (!date) return null
+
+    return new Date(date).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
+  }
 }
