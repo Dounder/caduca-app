@@ -10,6 +10,7 @@ import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import { useVoucherReturnType } from '@/modules/voucher-catalog'
 import VoucherFormItems from '../components/VoucherFormItems.vue'
 import { useVoucher } from '../composables'
+import type { CreateVoucherItem } from '../interfaces'
 
 interface Props {
   number: string
@@ -18,7 +19,8 @@ const props = defineProps<Props>()
 const { number } = toRefs(props)
 
 const { t } = useI18n()
-const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSubmit, meta } = useVoucher(number)
+const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSubmit, pushItem, meta } =
+  useVoucher(number)
 const { customers, loading: customersLoading } = useCustomersSummary()
 const { returnTypes, loading: returnTypesLoading } = useVoucherReturnType()
 const isPending = computed(() => isFetching.value)
@@ -26,6 +28,10 @@ const isPending = computed(() => isFetching.value)
 const onSubmit = handleSubmit((values) => {
   console.log(values)
 })
+
+const handleNewItem = (item: CreateVoucherItem) => {
+  pushItem(item)
+}
 </script>
 
 <template>
@@ -66,10 +72,17 @@ const onSubmit = handleSubmit((values) => {
         class="col-span-5"
       />
 
-      <VoucherFormItems :items="form.items" :error="errors.items" class="col-span-12" />
+      <section class="col-span-12">
+        <VoucherFormItems :items="form.items" :error="errors.items" @on:newItem="handleNewItem" />
+        <transition name="p-message" tag="div" class="flex flex-col mt-2">
+          <Message v-if="errors.items" severity="error">{{ errors.items }}</Message>
+        </transition>
+      </section>
+
+      <pre>{{ form }}</pre>
 
       <div class="col-span-12 flex justify-end">
-        <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="false" />
+        <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
       </div>
     </form>
   </DetailPageCard>

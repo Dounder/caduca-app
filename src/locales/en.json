@@ -41,6 +41,9 @@
       "createdBy": "Created By",
       "updatedBy": "Updated By",
       "deletedBy": "Deleted By"
+    },
+    "placeholders": {
+      "search": "Type to search"
     }
   },
   "navbar": {

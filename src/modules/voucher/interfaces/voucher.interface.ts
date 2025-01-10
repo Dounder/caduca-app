@@ -1,6 +1,6 @@
 import type { CustomerSummary } from '@/modules/customer/interfaces'
 import type { ProductCode } from '@/modules/product-codes'
-import type { AuditTrailData, AuditTrailDataPlain } from '@/modules/shared'
+import type { AuditTrailData, AuditTrailDataPlain, SelectOption } from '@/modules/shared'
 
 export interface Voucher extends AuditTrailData {
   number: number
@@ -41,5 +41,12 @@ export interface CreateVoucherItem {
   expirationDate: Date
   observation: string
   quantity: number
-  productCode: ProductCode
+  productCodeId: ProductCode
+}
+
+export interface CreateVoucherItemForm {
+  expirationDate: Date
+  observation: string
+  quantity: number
+  product: SelectOption
 }

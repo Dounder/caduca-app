@@ -13,15 +13,15 @@ interface Props {
   items: FieldEntry<CreateVoucherItem>[]
   error?: string
 }
-const props = defineProps<Props>()
+defineProps<Props>()
+interface Emits {
+  (e: 'on:newItem', item: CreateVoucherItem): void
+}
+defineEmits<Emits>()
 
 const { t } = useI18n()
 const attrs = useAttrs()
 const showDialog = ref(false)
-
-const handleSave = (item: CreateVoucherItem) => {
-  console.log(item)
-}
 </script>
 
 <template>
@@ -69,7 +69,11 @@ const handleSave = (item: CreateVoucherItem) => {
     </Column>
   </DataTable>
 
-  <VoucherItemDialog v-model:visible="showDialog" @on:close="showDialog = false" @on:save="handleSave" />
+  <VoucherItemDialog
+    v-model:visible="showDialog"
+    @on:close="showDialog = false"
+    @on:save="(item) => $emit('on:newItem', item)"
+  />
 </template>
 
 <style scoped></style>

@@ -1,11 +1,11 @@
+import type { ProductCodeSummary } from '@/modules/product-codes'
 import * as yup from 'yup'
-import type { CreateVoucherItem } from '../interfaces'
 
 export const voucherItemSchema = yup.object().shape({
   expirationDate: yup.date().required(),
   observation: yup.string(),
   quantity: yup.number().required().min(1),
-  productCodeId: yup.string().required()
+  product: yup.object<ProductCodeSummary>().required()
 })
 
 export const voucherSchema = yup.object().shape({

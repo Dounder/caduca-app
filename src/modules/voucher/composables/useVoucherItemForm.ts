@@ -2,7 +2,7 @@ import { useForm } from 'vee-validate'
 import { voucherItemSchema } from '../schemas'
 import { computed, reactive } from 'vue'
 
-const useVoucherItemForm = () => {
+export const useVoucherItemForm = () => {
   const { meta, errors, handleSubmit, resetForm, defineField } = useForm({
     validationSchema: voucherItemSchema
   })
@@ -11,7 +11,6 @@ const useVoucherItemForm = () => {
   const [expirationDate, expirationDateAttrs] = defineField('expirationDate')
   const [observation, observationAttrs] = defineField('observation')
   const [quantity, quantityAttrs] = defineField('quantity')
-  const [productCode, productCodeAttrs] = defineField('productCode')
 
   const form = reactive({
     product,
@@ -21,9 +20,7 @@ const useVoucherItemForm = () => {
     observation,
     observationAttrs,
     quantity,
-    quantityAttrs,
-    productCode,
-    productCodeAttrs
+    quantityAttrs
   })
 
   return {

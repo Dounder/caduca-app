@@ -41,6 +41,9 @@
       "createdBy": "Creado por",
       "updatedBy": "Actualizado por",
       "deletedBy": "Eliminado por"
+    },
+    "placeholders": {
+      "search": "Escribe para buscar"
     }
   },
   "navbar": {
