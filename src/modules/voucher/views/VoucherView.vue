@@ -79,7 +79,7 @@ const handleNewItem = (item: CreateVoucherItem) => {
         <b>{{ t('voucher.items.title') }}</b>
       </Divider>
 
-      <section class="w-full overflow-x-auto" v-if="voucher.status">
+      <section class="w-full overflow-x-auto">
         <VoucherFormItems :canEdit="canEdit" :items="form.items" :error="errors.items" @on:newItem="handleNewItem" />
       </section>
 
