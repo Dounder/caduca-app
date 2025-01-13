@@ -54,7 +54,7 @@ export interface CreateVoucherItemForm {
 export interface VoucherForm {
   customerId: number | null
   returnTypeId: number | null
-  statusId: number | null
+  statusId: VoucherStatus
   items: CreateVoucherItem[]
 }
 

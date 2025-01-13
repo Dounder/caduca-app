@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, toRefs } from 'vue'
+import { computed, ref, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useCustomersSummary } from '@/modules/customer/composables'
@@ -8,9 +8,9 @@ import CustomInputNumber from '@/modules/shared/components/CustomInputNumber.vue
 import CustomSelect from '@/modules/shared/components/CustomSelect.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import { useVoucherReturnType } from '@/modules/voucher-catalog'
-import VoucherFormItems from '../components/VoucherFormItems.vue'
+import VoucherItems from '../components/VoucherItems.vue'
 import { useVoucher, useVoucherCreation } from '../composables'
-import type { CreateVoucherItem, VoucherForm } from '../interfaces'
+import { VoucherStatus, type CreateVoucherItem, type VoucherForm } from '../interfaces'
 
 interface Props {
   number: string
@@ -25,9 +25,10 @@ const { customers, loading: customersLoading } = useCustomersSummary()
 const { returnTypes, loading: returnTypesLoading } = useVoucherReturnType()
 const { createMutation, isPending: creationPending } = useVoucherCreation()
 const isPending = computed(() => isFetching.value || creationPending.value)
+const voucherStatus = ref<VoucherStatus>(VoucherStatus.Draft)
 
 const onSubmit = handleSubmit((values) => {
-  createMutation(values as VoucherForm)
+  createMutation({ ...values, statusId: voucherStatus.value } as VoucherForm)
 })
 
 const handleNewItem = (item: CreateVoucherItem) => {
@@ -79,12 +80,21 @@ const handleNewItem = (item: CreateVoucherItem) => {
         <b>{{ t('voucher.items.title') }}</b>
       </Divider>
 
-      <section class="w-full overflow-x-auto">
-        <VoucherFormItems :canEdit="canEdit" :items="form.items" :error="errors.items" @on:newItem="handleNewItem" />
-      </section>
+      <VoucherItems :canEdit="canEdit" :items="form.items" :error="errors.items" @on:newItem="handleNewItem" />
 
-      <div class="flex justify-end">
-        <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
+      <div class="flex justify-end mt-6">
+        <CustomButton
+          type="submit"
+          @click="voucherStatus = VoucherStatus.Draft"
+          :label="t('shared.actions.saveDraft')"
+          :disabled="!canSave"
+        />
+        <CustomButton
+          type="submit"
+          @click="voucherStatus = VoucherStatus.Submitted"
+          :label="t('shared.actions.save')"
+          :disabled="!canSave"
+        />
       </div>
     </form>
   </DetailPageCard>

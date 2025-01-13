@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { FieldEntry } from 'vee-validate'
-import { ref, useAttrs } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import CustomTable from '@/modules/shared/components/CustomTable.vue'
-import VoucherItemDialog from './VoucherItemDialog.vue'
 import { DateUtils } from '@/modules/shared'
+import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import type { CreateVoucherItem } from '../interfaces'
+import VoucherItemForm from './VoucherItemForm.vue'
 
 interface Props {
   items: FieldEntry<CreateVoucherItem>[]
@@ -20,12 +20,11 @@ interface Emits {
 defineEmits<Emits>()
 
 const { t } = useI18n()
-const attrs = useAttrs()
 const showDialog = ref(false)
 </script>
 
 <template>
-  <VoucherItemDialog
+  <VoucherItemForm
     v-if="canEdit"
     v-model:visible="showDialog"
     @on:close="showDialog = false"
@@ -33,7 +32,7 @@ const showDialog = ref(false)
   />
   <pre>{{ canEdit }}</pre>
 
-  <CustomTable :data="items" grid :editable="false">
+  <CustomTable :data="items" grid :editable="false" :paginator="false">
     <Column :header="t('voucher.items.fields.quantity')">
       <template #body="{ data }">
         <span>{{ data.value.quantity }}</span>

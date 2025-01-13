@@ -13,9 +13,11 @@ interface Props {
   loading?: boolean
   editable?: boolean
   grid?: boolean
+  paginator?: boolean
 }
 withDefaults(defineProps<Props>(), {
-  editable: true
+  editable: true,
+  paginator: true
 })
 
 interface Emits {
@@ -34,7 +36,7 @@ const authStore = useAuthStore()
 <template>
   <DataTable
     :value="data"
-    paginator
+    :paginator="paginator"
     :rows="10"
     :rowsPerPageOptions="[10, 20, 50]"
     scrollable
@@ -74,7 +76,7 @@ const authStore = useAuthStore()
       </template>
     </Column>
 
-    <template #paginatorcontainer>
+    <template #paginatorcontainer v-if="paginator">
       <BottomPagination />
     </template>
 
