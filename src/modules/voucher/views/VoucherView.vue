@@ -79,8 +79,6 @@ const handleNewItem = (item: CreateVoucherItem) => {
         </transition>
       </section>
 
-      <pre>{{ form }}</pre>
-
       <div class="col-span-12 flex justify-end">
         <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
       </div>
