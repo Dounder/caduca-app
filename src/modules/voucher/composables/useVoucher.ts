@@ -76,7 +76,12 @@ const useVoucherForm = () => {
   const [customerId, customerIdAttrs] = defineField('customerId')
   const [returnTypeId, returnTypeIdAttrs] = defineField('returnTypeId')
 
-  const { fields: items, remove: removeItem, push: pushItem } = useFieldArray<CreateVoucherItem>('items')
+  const {
+    fields: items,
+    remove: removeItem,
+    push: pushItem,
+    update: updateItem
+  } = useFieldArray<CreateVoucherItem>('items')
 
   const form = reactive({ customerId, customerIdAttrs, returnTypeId, returnTypeIdAttrs, items })
 
@@ -93,6 +98,7 @@ const useVoucherForm = () => {
     handleSubmit,
     resetForm,
     removeItem,
-    pushItem
+    pushItem,
+    updateItem
   }
 }

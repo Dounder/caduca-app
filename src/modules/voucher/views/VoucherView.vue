@@ -19,7 +19,7 @@ const props = defineProps<Props>()
 const { number } = toRefs(props)
 
 const { t } = useI18n()
-const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSubmit, pushItem, canEdit } =
+const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSubmit, pushItem, updateItem, canEdit } =
   useVoucher(number)
 const { customers, loading: customersLoading } = useCustomersSummary()
 const { returnTypes, loading: returnTypesLoading } = useVoucherReturnType()
@@ -31,8 +31,25 @@ const onSubmit = handleSubmit((values) => {
   createMutation({ ...values, statusId: voucherStatus.value } as VoucherForm)
 })
 
-const handleNewItem = (item: CreateVoucherItem) => {
-  pushItem(item)
+const handleNewItem = (newItem: CreateVoucherItem) => {
+  const existingItemIndex = form.items.findIndex((formItem) => {
+    const sameProduct = formItem.value.productCodeId === newItem.productCodeId
+    const sameDate = new Date(formItem.value.expirationDate).getTime() === new Date(newItem.expirationDate).getTime()
+    return sameProduct && sameDate
+  })
+
+  if (existingItemIndex === -1) {
+    pushItem(newItem)
+    return
+  }
+
+  const existingItem = form.items[existingItemIndex]
+  const updatedItem = {
+    ...newItem,
+    quantity: existingItem.value.quantity + newItem.quantity
+  }
+
+  updateItem(existingItemIndex, updatedItem)
 }
 </script>
 
@@ -88,6 +105,7 @@ const handleNewItem = (item: CreateVoucherItem) => {
           @click="voucherStatus = VoucherStatus.Draft"
           :label="t('shared.actions.saveDraft')"
           :disabled="!canSave"
+          v-if="canEdit"
         />
         <CustomButton
           type="submit"
