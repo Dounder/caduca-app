@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/vue-query'
 import type { AutoCompleteCompleteEvent } from 'primevue'
-import { computed, onUpdated, ref, watch } from 'vue'
+import { computed, onMounted, onUpdated, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useNotification, type SelectOption } from '@/modules/shared'
@@ -14,7 +14,7 @@ export const useProductCodes = () => {
 
   const { data, isFetching, isLoading, isError, refetch } = useQuery({
     queryKey: ['product_codes'],
-    queryFn: async () => await getProductCodesAction(),
+    queryFn: async () => await handleProductCodesRequest(),
     staleTime: Infinity
   })
   const loading = computed(() => isFetching.value || isLoading.value)
@@ -36,9 +36,11 @@ export const useProductCodes = () => {
     if (val) showError({ detail: t('error.500') })
   })
 
-  watch(data, (val) => {
-    if (val) productCodes.value = val.map(({ id, code, product }) => ({ name: `${code} - ${product}`, value: id }))
-  })
+  const handleProductCodesRequest = async () => {
+    const codes = await getProductCodesAction()
+    productCodes.value = codes.map(({ id, code, product }) => ({ name: `${code} - ${product}`, value: id }))
+    return productCodes.value
+  }
 
   return {
     //* Props
