@@ -8,12 +8,14 @@ import BottomPagination from './BottomPagination.vue'
 import TableSearchBar from './TableSearchBar.vue'
 
 interface Props {
-  options?: SelectOption[]
   data: any[]
-  loading: boolean
+  options?: SelectOption[]
+  loading?: boolean
+  editable?: boolean
+  grid?: boolean
 }
 withDefaults(defineProps<Props>(), {
-  options: () => [{ label: 'Missing options', value: 'Missing options' }]
+  editable: true
 })
 
 interface Emits {
@@ -38,14 +40,16 @@ const authStore = useAuthStore()
     scrollable
     :loading="loading"
     data-key="id"
+    :show-gridlines="grid"
+    table-style="min-width: 50rem"
   >
-    <template #header>
+    <template #header v-if="options">
       <TableSearchBar :options="options" @on:search="onSearch" />
     </template>
 
     <slot />
 
-    <Column class="w-[8rem]">
+    <Column class="w-[8rem]" v-if="editable">
       <template #body="{ data }">
         <section class="flex justify-center gap-2">
           <Button

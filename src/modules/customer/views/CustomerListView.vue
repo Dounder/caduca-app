@@ -31,8 +31,8 @@ const onDelete = ({ id, deletedAt }: CustomerTable) => deletionToggleMutation({ 
       :data="customers"
       :loading="loading || isPending"
       :options="[
-        { label: t('customer.table.code'), value: 'code' },
-        { label: t('customer.table.name'), value: 'name' }
+        { name: t('customer.table.code'), value: 'code' },
+        { name: t('customer.table.name'), value: 'name' }
       ]"
       @on:edit="onEdit"
       @on:delete="onDelete"

@@ -1,10 +1,10 @@
 import { useForm } from 'vee-validate'
-import { voucherItemSchema } from '../schemas'
+import { voucherItemDialogSchema } from '../schemas'
 import { computed, reactive } from 'vue'
 
 export const useVoucherItemForm = () => {
   const { meta, errors, handleSubmit, resetForm, defineField } = useForm({
-    validationSchema: voucherItemSchema
+    validationSchema: voucherItemDialogSchema
   })
 
   const [product, productAttrs] = defineField('product')

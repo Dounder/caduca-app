@@ -13,7 +13,8 @@
       "export": "Export",
       "search": "Search",
       "options": "Options",
-      "copy": "Copy"
+      "copy": "Copy",
+      "add": "Add"
     },
     "toast": {
       "success": { "summary": "Success", "detail": "Message content" },
@@ -164,6 +165,9 @@
   },
   "voucher": {
     "title": "Expired Vouchers",
+    "info": {
+      "title": "Voucher Information"
+    },
     "fields": {
       "id": "ID",
       "number": "Number",

@@ -13,7 +13,8 @@
       "export": "Exportar",
       "search": "Buscar",
       "options": "Opciones",
-      "copy": "Copiar"
+      "copy": "Copiar",
+      "add": "Agregar"
     },
     "toast": {
       "success": { "summary": "Éxito", "detail": "Contenido del mensaje" },
@@ -164,6 +165,9 @@
   },
   "voucher": {
     "title": "Vales",
+    "info": {
+      "title": "Información del Vale"
+    },
     "fields": {
       "id": "ID",
       "number": "Número",

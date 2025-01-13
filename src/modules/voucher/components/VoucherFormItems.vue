@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { PrimeIcons as icons } from '@primevue/core/api'
 import type { FieldEntry } from 'vee-validate'
 import { ref, useAttrs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { DateUtils } from '@/modules/shared'
-import CustomButton from '@/modules/shared/components/CustomButton.vue'
-import type { CreateVoucherItem } from '../interfaces'
+import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import VoucherItemDialog from './VoucherItemDialog.vue'
+import { DateUtils } from '@/modules/shared'
+import type { CreateVoucherItem } from '../interfaces'
 
 interface Props {
   items: FieldEntry<CreateVoucherItem>[]
   error?: string
+  canEdit: boolean
 }
 defineProps<Props>()
 interface Emits {
@@ -25,28 +25,14 @@ const showDialog = ref(false)
 </script>
 
 <template>
-  <DataTable
-    :value="items"
-    tableStyle="min-width: 50rem"
-    :class="attrs.class"
-    :paginator="true"
-    :rows="10"
-    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-    :rowsPerPageOptions="[5, 10, 25]"
-    currentPageReportTemplate="{first} a {last} de {totalRecords} items"
-    show-gridlines
-  >
-    <template #header>
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <span class="text-xl font-bold">{{ t('voucher.items.title') }}</span>
-        <CustomButton
-          :icon="icons.PLUS"
-          icon-pos="right"
-          v-tooltip.top="t('shared.actions.new')"
-          @click="showDialog = true"
-        />
-      </div>
-    </template>
+  <VoucherItemDialog
+    v-if="canEdit"
+    v-model:visible="showDialog"
+    @on:close="showDialog = false"
+    @on:save="(item) => $emit('on:newItem', item)"
+  />
+
+  <CustomTable :data="items" grid :editable="false">
     <Column :header="t('voucher.items.fields.quantity')">
       <template #body="{ data }">
         <span>{{ data.value.quantity }}</span>
@@ -67,13 +53,11 @@ const showDialog = ref(false)
         <span>{{ data.value.observation }}</span>
       </template>
     </Column>
-  </DataTable>
+  </CustomTable>
 
-  <VoucherItemDialog
-    v-model:visible="showDialog"
-    @on:close="showDialog = false"
-    @on:save="(item) => $emit('on:newItem', item)"
-  />
+  <transition name="p-message" tag="div" class="flex flex-col mt-2">
+    <Message v-if="error" severity="error">{{ error }}</Message>
+  </transition>
 </template>
 
 <style scoped></style>

@@ -9,8 +9,8 @@ import CustomSelect from '@/modules/shared/components/CustomSelect.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import { useVoucherReturnType } from '@/modules/voucher-catalog'
 import VoucherFormItems from '../components/VoucherFormItems.vue'
-import { useVoucher } from '../composables'
-import type { CreateVoucherItem } from '../interfaces'
+import { useVoucher, useVoucherCreation } from '../composables'
+import type { CreateVoucherItem, VoucherForm } from '../interfaces'
 
 interface Props {
   number: string
@@ -19,14 +19,15 @@ const props = defineProps<Props>()
 const { number } = toRefs(props)
 
 const { t } = useI18n()
-const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSubmit, pushItem, meta } =
+const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSubmit, pushItem, canEdit } =
   useVoucher(number)
 const { customers, loading: customersLoading } = useCustomersSummary()
 const { returnTypes, loading: returnTypesLoading } = useVoucherReturnType()
-const isPending = computed(() => isFetching.value)
+const { createMutation, isPending: creationPending } = useVoucherCreation()
+const isPending = computed(() => isFetching.value || creationPending.value)
 
 const onSubmit = handleSubmit((values) => {
-  console.log(values)
+  createMutation(values as VoucherForm)
 })
 
 const handleNewItem = (item: CreateVoucherItem) => {
@@ -43,43 +44,46 @@ const handleNewItem = (item: CreateVoucherItem) => {
     @on:delete="undefined"
     @on:refresh="refetch"
   >
-    <form @submit.prevent="onSubmit" class="grid grid-cols-12 gap-4" v-focustrap v-if="voucher">
-      <CustomInputNumber
-        id="number"
-        v-model="voucher.number"
-        :label="t('voucher.fields.number')"
-        disabled
-        class="col-span-2"
-      />
-      <CustomSelect
-        id="customer"
-        v-model="form.customerId"
-        v-bind="form.customerIdAttrs"
-        :error="errors.customerId"
-        :options="customers"
-        :loading="customersLoading"
-        :label="t('voucher.fields.customer')"
-        class="col-span-5"
-      />
-      <CustomSelect
-        id="returnType"
-        v-model="form.returnTypeId"
-        v-bind="form.returnTypeIdAttrs"
-        :error="errors.returnTypeId"
-        :options="returnTypes"
-        :loading="returnTypesLoading"
-        :label="t('voucher.fields.returnType')"
-        class="col-span-5"
-      />
-
-      <section class="col-span-12">
-        <VoucherFormItems :items="form.items" :error="errors.items" @on:newItem="handleNewItem" />
-        <transition name="p-message" tag="div" class="flex flex-col mt-2">
-          <Message v-if="errors.items" severity="error">{{ errors.items }}</Message>
-        </transition>
+    <form @submit.prevent="onSubmit" v-focustrap v-if="voucher">
+      <section class="grid grid-cols-12 gap-4 w-full">
+        <CustomInputNumber
+          id="number"
+          v-model="voucher.number"
+          :label="t('voucher.fields.number')"
+          disabled
+          class="col-span-12 md:col-span-2"
+        />
+        <CustomSelect
+          id="customer"
+          v-model="form.customerId"
+          v-bind="form.customerIdAttrs"
+          :error="errors.customerId"
+          :options="customers"
+          :loading="customersLoading"
+          :label="t('voucher.fields.customer')"
+          class="col-span-12 md:col-span-5"
+        />
+        <CustomSelect
+          id="returnType"
+          v-model="form.returnTypeId"
+          v-bind="form.returnTypeIdAttrs"
+          :error="errors.returnTypeId"
+          :options="returnTypes"
+          :loading="returnTypesLoading"
+          :label="t('voucher.fields.returnType')"
+          class="col-span-12 md:col-span-5"
+        />
       </section>
 
-      <div class="col-span-12 flex justify-end">
+      <Divider align="left" type="solid">
+        <b>{{ t('voucher.items.title') }}</b>
+      </Divider>
+
+      <section class="w-full overflow-x-auto" v-if="voucher.status">
+        <VoucherFormItems :canEdit="canEdit" :items="form.items" :error="errors.items" @on:newItem="handleNewItem" />
+      </section>
+
+      <div class="flex justify-end">
         <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
       </div>
     </form>

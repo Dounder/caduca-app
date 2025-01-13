@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import { getVoucherAction } from '../actions'
 import { voucherSchema } from '../schemas'
 import { useFieldArray, useForm } from 'vee-validate'
-import type { CreateVoucherItem } from '../interfaces'
+import { VoucherStatus, type CreateVoucherItem } from '../interfaces'
 
 export const useVoucher = (number: Ref<string>) => {
   const router = useRouter()
@@ -24,6 +24,7 @@ export const useVoucher = (number: Ref<string>) => {
 
   const isFetching = computed(() => isLoading.value || isRefetching.value)
   const isDeleted = computed(() => voucher?.value?.deletedAt !== null)
+  const canEdit = computed(() => voucher.value?.status?.id === VoucherStatus.Draft)
 
   watch([isError, isLoading], ([error, loading]) => {
     if (error && !loading) router.replace({ name: 'voucher.list' })
@@ -35,7 +36,7 @@ export const useVoucher = (number: Ref<string>) => {
       if (!newData) return
 
       const items = newData.items.map((item) => ({
-        product: item.productCode.product.name,
+        product: `${item.productCode.code} - ${item.productCode.product.name}`,
         productCodeId: item.productCode.id,
         quantity: item.quantity,
         observation: item.observation,
@@ -57,6 +58,7 @@ export const useVoucher = (number: Ref<string>) => {
     //! Getters
     isFetching,
     isDeleted,
+    canEdit,
 
     //? Methods
     refetch,

@@ -50,3 +50,21 @@ export interface CreateVoucherItemForm {
   quantity: number
   product: SelectOption
 }
+
+export interface VoucherForm {
+  customerId: number | null
+  returnTypeId: number | null
+  statusId: number | null
+  items: CreateVoucherItem[]
+}
+
+export enum VoucherStatus {
+  Draft = 1,
+  Submitted = 2,
+  UnderReview = 3,
+  Approved = 4,
+  Processing = 5,
+  Received = 6,
+  Completed = 7,
+  Rejected = 8
+}
