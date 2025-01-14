@@ -9,7 +9,7 @@ import CustomSelect from '@/modules/shared/components/CustomSelect.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import { useVoucherReturnType } from '@/modules/voucher-catalog'
 import VoucherItems from '../components/VoucherItems.vue'
-import { useVoucher, useVoucherCreation } from '../composables'
+import { useVoucher, useVoucherUpsert } from '../composables'
 import { VoucherStatus, type CreateVoucherItem, type VoucherForm } from '../interfaces'
 
 interface Props {
@@ -23,12 +23,12 @@ const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSu
   useVoucher(number)
 const { customers, loading: customersLoading } = useCustomersSummary()
 const { returnTypes, loading: returnTypesLoading } = useVoucherReturnType()
-const { createMutation, isPending: creationPending } = useVoucherCreation()
-const isPending = computed(() => isFetching.value || creationPending.value)
+const { upsertMutation, isPending: upsertPending } = useVoucherUpsert()
+const isPending = computed(() => isFetching.value || upsertPending.value)
 const voucherStatus = ref<VoucherStatus>(VoucherStatus.Draft)
 
 const onSubmit = handleSubmit((values) => {
-  createMutation({ ...values, statusId: voucherStatus.value } as VoucherForm)
+  upsertMutation({ ...values, statusId: voucherStatus.value } as VoucherForm)
 })
 
 const handleNewItem = (newItem: CreateVoucherItem) => {
@@ -111,7 +111,7 @@ const handleNewItem = (newItem: CreateVoucherItem) => {
           type="submit"
           @click="voucherStatus = VoucherStatus.Submitted"
           :label="t('shared.actions.save')"
-          :disabled="!canSave"
+          :disabled="!true"
         />
       </div>
     </form>

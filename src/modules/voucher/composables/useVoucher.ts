@@ -36,14 +36,21 @@ export const useVoucher = (number: Ref<string>) => {
       if (!newData) return
 
       const items = newData.items.map((item) => ({
+        id: item.id,
         product: `${item.productCode.code} - ${item.productCode.product.name}`,
         productCodeId: item.productCode.id,
         quantity: item.quantity,
         observation: item.observation,
-        expirationDate: item.expirationDate
+        expirationDate: item.expirationDate,
+        received: item.received
       }))
       voucherForm.resetForm({
-        values: { customerId: newData.customer?.id || null, returnTypeId: newData.returnType?.id || null, items }
+        values: {
+          id: newData.id,
+          customerId: newData.customer?.id || null,
+          returnTypeId: newData.returnType?.id || null,
+          items
+        }
       })
     },
     { immediate: true }

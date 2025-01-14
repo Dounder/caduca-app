@@ -53,6 +53,13 @@ const showDialog = ref(false)
         <span>{{ data.value.observation }}</span>
       </template>
     </Column>
+    <Column :header="t('voucher.items.fields.received')">
+      <template #body="{ data }">
+        <article class="flex justify-center items-center">
+          <Checkbox v-model="data.value.received" binary size="large" />
+        </article>
+      </template>
+    </Column>
   </CustomTable>
 
   <transition name="p-message" tag="div" class="flex flex-col mt-2">

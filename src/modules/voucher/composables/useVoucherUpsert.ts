@@ -3,23 +3,23 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 import { useNotification } from '@/modules/shared'
-import { createVoucherAction } from '../actions'
+import { upsertVoucherAction } from '../actions'
 
-export const useVoucherCreation = () => {
+export const useVoucherUpsert = () => {
   const { t } = useI18n()
   const queryClient = useQueryClient()
   const { showSuccess, showError } = useNotification()
   const router = useRouter()
 
   const {
-    mutate: createMutation,
-    data: createData,
+    mutate: upsertMutation,
+    data: upsertData,
     isSuccess,
     isPending
   } = useMutation({
-    mutationFn: createVoucherAction,
+    mutationFn: upsertVoucherAction,
     onSuccess: (data) => {
-      queryClient.setQueryData(['voucher', { number: data.number }], data)
+      queryClient.setQueryData(['voucher', { number: `${data.number}` }], data)
 
       const message = data.id
         ? t('shared.messages.updated', [`#${data.number}`])
@@ -32,9 +32,9 @@ export const useVoucherCreation = () => {
   })
 
   return {
-    createMutation,
+    upsertMutation,
+    upsertData,
     isPending,
-    isSuccess,
-    createData
+    isSuccess
   }
 }

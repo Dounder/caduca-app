@@ -37,6 +37,7 @@ export interface VoucherItem {
 }
 
 export interface CreateVoucherItem {
+  id: string
   product: string | null
   expirationDate: Date
   observation: string
@@ -52,6 +53,7 @@ export interface CreateVoucherItemForm {
 }
 
 export interface VoucherForm {
+  id: string
   customerId: number | null
   returnTypeId: number | null
   statusId: VoucherStatus
