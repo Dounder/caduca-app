@@ -6,6 +6,7 @@
       "delete": "Delete",
       "restore": "Restore",
       "save": "Save",
+      "saveDraft": "Save Draft",
       "cancel": "Cancel",
       "close": "Close",
       "back": "Back",
@@ -13,7 +14,10 @@
       "export": "Export",
       "search": "Search",
       "options": "Options",
-      "copy": "Copy"
+      "copy": "Copy",
+      "add": "Add",
+      "approve": "Approve",
+      "reject": "Reject"
     },
     "toast": {
       "success": { "summary": "Success", "detail": "Message content" },
@@ -31,7 +35,8 @@
       "created": "{0} created successfully",
       "saved": "{0} saved successfully",
       "error": "Operation failed",
-      "additionalInfo": "Additional information"
+      "additionalInfo": "Additional information",
+      "noData": "No data available"
     },
     "fields": {
       "createdAt": "Created At",
@@ -40,6 +45,9 @@
       "createdBy": "Created By",
       "updatedBy": "Updated By",
       "deletedBy": "Deleted By"
+    },
+    "placeholders": {
+      "search": "Type to search"
     }
   },
   "navbar": {
@@ -50,7 +58,8 @@
     "salesperson": "Salespersons",
     "logout": "Logout",
     "preferences": "Preferences",
-    "products": "Products"
+    "products": "Products",
+    "expiredVouchers": "Expired Vouchers"
   },
   "preferences": {
     "title": "Preferences",
@@ -155,6 +164,44 @@
     "actions": {
       "addCode": "Add Code",
       "removeCode": "Remove Code"
+    }
+  },
+  "voucher": {
+    "title": "Expired Vouchers",
+    "info": {
+      "title": "Voucher Information"
+    },
+    "fields": {
+      "id": "ID",
+      "number": "Number",
+      "approvedDate": "Approved Date",
+      "rejectedDate": "Rejected Date",
+      "customer": "Customer",
+      "status": "Status",
+      "returnType": "Return Type"
+    },
+    "items": {
+      "title": "Voucher Items",
+      "fields": {
+        "id": "ID",
+        "product": "Product",
+        "quantity": "Quantity",
+        "expirationDate": "Expiration Date",
+        "observation": "Observation",
+        "received": "Received",
+        "productCode": "Product Code"
+      }
+    },
+    "status": {
+      "Draft": "Draft",
+      "Submitted": "Submitted",
+      "Approved": "Approved",
+      "Rejected": "Rejected"
+    },
+    "returnType": {
+      "Expired": "Expired",
+      "Damaged": "Damaged",
+      "Good Condition": "Good Condition"
     }
   }
 }

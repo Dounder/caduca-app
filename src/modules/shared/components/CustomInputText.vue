@@ -13,32 +13,27 @@ interface Props {
 }
 defineProps<Props>()
 defineEmits(['update:modelValue', 'blur', 'change', 'input'])
-
-const attrs = useAttrs()
-const klass = attrs.class
 </script>
 
 <template>
-  <article :class="klass">
-    <FloatLabel variant="in">
-      <InputText
-        :id="id"
-        :model-value="modelValue"
-        @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value || '')"
-        @blur="$emit('blur')"
-        :invalid="invalid || Boolean(error)"
-        :disabled="disabled"
-        :loading="loading"
-        :autofocus="autofocus"
-        size="large"
-        fluid
-      />
-      <label v-if="label" :for="id">{{ label }}</label>
-    </FloatLabel>
+  <IftaLabel>
+    <InputText
+      :id="id"
+      :model-value="modelValue"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value || '')"
+      @blur="$emit('blur')"
+      :invalid="invalid || Boolean(error)"
+      :disabled="disabled"
+      :loading="loading"
+      :autofocus="autofocus"
+      size="large"
+      fluid
+    />
+    <label v-if="label" :for="id">{{ label }}</label>
     <transition name="p-message" tag="div" class="flex flex-col mt-2">
       <Message v-if="error" severity="error">{{ error }}</Message>
     </transition>
-  </article>
+  </IftaLabel>
 </template>
 
 <style scoped>

@@ -7,6 +7,7 @@ export interface AuditItem {
 }
 
 export interface AuditTrailData {
+  id: string
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -16,6 +17,7 @@ export interface AuditTrailData {
 }
 
 export interface AuditTrailDataPlain {
+  id: string
   createdAt: string | null
   updatedAt: string | null
   deletedAt: string | null

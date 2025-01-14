@@ -6,6 +6,7 @@
       "delete": "Eliminar",
       "restore": "Restaurar",
       "save": "Guardar",
+      "saveDraft": "Guardar borrador",
       "cancel": "Cancelar",
       "close": "Cerrar",
       "back": "Regresar",
@@ -13,7 +14,10 @@
       "export": "Exportar",
       "search": "Buscar",
       "options": "Opciones",
-      "copy": "Copiar"
+      "copy": "Copiar",
+      "add": "Agregar",
+      "approve": "Aprobar",
+      "reject": "Rechazar"
     },
     "toast": {
       "success": { "summary": "Éxito", "detail": "Contenido del mensaje" },
@@ -31,7 +35,8 @@
       "created": "{0} creado exitosamente",
       "saved": "{0} guardado exitosamente",
       "error": "Operación fallida",
-      "additionalInfo": "Información adicional"
+      "additionalInfo": "Información adicional",
+      "noData": "No hay datos para mostrar"
     },
     "fields": {
       "createdAt": "Creado",
@@ -40,6 +45,9 @@
       "createdBy": "Creado por",
       "updatedBy": "Actualizado por",
       "deletedBy": "Eliminado por"
+    },
+    "placeholders": {
+      "search": "Escribe para buscar"
     }
   },
   "navbar": {
@@ -50,7 +58,8 @@
     "salesperson": "Vendedores",
     "logout": "Cerrar sesión",
     "preferences": "Preferencias",
-    "products": "Productos"
+    "products": "Productos",
+    "expiredVouchers": "Vales vencidos"
   },
   "preferences": {
     "title": "Preferencias",
@@ -155,6 +164,44 @@
     "actions": {
       "addCode": "Agregar código",
       "removeCode": "Eliminar código"
+    }
+  },
+  "voucher": {
+    "title": "Vales",
+    "info": {
+      "title": "Información del Vale"
+    },
+    "fields": {
+      "id": "ID",
+      "number": "Número",
+      "approvedDate": "Fecha de aprobación",
+      "rejectedDate": "Fecha de rechazo",
+      "customer": "Cliente",
+      "status": "Estado",
+      "returnType": "Tipo de devolución"
+    },
+    "items": {
+      "title": "Items del Vale",
+      "fields": {
+        "id": "ID",
+        "product": "Producto",
+        "quantity": "Cantidad",
+        "expirationDate": "Fecha de vencimiento",
+        "observation": "Observación",
+        "received": "Recibido",
+        "productCode": "Código de producto"
+      }
+    },
+    "status": {
+      "Draft": "Borrador",
+      "Submitted": "Enviado",
+      "Approved": "Aprobado",
+      "Rejected": "Rechazado"
+    },
+    "returnType": {
+      "Expired": "Vencido",
+      "Damaged": "Dañado",
+      "Good Condition": "Buen estado"
     }
   }
 }

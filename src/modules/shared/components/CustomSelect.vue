@@ -1,48 +1,50 @@
 <script setup lang="ts">
-interface Props {
-  disabled?: boolean
-  error?: string
-  id: string
-  label?: string
-  modelValue?: any
-  options?: { name: string; value: any }[]
-  placeholder?: string
-  scrollHeight?: string
-  variant?: 'outlined' | 'filled'
-  loading?: boolean
+import { defineProps } from 'vue'
+import type { SelectOption } from '../interfaces'
+
+interface FieldAttrs {
+  name?: string
+  onChange?: (e: any) => void
+  onBlur?: (e: any) => void
 }
 
+interface Props {
+  id: string
+  modelValue: any
+  fieldAttrs?: FieldAttrs
+  options?: SelectOption[]
+  label?: string
+  error?: string
+  loading?: boolean
+  disabled?: boolean
+}
 withDefaults(defineProps<Props>(), {
-  scrollHeight: '15rem',
-  loading: false
+  options: () => [{ name: 'Missing options', value: 1 }]
 })
-defineEmits(['update:modelValue', 'blur'])
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <label v-if="label" :for="id">{{ label }}</label>
-    <Select
-      @change="$emit('update:modelValue', $event.value)"
-      @blur="$emit('blur')"
-      :modelValue="modelValue"
-      :options="options"
-      filter
-      optionLabel="name"
-      optionValue="value"
-      :placeholder="placeholder"
-      fluid
-      filterMatchMode="contains"
-      :invalid="Boolean(error)"
-      :disabled="disabled"
-      :variant="variant"
-      showClear
-      :id="id"
-      :aria-describedby="`${id}-help`"
-      :loading="loading"
-    />
-    <transition name="expand">
-      <small v-if="error" :id="`${id}-help`" class="text-red-500">{{ error }}</small>
+  <article>
+    <FloatLabel variant="in">
+      <Select
+        :modelValue="modelValue"
+        @update:modelValue="$emit('update:modelValue', $event)"
+        v-bind="fieldAttrs"
+        :options="options"
+        option-label="name"
+        option-value="value"
+        :loading="loading"
+        fluid
+        :virtualScrollerOptions="{ itemSize: 38 }"
+        :disabled="disabled"
+      />
+
+      <label v-if="label" :for="id">{{ label }}</label>
+    </FloatLabel>
+    <transition name="p-message" tag="div" class="flex flex-col mt-2">
+      <Message v-if="error" severity="error">{{ error }}</Message>
     </transition>
-  </div>
+  </article>
 </template>
+
+<style scoped></style>

@@ -2,7 +2,7 @@
 import { PrimeIcons as icons } from '@primevue/core/api'
 import { useI18n } from 'vue-i18n'
 
-import type { ProductCode, ProductCodeSummary } from '@/modules/product-codes'
+import type { ProductCodeAudit, ProductCodeSummary } from '@/modules/product-codes'
 import CustomButton from '@/modules/shared/components/CustomButton.vue'
 
 interface Props {

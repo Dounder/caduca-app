@@ -8,12 +8,16 @@ import BottomPagination from './BottomPagination.vue'
 import TableSearchBar from './TableSearchBar.vue'
 
 interface Props {
-  options: SelectOption[]
   data: any[]
-  loading: boolean
+  options?: SelectOption[]
+  loading?: boolean
+  editable?: boolean
+  grid?: boolean
+  paginator?: boolean
 }
 withDefaults(defineProps<Props>(), {
-  options: () => [{ label: 'Missing options', value: 'Missing options' }]
+  editable: true,
+  paginator: true
 })
 
 interface Emits {
@@ -32,20 +36,22 @@ const authStore = useAuthStore()
 <template>
   <DataTable
     :value="data"
-    paginator
+    :paginator="paginator"
     :rows="10"
     :rowsPerPageOptions="[10, 20, 50]"
     scrollable
     :loading="loading"
     data-key="id"
+    :show-gridlines="grid"
+    table-style="min-width: 50rem"
   >
-    <template #header>
+    <template #header v-if="options">
       <TableSearchBar :options="options" @on:search="onSearch" />
     </template>
 
     <slot />
 
-    <Column class="w-[8rem]">
+    <Column class="w-[8rem]" v-if="editable">
       <template #body="{ data }">
         <section class="flex justify-center gap-2">
           <Button
@@ -70,8 +76,15 @@ const authStore = useAuthStore()
       </template>
     </Column>
 
-    <template #paginatorcontainer>
+    <template #paginatorcontainer v-if="paginator">
       <BottomPagination />
+    </template>
+
+    <template #empty>
+      <div class="flex flex-col items-center justify-center h-[200px]">
+        <i class="pi pi-folder-open text-4xl text-gray-400" />
+        <p class="text-gray-400">{{ t('shared.messages.noData') }}</p>
+      </div>
     </template>
   </DataTable>
 </template>

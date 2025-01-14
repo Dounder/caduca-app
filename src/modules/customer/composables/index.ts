@@ -1,4 +1,5 @@
 export * from './useCustomer'
 export * from './useCustomers'
+export * from './useCustomersSummary'
 export * from './useDeletionCustomer'
 export * from './useUpsertCustomer'

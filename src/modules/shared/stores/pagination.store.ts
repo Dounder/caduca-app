@@ -29,13 +29,14 @@ export const usePaginationStore = defineStore('pagination', () => {
   const hasNextPage = computed(() => page.value < lastPage.value)
   const hasPreviousPage = computed(() => page.value > 1)
 
-  const setPage = (newPage: number): void => {
-    if (newPage <= 0) throw new Error('Page number must be positive')
+  const setPage = (newPage: number = 1): void => {
+    if (newPage <= 0) newPage = 1
+
     page.value = clampPageNumber(newPage, lastPage.value)
   }
 
-  const setLastPage = (newLastPage: number): void => {
-    if (newLastPage <= 0) throw new Error('Last page must be positive')
+  const setLastPage = (newLastPage: number = 1): void => {
+    if (newLastPage <= 0) newLastPage = 1
     lastPage.value = newLastPage
     page.value = clampPageNumber(page.value, lastPage.value)
   }

@@ -1,10 +1,10 @@
 import { api } from '@/api'
 import { exceptionHandlerHelper } from '@/modules/shared'
-import type { ProductCode } from '../interfaces'
+import type { ProductCodeAudit } from '../interfaces'
 
-export const createProductCodeAction = async (productId: string): Promise<ProductCode> => {
+export const createProductCodeAction = async (productId: string): Promise<ProductCodeAudit> => {
   try {
-    const { data } = await api.post<ProductCode>(`/product/code`, { productId })
+    const { data } = await api.post<ProductCodeAudit>(`/product/code`, { productId })
 
     return data
   } catch (error) {
