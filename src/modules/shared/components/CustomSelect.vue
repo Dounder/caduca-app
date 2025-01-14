@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, useAttrs } from 'vue'
+import { defineProps } from 'vue'
 import type { SelectOption } from '../interfaces'
 
 interface FieldAttrs {
@@ -34,6 +34,7 @@ withDefaults(defineProps<Props>(), {
         option-value="value"
         :loading="loading"
         fluid
+        :virtualScrollerOptions="{ itemSize: 38 }"
       />
 
       <label v-if="label" :for="id">{{ label }}</label>

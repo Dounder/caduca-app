@@ -111,7 +111,7 @@ const handleNewItem = (newItem: CreateVoucherItem) => {
           type="submit"
           @click="voucherStatus = VoucherStatus.Submitted"
           :label="t('shared.actions.save')"
-          :disabled="!true"
+          :disabled="!canSave"
         />
       </div>
     </form>

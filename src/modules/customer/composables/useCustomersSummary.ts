@@ -1,20 +1,17 @@
-import { useNotification, usePaginationStore } from '@/modules/shared'
-import { useQuery, useQueryClient } from '@tanstack/vue-query'
-import { storeToRefs } from 'pinia'
-import { computed, watch, watchEffect } from 'vue'
+import { useNotification } from '@/modules/shared'
+import { useQuery } from '@tanstack/vue-query'
+import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getCustomersSummaryAction } from '../actions'
 
 export const useCustomersSummary = () => {
   const { t } = useI18n()
-  const paginationStore = usePaginationStore()
-  const { page, lastPage } = storeToRefs(paginationStore)
-  const queryClient = useQueryClient()
   const { showError } = useNotification()
 
   const { data, isFetching, isLoading, isPlaceholderData, isError, refetch } = useQuery({
-    queryKey: ['customers:summary', { page }],
-    queryFn: async () => await getCustomersSummaryAction({ limit: 1000, page: 1 })
+    queryKey: ['customers:summary'],
+    queryFn: async () => await getCustomersSummaryAction({ limit: 10000, page: 1 }),
+    staleTime: Infinity
   })
 
   const loading = computed(() => isFetching.value || isLoading.value)

@@ -8,7 +8,8 @@ export const useVoucherReturnType = () => {
 
   const { data, isFetching, isLoading, isError } = useQuery({
     queryKey: ['voucher:return_type'],
-    queryFn: async () => getVoucherReturnTypeAction()
+    queryFn: async () => getVoucherReturnTypeAction(),
+    staleTime: Infinity
   })
 
   const returnTypes = computed(() => data.value || [])
