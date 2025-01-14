@@ -191,6 +191,17 @@
         "received": "Received",
         "productCode": "Product Code"
       }
+    },
+    "status": {
+      "Draft": "Draft",
+      "Submitted": "Submitted",
+      "Approved": "Approved",
+      "Rejected": "Rejected"
+    },
+    "returnType": {
+      "Expired": "Expired",
+      "Damaged": "Damaged",
+      "Good Condition": "Good Condition"
     }
   }
 }

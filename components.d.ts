@@ -39,6 +39,7 @@ declare module 'vue' {
     Menubar: typeof import('primevue/menubar')['default']
     Message: typeof import('primevue/message')['default']
     MultiSelect: typeof import('primevue/multiselect')['default']
+    Panel: typeof import('primevue/panel')['default']
     Password: typeof import('primevue/password')['default']
     ProgressBar: typeof import('primevue/progressbar')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -8,6 +8,7 @@ import CustomInputNumber from '@/modules/shared/components/CustomInputNumber.vue
 import CustomSelect from '@/modules/shared/components/CustomSelect.vue'
 import DetailPageCard from '@/modules/shared/components/DetailPageCard.vue'
 import { useVoucherReturnType } from '@/modules/voucher-catalog'
+import VoucherInfo from '../components/VoucherInfo.vue'
 import VoucherItems from '../components/VoucherItems.vue'
 import { useVoucher, useVoucherUpsert } from '../composables'
 import { VoucherStatus, type CreateVoucherItem, type VoucherForm } from '../interfaces'
@@ -80,6 +81,7 @@ const handleNewItem = (newItem: CreateVoucherItem) => {
           :loading="customersLoading"
           :label="t('voucher.fields.customer')"
           class="col-span-12 md:col-span-5"
+          :disabled="!canEdit"
         />
         <CustomSelect
           id="returnType"
@@ -90,6 +92,7 @@ const handleNewItem = (newItem: CreateVoucherItem) => {
           :loading="returnTypesLoading"
           :label="t('voucher.fields.returnType')"
           class="col-span-12 md:col-span-5"
+          :disabled="!canEdit"
         />
       </section>
 
@@ -136,6 +139,8 @@ const handleNewItem = (newItem: CreateVoucherItem) => {
         </template>
       </div>
     </form>
+
+    <VoucherInfo class="mt-6" :data="voucher" />
   </DetailPageCard>
 </template>
 

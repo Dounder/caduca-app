@@ -31,7 +31,6 @@ const showDialog = ref(false)
     @on:close="showDialog = false"
     @on:save="(item) => $emit('on:newItem', item)"
   />
-  <pre>{{ canEdit }}</pre>
 
   <CustomTable :data="items" grid :editable="false" :paginator="false">
     <Column :header="t('voucher.items.fields.quantity')">

@@ -16,6 +16,7 @@ interface Props {
   label?: string
   error?: string
   loading?: boolean
+  disabled?: boolean
 }
 withDefaults(defineProps<Props>(), {
   options: () => [{ name: 'Missing options', value: 1 }]
@@ -35,6 +36,7 @@ withDefaults(defineProps<Props>(), {
         :loading="loading"
         fluid
         :virtualScrollerOptions="{ itemSize: 38 }"
+        :disabled="disabled"
       />
 
       <label v-if="label" :for="id">{{ label }}</label>

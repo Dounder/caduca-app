@@ -191,6 +191,17 @@
         "received": "Recibido",
         "productCode": "Código de producto"
       }
+    },
+    "status": {
+      "Draft": "Borrador",
+      "Submitted": "Enviado",
+      "Approved": "Aprobado",
+      "Rejected": "Rechazado"
+    },
+    "returnType": {
+      "Expired": "Vencido",
+      "Damaged": "Dañado",
+      "Good Condition": "Buen estado"
     }
   }
 }
