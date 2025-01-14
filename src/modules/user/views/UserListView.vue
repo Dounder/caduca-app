@@ -7,6 +7,7 @@ import ListPage from '@/modules/shared/components/ListPage.vue'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import type { UserTable } from '../interfaces'
 import { useUserDeletionToggle, useUsers } from '../composables'
+import TableSearchBar from '@/modules/shared/components/TableSearchBar.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -14,16 +15,14 @@ const authStore = useAuthStore()
 const { deletionToggleMutation, isDeletionTogglePending } = useUserDeletionToggle()
 const { users, refetch, loading } = useUsers()
 
-const options = [
-  { label: t('user.table.username'), value: 'username' },
-  { label: t('user.table.email'), value: 'email' },
-  { label: t('user.table.roles'), value: 'roles' }
-]
 const onEdit = ({ username }: UserTable, newTab: boolean) => {
   const route = router.resolve({ name: 'user.detail', params: { username } })
   newTab ? window.open(route.href, '_blank') : router.push(route)
 }
 const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ userId: id, isDeleted: !!deletedAt })
+const onSearch = (search: string) => {
+  console.log(search)
+}
 </script>
 
 <template>
@@ -32,13 +31,11 @@ const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ user
     @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
     @on:refresh="refetch"
   >
-    <CustomTable
-      :data="users"
-      :loading="loading || isDeletionTogglePending"
-      :options="options"
-      @on:edit="onEdit"
-      @on:delete="onDelete"
-    >
+    <CustomTable :data="users" :loading="loading || isDeletionTogglePending" @on:edit="onEdit" @on:delete="onDelete">
+      <template #searchBar>
+        <TableSearchBar @on:search="onSearch" />
+      </template>
+
       <Column field="username" :header="t('user.table.username')" />
       <Column field="email" :header="t('user.table.email')" />
       <Column field="roles" :header="t('user.table.roles')">

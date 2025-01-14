@@ -3,33 +3,24 @@ import { PrimeIcons as icons } from '@primevue/core/api'
 import { useI18n } from 'vue-i18n'
 
 import { useAuthStore } from '@/modules/auth/store/auth.store'
-import type { SelectOption } from '../interfaces'
 import BottomPagination from './BottomPagination.vue'
-import TableSearchBar from './TableSearchBar.vue'
 
 interface Props {
   data: any[]
-  options?: SelectOption[]
   loading?: boolean
   editable?: boolean
   grid?: boolean
   paginator?: boolean
 }
-withDefaults(defineProps<Props>(), {
-  editable: true,
-  paginator: true
-})
+withDefaults(defineProps<Props>(), { editable: true, paginator: true })
 
 interface Emits {
   (e: 'on:edit', data: any, newTab: boolean): void
   (e: 'on:delete', data: any): void
-  (e: 'on:search', value: string, option: string): void
 }
-const emits = defineEmits<Emits>()
+defineEmits<Emits>()
 
 const { t } = useI18n()
-const onSearch = (value: string, option: string) => emits('on:search', value, option)
-
 const authStore = useAuthStore()
 </script>
 
@@ -45,8 +36,8 @@ const authStore = useAuthStore()
     :show-gridlines="grid"
     table-style="min-width: 50rem"
   >
-    <template #header v-if="options">
-      <TableSearchBar :options="options" @on:search="onSearch" />
+    <template #header>
+      <slot name="searchBar" />
     </template>
 
     <slot />

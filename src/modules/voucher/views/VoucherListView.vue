@@ -7,6 +7,7 @@ import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import { useAuthStore } from '@/modules/auth'
 import type { VoucherPlain } from '../interfaces'
 import { useRouter } from 'vue-router'
+import TableSearchBar from '@/modules/shared/components/TableSearchBar.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -20,6 +21,9 @@ const onEdit = ({ number }: VoucherPlain, newTab: boolean) => {
 const onDelete = () => {
   console.log('Delete')
 }
+const onSearch = (value: string) => {
+  console.log('Search', value)
+}
 </script>
 
 <template>
@@ -28,13 +32,10 @@ const onDelete = () => {
     @on:new="$router.push({ name: 'voucher.detail', params: { number: 'nuevo' } })"
     @on:refresh="refetch"
   >
-    <CustomTable
-      :data="vouchers"
-      :options="[{ name: '', value: '' }]"
-      :loading="loading || false"
-      @on:edit="onEdit"
-      @on:delete="onDelete"
-    >
+    <CustomTable :data="vouchers" :loading="loading || false" @on:edit="onEdit" @on:delete="onDelete">
+      <template #searchBar>
+        <TableSearchBar @on:search="onSearch" />
+      </template>
       <Column :header="t('voucher.fields.number')" field="number" />
       <Column :header="t('voucher.fields.approvedDate')" field="approvedDate" />
       <Column :header="t('voucher.fields.rejectedDate')" field="rejectedDate" />

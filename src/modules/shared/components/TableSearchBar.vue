@@ -8,22 +8,17 @@ import { useConfigStore, type SelectOption } from '..'
 
 const { t } = useI18n()
 
-interface Props {
-  options: SelectOption[]
-}
-defineProps<Props>()
-
 interface Emits {
-  (e: 'on:search', value: string, option: string): void
+  (e: 'on:search', value: string): void
 }
 const emits = defineEmits<Emits>()
 
 const searchValue = ref('')
-const selectedOption = ref('')
+
 const onSearch = () => {
   if (searchValue.value === '') return
 
-  emits('on:search', searchValue.value, selectedOption.value)
+  emits('on:search', searchValue.value)
 }
 
 const configStore = useConfigStore()
@@ -33,22 +28,9 @@ const { darkTheme } = storeToRefs(configStore)
 <template>
   <article class="grid grid-cols-12 gap-2">
     <!-- Search Bar -->
-    <FloatLabel class="col-span-full md:col-span-9" variant="on">
+    <FloatLabel class="col-span-11" variant="on">
       <InputText id="search_bar" class="w-full" v-model="searchValue" />
       <label for="search_bar">{{ t('shared.actions.search') }}...</label>
-    </FloatLabel>
-
-    <!-- Options Dropdown -->
-    <FloatLabel class="col-span-5 md:col-span-2" variant="on">
-      <Select
-        inputId="search_options"
-        :options="options"
-        optionLabel="label"
-        option-value="value"
-        class="w-full"
-        :default-value="options[0].value"
-      />
-      <label for="search_options">{{ t('shared.actions.options') }}</label>
     </FloatLabel>
 
     <!-- Search Button -->
