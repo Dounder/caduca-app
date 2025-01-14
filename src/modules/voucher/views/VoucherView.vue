@@ -19,8 +19,8 @@ const props = defineProps<Props>()
 const { number } = toRefs(props)
 
 const { t } = useI18n()
-const { voucher, refetch, form, errors, canSave, isFetching, isDeleted, handleSubmit, pushItem, updateItem, canEdit } =
-  useVoucher(number)
+const { voucher, refetch, isFetching, isDeleted, canEdit, canReceive, voucherForm } = useVoucher(number)
+const { form, errors, pushItem, updateItem, handleSubmit, canSave } = voucherForm
 const { customers, loading: customersLoading } = useCustomersSummary()
 const { returnTypes, loading: returnTypesLoading } = useVoucherReturnType()
 const { upsertMutation, isPending: upsertPending } = useVoucherUpsert()
@@ -97,7 +97,13 @@ const handleNewItem = (newItem: CreateVoucherItem) => {
         <b>{{ t('voucher.items.title') }}</b>
       </Divider>
 
-      <VoucherItems :canEdit="canEdit" :items="form.items" :error="errors.items" @on:newItem="handleNewItem" />
+      <VoucherItems
+        :canEdit="canEdit"
+        :canReceive="canReceive"
+        :items="form.items"
+        :error="errors.items"
+        @on:newItem="handleNewItem"
+      />
 
       <div class="flex justify-end mt-6">
         <CustomButton
@@ -112,7 +118,22 @@ const handleNewItem = (newItem: CreateVoucherItem) => {
           @click="voucherStatus = VoucherStatus.Submitted"
           :label="t('shared.actions.save')"
           :disabled="!canSave"
+          v-if="canEdit"
         />
+        <template v-if="voucher.status?.id === VoucherStatus.Submitted">
+          <CustomButton
+            type="submit"
+            @click="voucherStatus = VoucherStatus.Rejected"
+            :label="t('shared.actions.reject')"
+            severity="danger"
+          />
+          <CustomButton
+            type="submit"
+            @click="voucherStatus = VoucherStatus.Approved"
+            :label="t('shared.actions.approve')"
+            :disabled="!canSave"
+          />
+        </template>
       </div>
     </form>
   </DetailPageCard>

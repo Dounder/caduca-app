@@ -10,7 +10,7 @@ export const upsertVoucherAction = async (voucher: VoucherForm): Promise<Voucher
 
 const createVoucher = async (voucher: VoucherForm): Promise<Voucher> => {
   try {
-    const { items = [], ...rest } = voucher
+    const { items = [], id: _, ...rest } = voucher
 
     const { data } = await api.post<Voucher>('/voucher', {
       ...rest,

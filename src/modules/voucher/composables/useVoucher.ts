@@ -25,6 +25,9 @@ export const useVoucher = (number: Ref<string>) => {
   const isFetching = computed(() => isLoading.value || isRefetching.value)
   const isDeleted = computed(() => voucher?.value?.deletedAt !== null)
   const canEdit = computed(() => (voucher.value?.status ? voucher.value.status.id === VoucherStatus.Draft : true))
+  const canReceive = computed(() =>
+    voucher.value?.status ? voucher.value.status.id === VoucherStatus.Submitted : false
+  )
 
   watch([isError, isLoading], ([error, loading]) => {
     if (error && !loading) router.replace({ name: 'voucher.list' })
@@ -66,12 +69,13 @@ export const useVoucher = (number: Ref<string>) => {
     isFetching,
     isDeleted,
     canEdit,
+    canReceive,
 
     //? Methods
     refetch,
 
     //? form
-    ...voucherForm
+    voucherForm
   }
 }
 

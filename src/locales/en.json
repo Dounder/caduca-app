@@ -15,7 +15,9 @@
       "search": "Search",
       "options": "Options",
       "copy": "Copy",
-      "add": "Add"
+      "add": "Add",
+      "approve": "Approve",
+      "reject": "Reject"
     },
     "toast": {
       "success": { "summary": "Success", "detail": "Message content" },

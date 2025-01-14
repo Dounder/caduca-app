@@ -12,6 +12,7 @@ interface Props {
   items: FieldEntry<CreateVoucherItem>[]
   error?: string
   canEdit: boolean
+  canReceive: boolean
 }
 defineProps<Props>()
 interface Emits {
@@ -53,7 +54,7 @@ const showDialog = ref(false)
         <span>{{ data.value.observation }}</span>
       </template>
     </Column>
-    <Column :header="t('voucher.items.fields.received')">
+    <Column :header="t('voucher.items.fields.received')" v-if="canReceive">
       <template #body="{ data }">
         <article class="flex justify-center items-center">
           <Checkbox v-model="data.value.received" binary size="large" />
