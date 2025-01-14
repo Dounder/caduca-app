@@ -15,7 +15,8 @@ export const useProductCodes = () => {
   const { data, isFetching, isLoading, isError, refetch } = useQuery({
     queryKey: ['product_codes'],
     queryFn: async () => await handleProductCodesRequest(),
-    staleTime: Infinity
+    staleTime: Infinity,
+    refetchOnMount: 'always'
   })
   const loading = computed(() => isFetching.value || isLoading.value)
 
