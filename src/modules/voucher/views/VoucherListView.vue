@@ -28,7 +28,13 @@ const onDelete = () => {
     @on:new="$router.push({ name: 'voucher.detail', params: { number: 'nuevo' } })"
     @on:refresh="refetch"
   >
-    <CustomTable :data="vouchers" :loading="loading || false" @on:edit="onEdit" @on:delete="onDelete">
+    <CustomTable
+      :data="vouchers"
+      :options="[{ name: '', value: '' }]"
+      :loading="loading || false"
+      @on:edit="onEdit"
+      @on:delete="onDelete"
+    >
       <Column :header="t('voucher.fields.number')" field="number" />
       <Column :header="t('voucher.fields.approvedDate')" field="approvedDate" />
       <Column :header="t('voucher.fields.rejectedDate')" field="rejectedDate" />

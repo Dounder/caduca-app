@@ -28,7 +28,7 @@ const onDelete = ({ id, deletedAt }: ProductPlain) => deletionMutation({ id, isD
   >
     <CustomTable
       :data="products"
-      :options="[{ label: '', value: '' }]"
+      :options="[{ name: '', value: '' }]"
       :loading="loading || isPending"
       @on:edit="onEdit"
       @on:delete="onDelete"
