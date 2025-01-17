@@ -8,6 +8,7 @@ import { useAuthStore } from '@/modules/auth'
 import type { VoucherPlain } from '../interfaces'
 import { useRouter } from 'vue-router'
 import TableSearchBar from '@/modules/shared/components/TableSearchBar.vue'
+import { DateUtils } from '@/modules/shared'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -37,8 +38,16 @@ const onSearch = (value: string) => {
         <TableSearchBar @on:search="onSearch" />
       </template>
       <Column :header="t('voucher.fields.number')" field="number" />
-      <Column :header="t('voucher.fields.approvedDate')" field="approvedDate" />
-      <Column :header="t('voucher.fields.rejectedDate')" field="rejectedDate" />
+      <Column :header="t('voucher.fields.approvedDate')">
+        <template #body="{ data }">
+          {{ DateUtils.convertDate(data.approvedDate) }}
+        </template>
+      </Column>
+      <Column :header="t('voucher.fields.rejectedDate')">
+        <template #body="{ data }">
+          {{ DateUtils.convertDate(data.rejectedDate) }}
+        </template>
+      </Column>
       <Column :header="t('shared.fields.createdAt')" field="createdAt" />
       <Column :header="t('shared.fields.createdBy')" field="createdBy" />
       <Column :header="t('shared.fields.deletedAt')" field="deletedAt" v-if="authStore.canDelete" />
