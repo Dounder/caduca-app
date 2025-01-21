@@ -2,9 +2,13 @@ import { api } from '@/api'
 import { DateUtils, type ApiListResponse } from '@/modules/shared'
 import type { Product, ProductPlain } from '../interfaces'
 
-export const getProductsAction = async (page: number = 1): Promise<ApiListResponse<ProductPlain>> => {
+export const getProductsAction = async (
+  page: number = 1,
+  search: string = ''
+): Promise<ApiListResponse<ProductPlain>> => {
   try {
     const params = new URLSearchParams({ page: page.toString(), limit: '10' })
+    if (search) params.append('search', search)
 
     const { data } = await api.get<ApiListResponse<Product>>('/product', { params })
 
