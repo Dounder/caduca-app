@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 
 import { useAuthStore } from '@/modules/auth/store/auth.store'
 import BottomPagination from './BottomPagination.vue'
+import TableSearchBar from './TableSearchBar.vue'
 
 interface Props {
   data: any[]
@@ -37,7 +38,7 @@ const authStore = useAuthStore()
     table-style="min-width: 50rem"
   >
     <template #header>
-      <slot name="searchBar" />
+      <TableSearchBar />
     </template>
 
     <slot />
