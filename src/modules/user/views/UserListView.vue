@@ -3,11 +3,10 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 import { useAuthStore } from '@/modules/auth'
-import ListPage from '@/modules/shared/components/ListPage.vue'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
-import type { UserTable } from '../interfaces'
+import ListPage from '@/modules/shared/components/ListPage.vue'
 import { useUserDeletionToggle, useUsers } from '../composables'
-import TableSearchBar from '@/modules/shared/components/TableSearchBar.vue'
+import type { UserTable } from '../interfaces'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -29,10 +28,6 @@ const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ user
     @on:refresh="refetch"
   >
     <CustomTable :data="users" :loading="loading || isDeletionTogglePending" @on:edit="onEdit" @on:delete="onDelete">
-      <template #searchBar>
-        <TableSearchBar />
-      </template>
-
       <Column field="username" :header="t('user.table.username')" />
       <Column field="email" :header="t('user.table.email')" />
       <Column field="roles" :header="t('user.table.roles')">
