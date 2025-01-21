@@ -59,7 +59,7 @@ const onNewCode = () => {
         autofocus
       />
 
-      <ProductCodes :codes="product.codes" @add:code="onNewCode" />
+      <ProductCodes v-if="product.id !== ''" :codes="product.codes" @add:code="onNewCode" />
 
       <div class="col-span-12 flex justify-end">
         <CustomButton type="submit" :label="t('shared.actions.save')" :disabled="!canSave" />
