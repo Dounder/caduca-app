@@ -17,7 +17,8 @@
       "copy": "Copiar",
       "add": "Agregar",
       "approve": "Aprobar",
-      "reject": "Rechazar"
+      "reject": "Rechazar",
+      "clean": "Limpiar"
     },
     "toast": {
       "success": { "summary": "Éxito", "detail": "Contenido del mensaje" },

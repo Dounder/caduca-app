@@ -5,17 +5,21 @@ import { useI18n } from 'vue-i18n'
 import { useNotification, usePaginationStore } from '@/modules/shared'
 import { storeToRefs } from 'pinia'
 import { getUsersAction } from '../actions/get-users.action'
+import { useRoute } from 'vue-router'
 
 export const useUsers = () => {
+  const route = useRoute()
   const { t } = useI18n()
   const queryClient = useQueryClient()
   const { showError } = useNotification()
+
+  const searchValue = computed(() => (route.query.q as string) || '')
   const paginationStore = usePaginationStore()
   const { page, lastPage } = storeToRefs(paginationStore)
 
   const { data, isFetching, isLoading, isPlaceholderData, isError, refetch } = useQuery({
-    queryKey: ['users', { page }],
-    queryFn: () => getUsersAction(page.value)
+    queryKey: ['users', { page, searchValue }],
+    queryFn: () => getUsersAction(page.value, searchValue.value)
   })
 
   const loading = computed(() => isFetching.value || isLoading.value)
@@ -27,14 +31,14 @@ export const useUsers = () => {
 
     if (currentPage > 1)
       queryClient.prefetchQuery({
-        queryKey: ['users', { page: currentPage - 1 }],
-        queryFn: () => getUsersAction(currentPage - 1)
+        queryKey: ['users', { page: currentPage - 1, search: searchValue.value }],
+        queryFn: () => getUsersAction(currentPage - 1, searchValue.value)
       })
 
     if (currentPage < currentLastPage)
       queryClient.prefetchQuery({
-        queryKey: ['users', { page: currentPage + 1 }],
-        queryFn: () => getUsersAction(currentPage + 1)
+        queryKey: ['users', { page: currentPage + 1, search: searchValue.value }],
+        queryFn: () => getUsersAction(currentPage + 1, searchValue.value)
       })
   })
 

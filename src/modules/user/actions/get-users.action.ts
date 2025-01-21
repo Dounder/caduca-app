@@ -1,18 +1,14 @@
 import { api } from '@/api'
-import {
-  type ApiListResponse,
-  DateUtils,
-  exceptionHandlerHelper,
-  getLimitPaginationHelper
-} from '@/modules/shared'
+import { type ApiListResponse, DateUtils, exceptionHandlerHelper, getLimitPaginationHelper } from '@/modules/shared'
 import type { User, UserTable } from '../interfaces'
 
-export const getUsersAction = async (page: number = 1): Promise<ApiListResponse<UserTable>> => {
+export const getUsersAction = async (page: number = 1, search: string = ''): Promise<ApiListResponse<UserTable>> => {
   try {
     const limit = getLimitPaginationHelper()
     const params = new URLSearchParams()
     params.append('page', page.toString())
     params.append('limit', limit.toString())
+    if (search) params.append('search', search)
 
     const { data } = await api.get<ApiListResponse<User>>('/user', { params })
 

@@ -20,9 +20,6 @@ const onEdit = ({ username }: UserTable, newTab: boolean) => {
   newTab ? window.open(route.href, '_blank') : router.push(route)
 }
 const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ userId: id, isDeleted: !!deletedAt })
-const onSearch = (search: string) => {
-  console.log(search)
-}
 </script>
 
 <template>
@@ -33,7 +30,7 @@ const onSearch = (search: string) => {
   >
     <CustomTable :data="users" :loading="loading || isDeletionTogglePending" @on:edit="onEdit" @on:delete="onDelete">
       <template #searchBar>
-        <TableSearchBar @on:search="onSearch" />
+        <TableSearchBar />
       </template>
 
       <Column field="username" :header="t('user.table.username')" />

@@ -4,21 +4,27 @@ import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { useConfigStore, type SelectOption } from '..'
+import { useConfigStore } from '..'
+import { useRoute, useRouter } from 'vue-router'
 
 const { t } = useI18n()
 
-interface Emits {
-  (e: 'on:search', value: string): void
-}
-const emits = defineEmits<Emits>()
-
-const searchValue = ref('')
+const router = useRouter()
+const route = useRoute()
+const searchValue = ref<string>((route.query.q as string) || '')
 
 const onSearch = () => {
-  if (searchValue.value === '') return
+  router.push({
+    query: {
+      ...route.query, // keep other existing query params
+      q: searchValue.value || undefined
+    }
+  })
+}
 
-  emits('on:search', searchValue.value)
+const onClean = () => {
+  searchValue.value = ''
+  onSearch()
 }
 
 const configStore = useConfigStore()
@@ -26,23 +32,35 @@ const { darkTheme } = storeToRefs(configStore)
 </script>
 
 <template>
-  <article class="grid grid-cols-12 gap-2">
-    <!-- Search Bar -->
-    <FloatLabel class="col-span-11" variant="on">
-      <InputText id="search_bar" class="w-full" v-model="searchValue" />
-      <label for="search_bar">{{ t('shared.actions.search') }}...</label>
-    </FloatLabel>
+  <form @submit.prevent="onSearch">
+    <InputGroup class="">
+      <FloatLabel variant="on">
+        <InputText id="search_bar" class="w-full" v-model="searchValue" />
+        <label for="search_bar">{{ t('shared.actions.search') }}...</label>
+      </FloatLabel>
 
-    <!-- Search Button -->
-    <Button
-      v-tooltip.top="t('shared.actions.search')"
-      :icon="icons.SEARCH"
-      @click="onSearch"
-      :text="darkTheme"
-      :outlined="!darkTheme"
-      class="col-span-1 !w-full"
-    />
-  </article>
+      <InputGroupAddon>
+        <Button
+          v-tooltip.top="t('shared.actions.clean')"
+          :icon="icons.ERASER"
+          :text="darkTheme"
+          :outlined="!darkTheme"
+          :disabled="!searchValue"
+          @click="onClean"
+        />
+      </InputGroupAddon>
+
+      <InputGroupAddon>
+        <Button
+          type="submit"
+          v-tooltip.top="t('shared.actions.search')"
+          :icon="icons.SEARCH"
+          :text="darkTheme"
+          :outlined="!darkTheme"
+        />
+      </InputGroupAddon>
+    </InputGroup>
+  </form>
 </template>
 
 <style scoped></style>
