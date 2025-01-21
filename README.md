@@ -1,44 +1,44 @@
 # dracking
 
-Frontend for a microservice api that is a clone of [Amazon](https://www.amazon.com/). With the most simple features like user registration, login, product listing, and cart management.
+Esta es la aplicación backend para el sistema de vales de producto vencido, construida con NestJS. Proporciona una API RESTful para la aplicación frontend y maneja toda la lógica de negocio, gestión de datos y características de seguridad.
 
-## Recommended IDE Setup
+## Configuración recomendada del IDE
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (y desactivar Vetur).
 
-## Type Support for `.vue` Imports in TS
+## Soporte de tipos para importaciones de `.vue` en TS
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+TypeScript no puede manejar la información de tipos para importaciones de `.vue` por defecto, por lo que reemplazamos la CLI `tsc` con `vue-tsc` para la comprobación de tipos. En los editores, necesitamos [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) para que el servicio de lenguaje TypeScript reconozca los tipos de `.vue`.
 
-## Customize configuration
+## Personalizar configuración
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Ver [Referencia de configuración de Vite](https://vitejs.dev/config/).
 
-## Project Setup
+## Configuración del proyecto
 
 ```sh
 bun install
 ```
 
-### Compile and Hot-Reload for Development
+### Compilar y recargar automáticamente para desarrollo
 
 ```sh
 bun dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Comprobar tipos, compilar y minificar para producción
 
 ```sh
 bun build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Ejecutar pruebas unitarias con [Vitest](https://vitest.dev/)
 
 ```sh
 bun test:unit
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Lint con [ESLint](https://eslint.org/)
 
 ```sh
 bun lint

@@ -1,13 +1,14 @@
 import { api } from '@/api'
 import { faker } from '@faker-js/faker'
 import type { Salesperson } from '../interfaces'
+import { envs } from '@/config/envs'
 
 export const getSalespersonAction = async (code: string): Promise<Salesperson> => {
   if (code === 'nuevo')
     return {
       id: '',
       code: 0,
-      name: faker.person.fullName(),
+      name: envs.isDev ? faker.person.fullName() : '',
       createdAt: null,
       updatedAt: null,
       deletedAt: null,
