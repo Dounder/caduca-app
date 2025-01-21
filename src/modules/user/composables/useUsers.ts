@@ -18,7 +18,7 @@ export const useUsers = () => {
   const { page, lastPage } = storeToRefs(paginationStore)
 
   const { data, isFetching, isLoading, isPlaceholderData, isError, refetch } = useQuery({
-    queryKey: ['users', { page, searchValue }],
+    queryKey: ['users', { page, search: searchValue }],
     queryFn: () => getUsersAction(page.value, searchValue.value)
   })
 
