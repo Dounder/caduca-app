@@ -32,12 +32,14 @@ export const getMenuOptions = (userRoles: RoleItem[]) => {
     {
       label: t('navbar.products'),
       icon: icons.BOX,
-      route: { name: 'product.list' }
+      route: { name: 'product.list' },
+      roles: [RoleId.Admin, RoleId.Developer, RoleId.Manager]
     },
     {
       label: t('navbar.expiredVouchers'),
       icon: icons.TICKET,
-      route: { name: 'voucher.list' }
+      route: { name: 'voucher.list' },
+      roles: [RoleId.Admin, RoleId.Developer, RoleId.Manager, RoleId.Salesperson, RoleId.Warehouse]
     }
   ]
 
