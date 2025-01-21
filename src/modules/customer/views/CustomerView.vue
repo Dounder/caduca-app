@@ -35,7 +35,7 @@ const isPending = computed(() => isFetching.value || isDeletionTogglePending.val
     :deleted="isDeleted"
     :back-route="{ name: 'customer.list' }"
     :loading="isPending"
-    @on:new="$router.push({ name: 'customer.detail', params: { username: 'nuevo' } })"
+    @on:new="$router.push({ name: 'customer.detail', params: { code: 'nuevo' } })"
     @on:delete="onDelete"
     @on:refresh="refetch"
   >

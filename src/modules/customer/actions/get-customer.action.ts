@@ -13,7 +13,7 @@ export const getCustomerAction = async (code: string): Promise<Customer> => {
       address: envs.isDev ? faker.location.streetAddress({ useFullAddress: true }) : '',
       createdAt: new Date(),
       updatedAt: new Date(),
-      deletedAt: new Date(),
+      deletedAt: null,
       createdBy: null,
       updatedBy: null,
       deletedBy: null
