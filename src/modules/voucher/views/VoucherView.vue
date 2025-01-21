@@ -114,16 +114,16 @@ const handleNewItem = (newItem: CreateVoucherItem) => {
           @click="voucherStatus = VoucherStatus.Draft"
           :label="t('shared.actions.saveDraft')"
           :disabled="!canSave"
-          v-if="canEdit"
+          v-if="!voucher.status"
         />
         <CustomButton
           type="submit"
           @click="voucherStatus = VoucherStatus.Submitted"
           :label="t('shared.actions.save')"
-          :disabled="!canSave"
+          :disabled="!voucher.status && !canSave"
           v-if="canEdit"
         />
-        <template v-if="voucher.status?.id === VoucherStatus.Submitted">
+        <template v-if="voucher.status?.id === VoucherStatus.Submitted && canReceive">
           <CustomButton
             type="submit"
             @click="voucherStatus = VoucherStatus.Rejected"

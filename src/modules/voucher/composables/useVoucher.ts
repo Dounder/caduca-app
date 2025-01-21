@@ -2,14 +2,18 @@ import { useQuery } from '@tanstack/vue-query'
 import { computed, reactive, watch, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { getVoucherAction } from '../actions'
-import { voucherSchema } from '../schemas'
+import { useAuthStore } from '@/modules/auth'
 import { useFieldArray, useForm } from 'vee-validate'
+import { getVoucherAction } from '../actions'
 import { VoucherStatus, type CreateVoucherItem } from '../interfaces'
+import { voucherSchema } from '../schemas'
+import { hasRoles } from '@/modules/shared'
+import { RoleId } from '@/modules/user'
 
 export const useVoucher = (number: Ref<string>) => {
   const router = useRouter()
   const voucherForm = useVoucherForm()
+  const authStore = useAuthStore()
 
   const {
     data: voucher,
@@ -25,9 +29,7 @@ export const useVoucher = (number: Ref<string>) => {
   const isFetching = computed(() => isLoading.value || isRefetching.value)
   const isDeleted = computed(() => voucher?.value?.deletedAt !== null)
   const canEdit = computed(() => (voucher.value?.status ? voucher.value.status.id === VoucherStatus.Draft : true))
-  const canReceive = computed(() =>
-    voucher.value?.status ? voucher.value.status.id === VoucherStatus.Submitted : false
-  )
+  const canReceive = computed(() => hasRoles(authStore.userRoles, [RoleId.Admin, RoleId.Warehouse]))
 
   watch([isError, isLoading], ([error, loading]) => {
     if (error && !loading) router.replace({ name: 'voucher.list' })

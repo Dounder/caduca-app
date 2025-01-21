@@ -84,7 +84,7 @@ export const useAuthStore = defineStore('auth', () => {
     isChecking: computed(() => authStatus.value === AuthStatus.Checking),
     isAuthenticated: computed(() => authStatus.value === AuthStatus.Authenticated),
     username: computed(() => user.value?.username),
-    userRoles: computed(() => user.value?.roles),
+    userRoles: computed(() => user.value?.roles || []),
     canDelete: computed(() => hasRoles(user.value?.roles || [], [RoleId.Admin, RoleId.Developer])),
 
     // Actions
