@@ -6,7 +6,7 @@ import { computed } from 'vue'
 import { useAuthStore } from '@/modules/auth'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import ListPage from '@/modules/shared/components/ListPage.vue'
-import { useSalespersonDeletion, useSalespersons } from '../composables'
+import { useSalespersonDeletion, useSalespersonReports, useSalespersons } from '../composables'
 import type { SalespersonTable } from '../interfaces'
 
 const { t } = useI18n()
@@ -15,6 +15,8 @@ const router = useRouter()
 const authStore = useAuthStore()
 const { salespersons, refetch, loading } = useSalespersons()
 const { deletionToggleMutation, isPending: deletionPending } = useSalespersonDeletion()
+const { salespersonReportMutation, isGeneratingReport } = useSalespersonReports()
+
 const isPending = computed(() => loading.value || deletionPending.value)
 
 const onEdit = ({ code }: SalespersonTable, newTab: boolean) => {
@@ -29,6 +31,8 @@ const onDelete = ({ id, deletedAt }: SalespersonTable) => deletionToggleMutation
     :title="t('salesperson.title')"
     @on:new="$router.push({ name: 'salesperson.detail', params: { code: 'nuevo' } })"
     @on:refresh="refetch"
+    @on:export="salespersonReportMutation"
+    v-model:visible="isGeneratingReport"
   >
     <CustomTable :data="salespersons" :loading="isPending" @on:delete="onDelete" @on:edit="onEdit">
       <Column field="code" :header="t('salesperson.table.code')" />

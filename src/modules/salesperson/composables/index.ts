@@ -1,4 +1,5 @@
 export * from './useSalesperson'
 export * from './useSalespersonDeletion'
+export * from './useSalespersonReports'
 export * from './useSalespersonUpsert'
 export * from './useSalespersons'
