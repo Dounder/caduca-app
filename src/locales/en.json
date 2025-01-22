@@ -37,7 +37,9 @@
       "saved": "{0} saved successfully",
       "error": "Operation failed",
       "additionalInfo": "Additional information",
-      "noData": "No data available"
+      "noData": "No data available",
+      "reportFailed": "Error generating report",
+      "generatingReport": "Generating report"
     },
     "fields": {
       "createdAt": "Created At",

@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/modules/auth'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import ListPage from '@/modules/shared/components/ListPage.vue'
-import { useUserDeletionToggle, useUsers } from '../composables'
+import { useUserDeletionToggle, useUserReports, useUsers } from '../composables'
 import type { UserTable } from '../interfaces'
 
 const router = useRouter()
@@ -13,6 +13,7 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 const { deletionToggleMutation, isDeletionTogglePending } = useUserDeletionToggle()
 const { users, refetch, loading } = useUsers()
+const { userReportMutation, isGeneratingReport } = useUserReports()
 
 const onEdit = ({ username }: UserTable, newTab: boolean) => {
   const route = router.resolve({ name: 'user.detail', params: { username } })
@@ -26,6 +27,8 @@ const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ user
     :title="t('user.title')"
     @on:new="$router.push({ name: 'user.detail', params: { username: 'nuevo' } })"
     @on:refresh="refetch"
+    @on:export="userReportMutation"
+    v-model:visible="isGeneratingReport"
   >
     <CustomTable :data="users" :loading="loading || isDeletionTogglePending" @on:edit="onEdit" @on:delete="onDelete">
       <Column field="username" :header="t('user.table.username')" />

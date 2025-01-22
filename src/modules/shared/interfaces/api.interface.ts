@@ -1,3 +1,5 @@
+import type { AxiosResponseHeaders } from 'axios'
+
 export interface ApiListResponse<T> {
   meta: ApiListMeta
   data: T[]
@@ -16,4 +18,9 @@ export interface DeletionToggle {
 export interface CatalogResponse {
   id: number
   name: string
+}
+
+export interface BlobResponse {
+  blob: Blob
+  headers: Record<string, any>
 }

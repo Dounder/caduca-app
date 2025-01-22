@@ -2,14 +2,18 @@
 import { PrimeIcons as icons } from '@primevue/core/api'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
+
 import { useConfigStore } from '../stores'
+import CustomSpinner from './CustomSpinner.vue'
 
 interface Props {
   title: string
+  visible: boolean
 }
 
-defineProps<Props>()
-defineEmits(['on:refresh', 'on:new', 'on:export'])
+const props = defineProps<Props>()
+const emit = defineEmits(['on:refresh', 'on:new', 'on:export', 'update:visible'])
+
 const { t } = useI18n()
 const configStore = useConfigStore()
 const { darkTheme, isMobile } = storeToRefs(configStore)
@@ -43,7 +47,6 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
           :outlined="!darkTheme"
           :rounded="isMobile"
         />
-        <!-- TODO: Implement export logic -->
         <Button
           size="small"
           v-tooltip.top="!isMobile ? '' : t('shared.actions.export')"
@@ -53,13 +56,24 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
           :text="darkTheme"
           :outlined="!darkTheme"
           :rounded="isMobile"
-          disabled
         />
       </section>
     </template>
   </Toolbar>
 
   <slot />
-</template>
 
-<style scoped></style>
+  <!-- Use v-bind and v-on instead of v-model -->
+  <Dialog
+    :visible="props.visible"
+    @update:visible="$emit('update:visible', $event)"
+    modal
+    :closable="false"
+    class="w-1/2"
+  >
+    <div class="flex flex-col items-center gap-4 p-10">
+      <span class="text-2xl">{{ t('shared.messages.generatingReport') }}...</span>
+      <CustomSpinner />
+    </div>
+  </Dialog>
+</template>

@@ -37,7 +37,9 @@
       "saved": "{0} guardado exitosamente",
       "error": "Operación fallida",
       "additionalInfo": "Información adicional",
-      "noData": "No hay datos para mostrar"
+      "noData": "No hay datos para mostrar",
+      "reportFailed": "Error al generar el reporte",
+      "generatingReport": "Generando reporte"
     },
     "fields": {
       "createdAt": "Creado",
