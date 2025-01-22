@@ -28,6 +28,7 @@ const onDelete = () => {
     :title="t('voucher.title')"
     @on:new="$router.push({ name: 'voucher.detail', params: { number: 'nuevo' } })"
     @on:refresh="refetch"
+    :can-export="false"
   >
     <CustomTable :data="vouchers" :loading="loading || false" @on:edit="onEdit" @on:delete="onDelete">
       <Column :header="t('voucher.fields.number')" field="number" />

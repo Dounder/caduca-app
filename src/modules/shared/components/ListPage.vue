@@ -8,10 +8,11 @@ import CustomSpinner from './CustomSpinner.vue'
 
 interface Props {
   title: string
-  visible: boolean
+  visible?: boolean
+  canExport?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), { canExport: true })
 const emit = defineEmits(['on:refresh', 'on:new', 'on:export', 'update:visible'])
 
 const { t } = useI18n()
@@ -56,6 +57,7 @@ const { darkTheme, isMobile } = storeToRefs(configStore)
           :text="darkTheme"
           :outlined="!darkTheme"
           :rounded="isMobile"
+          v-if="canExport"
         />
       </section>
     </template>

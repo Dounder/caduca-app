@@ -7,6 +7,7 @@ import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import ListPage from '@/modules/shared/components/ListPage.vue'
 import { useProductDeletion, useProducts } from '../composables'
 import type { ProductPlain } from '../interfaces'
+import { useProductReports } from '../composables'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -14,6 +15,7 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 const { products, loading, refetch } = useProducts()
 const { deletionMutation, isPending } = useProductDeletion()
+const { isGeneratingReport, productReportMutation } = useProductReports()
 
 const onEdit = ({ slug }: ProductPlain, newTab: boolean) => {
   const route = router.resolve({ name: 'product.detail', params: { slug } })
@@ -27,6 +29,8 @@ const onDelete = ({ id, deletedAt }: ProductPlain) => deletionMutation({ id, isD
     :title="t('product.title')"
     @on:new="$router.push({ name: 'product.detail', params: { slug: 'nuevo' } })"
     @on:refresh="refetch"
+    @on:export="productReportMutation"
+    v-model:visible="isGeneratingReport"
   >
     <CustomTable
       :data="products"
