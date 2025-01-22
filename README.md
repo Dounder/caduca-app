@@ -1,4 +1,4 @@
-# dracking
+# Caduca
 
 Esta es la aplicación backend para el sistema de vales de producto vencido, construida con NestJS. Proporciona una API RESTful para la aplicación frontend y maneja toda la lógica de negocio, gestión de datos y características de seguridad.
 
