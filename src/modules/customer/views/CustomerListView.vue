@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/modules/auth'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import ListPage from '@/modules/shared/components/ListPage.vue'
-import { useCustomers, useDeletionCustomer } from '../composables'
+import { useCustomerReports, useCustomers, useDeletionCustomer } from '../composables'
 import type { CustomerTable } from '../interfaces'
 
 const router = useRouter()
@@ -13,6 +13,7 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 const { customers, loading, refetch } = useCustomers()
 const { deletionToggleMutation, isPending } = useDeletionCustomer()
+const { customerReportMutation, isGeneratingReport } = useCustomerReports()
 
 const onEdit = ({ code }: CustomerTable, newTab: boolean) => {
   const route = router.resolve({ name: 'customer.detail', params: { code } })
@@ -26,6 +27,8 @@ const onDelete = ({ id, deletedAt }: CustomerTable) => deletionToggleMutation({ 
     :title="t('customer.title')"
     @on:new="$router.push({ name: 'customer.detail', params: { code: 'nuevo' } })"
     @on:refresh="refetch"
+    @on:export="customerReportMutation"
+    v-model:visible="isGeneratingReport"
   >
     <CustomTable :data="customers" :loading="loading || isPending" @on:edit="onEdit" @on:delete="onDelete">
       <Column field="code" :header="t('customer.table.code')" />
