@@ -3,7 +3,6 @@ import type { RouteRecordRaw } from 'vue-router'
 import isAuthenticatedGuard from '@/modules/auth/guards/is-authenticated.guard'
 import { CUSTOMER_ROUTES } from '@/modules/customer/routes'
 import { PRODUCT_ROUTES } from '@/modules/product'
-import { SALES_PERSON_ROUTES } from '@/modules/salesperson/routes'
 import { USER_ROUTES } from '@/modules/user/routes'
 import { VOUCHER_ROUTES } from '@/modules/voucher'
 
@@ -29,7 +28,6 @@ export const HOME_ROUTES: RouteRecordRaw = {
     },
     ...USER_ROUTES,
     ...CUSTOMER_ROUTES,
-    ...SALES_PERSON_ROUTES,
     ...PRODUCT_ROUTES,
     ...VOUCHER_ROUTES
   ]

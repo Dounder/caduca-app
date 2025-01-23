@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n'
 export const getMenuOptions = (userRoles: RoleItem[]) => {
   const { t } = useI18n()
   const menuItems = [
-    { icon: icons.HOME, route: { name: 'home' } },
+    { icon: icons.HOME, mobile: t('navbar.home'), route: { name: 'home' } },
     {
       label: t('navbar.directory'),
       icon: icons.BOOK,
@@ -21,11 +21,6 @@ export const getMenuOptions = (userRoles: RoleItem[]) => {
           label: t('navbar.customer'),
           route: { name: 'customer.list' },
           roles: [RoleId.Admin, RoleId.Developer, RoleId.Manager, RoleId.Salesperson]
-        },
-        {
-          label: t('navbar.salesperson'),
-          route: { name: 'salesperson.list' },
-          roles: [RoleId.Admin, RoleId.Developer, RoleId.Manager]
         }
       ]
     },

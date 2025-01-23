@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/modules/auth/store/auth.store'
-import { PrimeIcons as icons } from '@primevue/core/api'
 import { storeToRefs } from 'pinia'
+
+import { useAuthStore } from '@/modules/auth/store/auth.store'
+import { useConfigStore } from '@/modules/shared'
+import { PrimeIcons as icons } from '@primevue/core/api'
 import { getMenuOptions } from '../data/menu-options.data'
 import OptionsMenu from './OptionsMenu.vue'
 
 const authStore = useAuthStore()
 const { userRoles } = storeToRefs(authStore)
+const configStore = useConfigStore()
+
 const items = getMenuOptions(userRoles.value || [])
 </script>
 
@@ -17,6 +21,7 @@ const items = getMenuOptions(userRoles.value || [])
         <a v-ripple :href="href" v-bind="props.action" @click="navigate">
           <span v-if="item.icon" :class="[item.icon, 'p-2']" />
           <span v-if="item.label">{{ item.label }}</span>
+          <span v-if="configStore.isMobile && item.mobile">{{ item.mobile }}</span>
         </a>
       </router-link>
       <a v-else v-ripple class="flex items-center" v-bind="props.action">
