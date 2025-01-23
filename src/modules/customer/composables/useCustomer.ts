@@ -25,10 +25,12 @@ export const useCustomer = (code: Ref<string>) => {
   const isFetching = computed(() => isLoading.value || isRefetching.value)
   const isDeleted = computed(() => customer?.value?.deletedAt !== null)
 
+  // Redirect to list if customer is deleted
   watch([isError, isLoading], ([error, loading]) => {
     if (error && !loading) router.replace({ name: 'customer.list' })
   })
 
+  // Reset form when customer changes
   watch(
     customer,
     (newUser) => {
@@ -39,6 +41,7 @@ export const useCustomer = (code: Ref<string>) => {
     { immediate: true }
   )
 
+  // Refetch when code changes
   watch(code, () => refetch())
 
   return {

@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useNotification } from '@/modules/shared'

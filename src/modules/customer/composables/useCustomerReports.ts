@@ -19,6 +19,7 @@ export const useCustomerReports = () => {
     onSuccess: DownloadFilesUtil.downloadExcelBlob
   })
 
+  // Show error notification
   watch(isError, (error) => {
     if (error) showError({ detail: t('shared.messages.reportFailed') })
   })

@@ -25,6 +25,7 @@ export const useCustomers = () => {
   const loading = computed(() => isFetching.value || isLoading.value)
   const customers = computed(() => data.value?.data || [])
 
+  // Prefetch previous and next page
   watchEffect(() => {
     const currentPage = page.value
     const currentLastPage = lastPage.value
@@ -42,10 +43,12 @@ export const useCustomers = () => {
       })
   })
 
+  // Show error notification when isError changes
   watch(isError, (val) => {
     if (val) showError({ detail: t('error.500') })
   })
 
+  // Update lastPage value when data changes
   watch(data, (val) => {
     if (val) lastPage.value = val.meta.lastPage
   })

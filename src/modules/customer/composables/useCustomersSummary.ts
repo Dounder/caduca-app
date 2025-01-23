@@ -17,6 +17,7 @@ export const useCustomersSummary = () => {
   const loading = computed(() => isFetching.value || isLoading.value)
   const customers = computed(() => data.value || [])
 
+  // Show error notification
   watch(isError, (val) => {
     if (val) showError({ detail: t('error.500') })
   })

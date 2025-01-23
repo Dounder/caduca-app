@@ -25,7 +25,7 @@ const cleanCustomer = (customer: Partial<Customer>) => {
   return customer
 }
 
-const createCustomer = async (customer: Partial<Customer>) => {
+const createCustomer = async (customer: Partial<Customer>): Promise<Customer> => {
   try {
     const { data } = await api.post<Customer>('/customer', customer)
 
@@ -35,7 +35,7 @@ const createCustomer = async (customer: Partial<Customer>) => {
   }
 }
 
-const updateCustomer = async (customerId: string, customer: Partial<Customer>) => {
+const updateCustomer = async (customerId: string, customer: Partial<Customer>): Promise<Customer> => {
   try {
     const { data } = await api.patch<Customer>(`/customer/${customerId}`, customer)
 
