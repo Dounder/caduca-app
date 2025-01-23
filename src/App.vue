@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import FullscreenLoader from '@shared/components/FullscreenLoader.vue'
-import { useConfigStore } from '@shared/stores/config.store'
 import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
-import { useRoute, useRouter } from 'vue-router'
-import { AuthStatus } from './modules/auth/interfaces'
-import { useAuthStore } from './modules/auth/store/auth.store'
 import { watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router'
+
+import FullscreenLoader from '@shared/components/FullscreenLoader.vue'
+import { useConfigStore } from '@shared/stores/config.store'
+import { AuthStatus } from './modules/auth/interfaces'
+import { useAuthStore } from './modules/auth/store/auth.store'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -30,12 +31,11 @@ authStore.$subscribe(
 
 const appName = 'Caduca'
 // Utility function to replace placeholders
-function replacePlaceholders(template: string, params: Record<string, string | string[]>): string {
-  return Object.keys(params).reduce((result, param) => {
+const replacePlaceholders = (template: string, params: Record<string, string | string[]>): string =>
+  Object.keys(params).reduce((result, param) => {
     const paramValue = Array.isArray(params[param]) ? params[param][0] : params[param]
     return result.replace(`{${param}}`, String(paramValue || ''))
   }, template)
-}
 
 // Watcher for the titleKey in route meta
 watch(
