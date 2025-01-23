@@ -2,6 +2,30 @@ import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { AuthStatus } from '../interfaces'
 import { useAuthStore } from '../store/auth.store'
 
+/**
+ * Navigation guard that checks authentication status before allowing route access.
+ *
+ * @async
+ * @param {RouteLocationNormalized} to - Target route the user is navigating to
+ * @param {RouteLocationNormalized} from - Current route the user is navigating from
+ * @param {NavigationGuardNext} next - Function to resolve the navigation
+ * @returns {Promise<void>}
+ *
+ * @remarks
+ * This guard performs the following checks:
+ * 1. Waits for authentication status check if status is 'checking'
+ * 2. Redirects to login if user is unauthenticated, saving attempted route
+ * 3. Redirects to previously attempted route if it exists
+ *
+ * @example
+ * ```typescript
+ * // In router configuration
+ * {
+ *   path: '/protected',
+ *   beforeEnter: isAuthenticatedGuard
+ * }
+ * ```
+ */
 const isAuthenticatedGuard = async (
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,

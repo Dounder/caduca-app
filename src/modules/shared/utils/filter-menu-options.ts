@@ -1,8 +1,8 @@
 import type { MenuItem } from 'primevue/menuitem'
-import type { RoleItem } from '@/modules/user'
+import type { Role } from '@/modules/user'
 import { hasRoles } from '../helpers'
 
-export const filterMenuItems = (items: MenuItem[], userRoles: RoleItem[]) => {
+export const filterMenuItems = (items: MenuItem[], userRoles: Role[]) => {
   return items
     .filter((item) => hasRoles(userRoles, item.roles))
     .map((item) => {

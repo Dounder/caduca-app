@@ -1,5 +1,5 @@
 import { api } from '@/api'
-import { exceptionHandlerHelper } from '@/modules/shared'
+import { exceptionHandler } from '@/modules/shared'
 import type { ProductCodeAudit } from '../interfaces'
 
 export const createProductCodeAction = async (productId: string): Promise<ProductCodeAudit> => {
@@ -8,6 +8,6 @@ export const createProductCodeAction = async (productId: string): Promise<Produc
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, createProductCodeAction.name)
+    throw exceptionHandler(error, createProductCodeAction.name)
   }
 }

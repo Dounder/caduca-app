@@ -1,8 +1,8 @@
 import { api } from '@/api'
-import { exceptionHandlerHelper } from '@/modules/shared'
-import type { User, UserWithRoleStrings } from '../interfaces'
+import { exceptionHandler } from '@/modules/shared'
+import type { User, UserRoleString } from '../interfaces'
 
-export const upsertUserAction = async (user: Partial<User>): Promise<UserWithRoleStrings> => {
+export const upsertUserAction = async (user: Partial<User>): Promise<UserRoleString> => {
   const userId = user.id
 
   user = cleanUser(user)
@@ -26,22 +26,22 @@ const cleanUser = (user: Partial<User>) => {
   return user
 }
 
-const createUser = async (user: Partial<User>): Promise<UserWithRoleStrings> => {
+const createUser = async (user: Partial<User>): Promise<UserRoleString> => {
   try {
     const { data } = await api.post<User>('/user', user)
 
     return { ...data, roles: data.roles.map((role) => role.id) }
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'createUser')
+    throw exceptionHandler(error, 'createUser')
   }
 }
 
-const updateUser = async (userId: string, user: Partial<User>): Promise<UserWithRoleStrings> => {
+const updateUser = async (userId: string, user: Partial<User>): Promise<UserRoleString> => {
   try {
     const { data } = await api.patch<User>(`/user/${userId}`, user)
 
     return { ...data, roles: data.roles.map((role) => role.id) }
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'updateUser')
+    throw exceptionHandler(error, 'updateUser')
   }
 }

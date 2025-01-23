@@ -1,6 +1,6 @@
 import { api } from '@/api'
 import type { Customer } from '../interfaces'
-import { exceptionHandlerHelper, type DeletionToggle } from '@/modules/shared'
+import { exceptionHandler, type DeletionToggle } from '@/modules/shared'
 
 export const customerDeletionToggleAction = async ({ id, isDeleted }: DeletionToggle) => {
   if (isDeleted) return await restoreCustomer(id)
@@ -14,7 +14,7 @@ const restoreCustomer = async (customerId: string) => {
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'restoreCustomer')
+    throw exceptionHandler(error, 'restoreCustomer')
   }
 }
 
@@ -24,6 +24,6 @@ const deleteCustomer = async (customerId: string) => {
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'deleteCustomer')
+    throw exceptionHandler(error, 'deleteCustomer')
   }
 }

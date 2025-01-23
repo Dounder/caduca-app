@@ -2,10 +2,10 @@ import { faker } from '@faker-js/faker'
 
 import { api } from '@/api'
 import { envs } from '@/config/envs'
-import { exceptionHandlerHelper } from '@/modules/shared'
-import type { User, UserWithRoleStrings } from '../interfaces'
+import { exceptionHandler } from '@/modules/shared'
+import type { User, UserRoleString } from '../interfaces'
 
-export const getUserAction = async (id: string): Promise<UserWithRoleStrings> => {
+export const getUserAction = async (id: string): Promise<UserRoleString> => {
   if (id === 'nuevo')
     return {
       id: '',
@@ -26,6 +26,6 @@ export const getUserAction = async (id: string): Promise<UserWithRoleStrings> =>
 
     return { ...data, roles: data.roles.map((role) => role.id) }
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'getUserAction')
+    throw exceptionHandler(error, 'getUserAction')
   }
 }

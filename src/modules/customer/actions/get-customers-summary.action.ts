@@ -1,5 +1,5 @@
 import { api } from '@/api'
-import { exceptionHandlerHelper, type ApiListResponse, type SelectOption } from '@/modules/shared'
+import { exceptionHandler, type ApiListResponse, type SelectOption } from '@/modules/shared'
 import type { CustomerSummary } from '../interfaces'
 
 interface Props {
@@ -18,6 +18,6 @@ export const getCustomersSummaryAction = async ({ page = 1, limit = 10, search }
 
     return customers.map((customer) => ({ name: `${customer.code} - ${customer.name}`, value: customer.id }))
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'updateCustomer')
+    throw exceptionHandler(error, 'updateCustomer')
   }
 }

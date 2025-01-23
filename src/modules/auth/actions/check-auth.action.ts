@@ -1,6 +1,8 @@
+import axios from 'axios'
+
 import { api } from '@/api/api'
-import type { AuthResponse, User } from '../interfaces'
-import { isAxiosError } from 'axios'
+import { exceptionHandler } from '@/modules/shared'
+import type { AuthResponse } from '../interfaces'
 
 interface CheckError {
   ok: false
@@ -9,29 +11,35 @@ interface CheckError {
 
 interface CheckSuccess {
   ok: true
-  user: User
+  user: AuthResponse['user']
   token: string
 }
 
-export const checkAuthAction = async (): Promise<CheckError | CheckSuccess> => {
+type CheckAuthResult = CheckError | CheckSuccess
+
+const ErrorMessages = {
+  INVALID_TOKEN: 'Token inválido o no proporcionado',
+  SESSION_VERIFICATION_FAILED: 'No se pudo verificar la sesión',
+  UNEXPECTED_ERROR: 'Ocurrió un error inesperado'
+}
+
+const validateToken = (token: string | null): boolean => {
+  return !!token && token.length >= 10
+}
+
+export const checkAuthAction = async (): Promise<CheckAuthResult> => {
+  const context = checkAuthAction.name
+  const localToken = localStorage.getItem('token')
+
+  if (!validateToken(localToken)) return { ok: false, message: ErrorMessages.INVALID_TOKEN }
+
   try {
-    const localToken = localStorage.getItem('token')
-
-    if (localToken && localToken.length < 10)
-      return { ok: false, message: 'Ocurrió un error al verificar la sesión' }
-
     const { data } = await api.post<AuthResponse>('/auth/verify')
-
-    return {
-      ok: true,
-      user: data.user,
-      token: data.token
-    }
+    return { ok: true, user: data.user, token: data.token }
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 401)
-      return { ok: false, message: 'No se pudo verificar la sesión' }
+    if (axios.isAxiosError(error) && error.response?.status === 401)
+      return { ok: false, message: ErrorMessages.SESSION_VERIFICATION_FAILED }
 
-    console.log(error)
-    throw new Error('No se pudo verificar la sesión')
+    throw exceptionHandler(error, context)
   }
 }

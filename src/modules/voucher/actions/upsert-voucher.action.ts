@@ -1,6 +1,6 @@
 import { api } from '@/api'
 import type { Voucher, VoucherForm } from '../interfaces'
-import { exceptionHandlerHelper } from '@/modules/shared'
+import { exceptionHandler } from '@/modules/shared'
 
 export const upsertVoucherAction = async (voucher: VoucherForm): Promise<Voucher> => {
   const voucherId = voucher.id
@@ -19,7 +19,7 @@ const createVoucher = async (voucher: VoucherForm): Promise<Voucher> => {
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, createVoucher.name)
+    throw exceptionHandler(error, createVoucher.name)
   }
 }
 
@@ -34,6 +34,6 @@ const updateVoucher = async (id: string, voucher: VoucherForm): Promise<Voucher>
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, updateVoucher.name)
+    throw exceptionHandler(error, updateVoucher.name)
   }
 }

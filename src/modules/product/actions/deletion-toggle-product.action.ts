@@ -1,5 +1,5 @@
 import { api } from '@/api'
-import { exceptionHandlerHelper, type DeletionToggle } from '@/modules/shared'
+import { exceptionHandler, type DeletionToggle } from '@/modules/shared'
 import type { Product } from '../interfaces'
 
 export const deletionToggleProductAction = async ({ id, isDeleted }: DeletionToggle) => {
@@ -12,7 +12,7 @@ const deleteProduct = async (id: string) => {
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, deletionToggleProductAction.name)
+    throw exceptionHandler(error, deletionToggleProductAction.name)
   }
 }
 
@@ -22,6 +22,6 @@ const restoreProduct = async (id: string) => {
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, deletionToggleProductAction.name)
+    throw exceptionHandler(error, deletionToggleProductAction.name)
   }
 }

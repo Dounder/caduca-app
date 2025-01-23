@@ -3,9 +3,9 @@ import type { MenuItem } from 'primevue/menuitem'
 import { useI18n } from 'vue-i18n'
 
 import { filterMenuItems } from '@/modules/shared'
-import { RoleId, type RoleItem } from '@/modules/user'
+import { RoleId, type Role } from '@/modules/user'
 
-export const getListPageOptions = (userRoles: RoleItem[]) => {
+export const getListPageOptions = (userRoles: Role[]) => {
   const { t } = useI18n()
   const menuItems: MenuItem[] = [
     {

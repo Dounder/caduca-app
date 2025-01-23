@@ -1,54 +1,15 @@
 <script setup lang="ts">
-import { useForm } from 'vee-validate'
-import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { envs } from '@/config/envs'
-import { useNotification } from '@/modules/shared'
 import CustomButton from '@/modules/shared/components/CustomButton.vue'
 import CustomCard from '@/modules/shared/components/CustomCard.vue'
 import CustomSpinner from '@/modules/shared/components/CustomSpinner.vue'
 import CustomInputPassword from '@shared/components/CustomInputPassword.vue'
 import CustomInputText from '@shared/components/CustomInputText.vue'
-import { loginSchema } from '../schemas'
-import { useAuthStore } from '../store/auth.store'
+import { useLogin } from '../composables/useLogin'
 
 const { t } = useI18n()
-const { showSuccess, showError } = useNotification()
-const authStore = useAuthStore()
-
-const initialValues = envs.mode === 'development' ? { username: 'admin', password: 'Abcd@123' } : {}
-const { defineField, errors, handleSubmit } = useForm({
-  validationSchema: loginSchema,
-  initialValues
-})
-
-const loading = ref(false)
-const error = ref<string | null>(null)
-const [username, usernameAttrs] = defineField('username')
-const [password, passwordAttrs] = defineField('password')
-
-const onSubmit = handleSubmit(async ({ username, password }, { resetForm }) => {
-  loading.value = true
-
-  try {
-    const ok = await authStore.login(username, password)
-
-    if (!ok) {
-      error.value = t('auth.login.errorMessage')
-      return
-    }
-
-    showSuccess({ detail: t('auth.login.success') })
-
-    resetForm()
-  } catch (error) {
-    console.log(error)
-    showError({ detail: t('auth.login.error') })
-  } finally {
-    loading.value = false
-  }
-})
+const { onSubmit, form, error, errors, loading } = useLogin()
 </script>
 
 <template>
@@ -60,16 +21,16 @@ const onSubmit = handleSubmit(async ({ username, password }, { resetForm }) => {
         <CustomInputText
           id="username"
           :label="t('auth.login.username')"
-          v-model="username"
-          v-bind="usernameAttrs"
+          v-model="form.username"
+          v-bind="form.usernameAttrs"
           :error="errors.username"
           autofocus
         />
         <CustomInputPassword
           id="password"
           :label="t('auth.login.password')"
-          v-model="password"
-          v-bind="passwordAttrs"
+          v-model="form.password"
+          v-bind="form.passwordAttrs"
           :error="errors.password"
         />
         <CustomButton type="submit" :label="t('auth.login.submit')" class="mt-4" fluid />

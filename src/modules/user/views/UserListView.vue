@@ -6,7 +6,7 @@ import { useAuthStore } from '@/modules/auth'
 import CustomTable from '@/modules/shared/components/CustomTable.vue'
 import ListPage from '@/modules/shared/components/ListPage.vue'
 import { useUserDeletionToggle, useUserReports, useUsers } from '../composables'
-import type { UserTable } from '../interfaces'
+import type { UserPlain } from '../interfaces'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -15,11 +15,11 @@ const { deletionToggleMutation, isDeletionTogglePending } = useUserDeletionToggl
 const { users, refetch, loading } = useUsers()
 const { userReportMutation, isGeneratingReport } = useUserReports()
 
-const onEdit = ({ username }: UserTable, newTab: boolean) => {
+const onEdit = ({ username }: UserPlain, newTab: boolean) => {
   const route = router.resolve({ name: 'user.detail', params: { username } })
   newTab ? window.open(route.href, '_blank') : router.push(route)
 }
-const onDelete = ({ id, deletedAt }: UserTable) => deletionToggleMutation({ userId: id, isDeleted: !!deletedAt })
+const onDelete = ({ id, deletedAt }: UserPlain) => deletionToggleMutation({ userId: id, isDeleted: !!deletedAt })
 </script>
 
 <template>

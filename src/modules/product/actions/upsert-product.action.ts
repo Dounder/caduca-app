@@ -1,5 +1,5 @@
 import { api } from '@/api'
-import { exceptionHandlerHelper } from '@/modules/shared'
+import { exceptionHandler } from '@/modules/shared'
 import type { Product } from '../interfaces'
 
 export const upsertProductAction = async (product: Partial<Product>): Promise<Product> => {
@@ -32,7 +32,7 @@ const createProduct = async (product: Partial<Product>) => {
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'createProduct')
+    throw exceptionHandler(error, 'createProduct')
   }
 }
 
@@ -42,6 +42,6 @@ const updateProduct = async (productId: string, product: Partial<Product>) => {
 
     return data
   } catch (error) {
-    throw exceptionHandlerHelper(error, 'updateProduct')
+    throw exceptionHandler(error, 'updateProduct')
   }
 }

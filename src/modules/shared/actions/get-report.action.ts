@@ -1,5 +1,5 @@
 import { api } from '@/api'
-import { exceptionHandlerHelper, type BlobResponse } from '@/modules/shared'
+import { exceptionHandler, type BlobResponse } from '@/modules/shared'
 
 export const getReportAction = async (endpoint: string): Promise<BlobResponse> => {
   try {
@@ -10,6 +10,6 @@ export const getReportAction = async (endpoint: string): Promise<BlobResponse> =
 
     return { blob, headers }
   } catch (error) {
-    throw exceptionHandlerHelper(error, getReportAction.name)
+    throw exceptionHandler(error, getReportAction.name)
   }
 }
