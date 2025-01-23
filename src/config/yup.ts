@@ -1,6 +1,27 @@
 import * as yup from 'yup'
 
-// Establecer el idioma de los mensajes de error en español
+/**
+ * Configuration file for Yup validation schema messages in Spanish.
+ * Sets custom locale messages for different validation types.
+ *
+ * @remarks
+ * This configuration includes error messages for:
+ * - Mixed type validations (default, required, oneOf, etc.)
+ * - String validations (length, min, max, email, etc.)
+ * - Number validations (min, max, integer, etc.)
+ * - Date validations (min, max)
+ * - Array validations (min, max, length)
+ * - Boolean validations
+ * - Object validations
+ *
+ * @example
+ * ```typescript
+ * import './config/yup'
+ * // Now all Yup validations will use these Spanish messages
+ * ```
+ *
+ * @see {@link https://github.com/jquense/yup?tab=readme-ov-file#localization-and-i18n Yup Custom Locale}
+ */
 yup.setLocale({
   mixed: {
     default: 'No es válido',
